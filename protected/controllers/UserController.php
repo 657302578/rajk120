@@ -150,8 +150,8 @@ class UserController extends Controller
             if($userinfo->JoinProtectPlan==0)//未加入商保
             {
                 $userinfo->JoinProtectPlan=1;//将商保状态改变为加入
-                $userinfo->JoinProtectPlanMoney=300;//将商保金额改变300
-                $userinfo->Money=$userinfo->Money-300;//余额减少300
+                $userinfo->JoinProtectPlanMoney=50;//将商保金额改变300
+                $userinfo->Money=$userinfo->Money-50;//余额减少300
                 $userinfo->JoinProtectPlanTime=time();//加入商保的时间
                 
                 if($userinfo->save())
@@ -160,7 +160,7 @@ class UserController extends Controller
                     $record=new Recordlist();
                     $record->userid=Yii::app()->user->getId();//用户id
                     $record->catalog=11;//加入商保使用的金额
-                    $record->number=300;//操作数量
+                    $record->number=50;//操作数量
                     $record->time=$userinfo->JoinProtectPlanTime;//操作时间
                     $record->save();//保存金额流水
                     
@@ -545,7 +545,7 @@ class UserController extends Controller
             $keywordsArr=explode('*',$_POST['keywords']);//分解关键词
             //任务大厅
     	    $criteria = new CDbCriteria;
-            $criteria->condition='taskerid='.Yii::app()->user->getId().' and status<>6 and taskCompleteStatus<>1 and time='.trim($keywordsArr[0]).' and id='.trim($keywordsArr[1]);
+            $criteria->condition=' id IN(select task_id from zxjy_usertasklist WHERE uid='.Yii::app()->user->getId().') and taskCompleteStatus<>1 and time='.trim($keywordsArr[0]).' and id='.trim($keywordsArr[1]);
             $criteria->order ="time desc";
         
             //分页开始
@@ -565,9 +565,8 @@ class UserController extends Controller
         }
         //我接手的任务
 	    $criteria = new CDbCriteria;
-        $criteria->condition='taskerid='.Yii::app()->user->getId().' and status<>6 and taskCompleteStatus<>1';//不查询已完成的任务
+        $criteria->condition=' id IN(select task_id from zxjy_usertasklist WHERE uid='.Yii::app()->user->getId().')  and taskCompleteStatus<>1';//不查询已完成的任务
         $criteria->order ="status asc";
-    
         //分页开始
         $total =Companytasklist::model()->count($criteria);
         $pages = new CPagination($total);
@@ -1370,19 +1369,18 @@ class UserController extends Controller
     {
         if(isset($_POST))
         {
-            /*echo "<pre/>";
-            var_dump($_POST);
-            exit;*/
+            //echo "<pre/>";
+            //var_dump($_POST);
             $task=new Companytasklist();
             $task->publishid=Yii::app()->user->getId();//发布人id
             $task->time=time();//发布任务时间
             $task->taskCatalog=$_POST['taskCatalog'];//任务类别（0-普通任务，1-来路来搜索任务）
             $task->platform=$_POST['platform'];//任务所属平台
             $task->payWay=$_POST['payWay'];//任务支付方式
-            
             //判断是否为来路搜索任务
             if(isset($_POST['taskCatalog']))
             {
+                echo 'ddd';
                 $task->visitWay=$_POST['visitWay'];//搜索方式(1-搜商品,2-搜店铺,3- 直通车,4信用评价)
                 $task->divKey=$_POST['divKey'];//搜商品关键字
                 $task->txtSearchDes=$_POST['txtSearchDes'];//商品搜索提示
@@ -1391,7 +1389,7 @@ class UserController extends Controller
             
             //米粒初始化
             $MinLi=0;
-            
+            $_POST['txtMinMPrice'] = 0; //重置基本米粒
             //第一步：商品信息
             $task->task_type=$_POST['task_type'];//任务类型
             $task->ddlZGAccount=$_POST['ddlZGAccount'];//淘宝掌柜名
@@ -1540,41 +1538,42 @@ class UserController extends Controller
             $task->isTpl=$_POST['isTpl'];////是否选中收货地址，1选中，0未选中
             $task->tplTo=$_POST['isTpl']==1?"".$_POST['tplTo']."":"0*#";//模板名称如果为0*#则为不保存模板
             
-            $task->MinLi=$MinLi;//消耗总米粒
-            
+            $task->MinLi=0;//消耗总米粒-不消耗米粒了
+            $MinLi=0;//重置米粒数量
             $taskPublistStatus=0;
             $taskmoreArr=$task->attributes;
             if($_POST['txtFCount']<2)//单任务
             {
+                
                 $userinfoDone=User::model()->findByPk(Yii::app()->user->getId());
                 //前提条件判断一.帐户余额充足，同时米粒充足
-                if($_POST['txtPrice']>$userinfoDone->Money || $MinLi>$userinfoDone->MinLi)
-                {
-                    $this->redirect_message('您的余额或者米粒不足','success',3,$this->createUrl('user/index'));
-                    Yii::app()->end();
-                }
+//                 if($_POST['txtPrice']>$userinfoDone->Money || $MinLi>$userinfoDone->MinLi)
+//                 {
+//                     $this->redirect_message('您的余额或者米粒不足','success',3,$this->createUrl('user/index'));
+//                     Yii::app()->end();
+//                 }
                 
                 //添加流水
                 //1.保存金额流水
                 $record=new Recordlist();
                 $record->userid=Yii::app()->user->getId();//用户id
                 $record->catalog=3;//发布任务使用金额
-                $record->number=$_POST['txtPrice'];//操作数量
+                $record->number=1;//$_POST['txtPrice'];//操作数量--扣除1元
                 $record->tasknum=$_POST['txtFCount'];//1个任务
                 $record->time=time();//操作时间
                 $record->save();//保存金额流水
                 
                 //2.保存米粒流水
-                $recordMinLi=new Recordlist();
-                $recordMinLi->userid=Yii::app()->user->getId();//用户id
-                $recordMinLi->catalog=4;//发布任务使用米粒
-                $recordMinLi->number=$MinLi;//操作数量
-                $recordMinLi->tasknum=$_POST['txtFCount'];//1个任务
-                $recordMinLi->time=time();//操作时间
-                $recordMinLi->save();//保存米粒流水
+//                 $recordMinLi=new Recordlist();
+//                 $recordMinLi->userid=Yii::app()->user->getId();//用户id
+//                 $recordMinLi->catalog=4;//发布任务使用米粒
+//                 $recordMinLi->number=$MinLi;//操作数量
+//                 $recordMinLi->tasknum=$_POST['txtFCount'];//1个任务
+//                 $recordMinLi->time=time();//操作时间
+//                 $recordMinLi->save();//保存米粒流水
                 
                 //3.改变充值后帐户的余额
-                $userinfoDone->Money=$userinfoDone->Money-$_POST['txtPrice'];//在原有余额基本上减去任务需要的金额
+                $userinfoDone->Money=$userinfoDone->Money-1;//$_POST['txtPrice'];//在原有余额基本上减去任务需要的金额
                 $userinfoDone->MinLi=$userinfoDone->MinLi-$MinLi;//在原有米粒基本上减去任务需要的米粒
                 $userinfoDone->save();
                 
@@ -1585,7 +1584,6 @@ class UserController extends Controller
                     $taskPublistStatus=0;
             }else//批量发布任务
             {
-                
                 $userinfoDone=User::model()->findByPk(Yii::app()->user->getId());
                 //前提条件判断一.帐户余额充足，同时米粒充足
                 if(($_POST['txtPrice']*$_POST['txtFCount'])>$userinfoDone->Money || ($MinLi*$_POST['txtFCount'])>$userinfoDone->MinLi)
@@ -1714,6 +1712,9 @@ class UserController extends Controller
             $userinfo->TrueName=$_POST['truename'];//真实姓名
             $userinfo->Sex=$_POST['sex'];//性别
             $userinfo->PlaceOtherLogin=$_POST['PlaceOtherLogin'];//异地登录
+            $userinfo->id_card = $_POST['id_card'];
+            $userinfo->id_photo_front = $_POST['id_photo_front'];
+            $userinfo->id_photo_rear = $_POST['id_photo_rear'];
             if($userinfo->save())
                 echo "SUCCESS";
             else

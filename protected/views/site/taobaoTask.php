@@ -53,7 +53,7 @@
                 </ul>
                 <?php @$GetConditionArr['platform'] = $_GET['platform'];?>
             </div>
-            <div class="dtSortLis">
+            <!--<div class="dtSortLis">
                 <div class="dtSortLis_t">付款方式：</div>
                 <div class="<?php echo !isset($_GET['payWay']) || @$_GET['payWay']=='noVal' || @$_GET['payWay']==''?'dtSortLis_pro':'dtSortLis_proBeore';?>"><a href="<?php
                         @$GetConditionArr['payWay']='noVal';
@@ -70,7 +70,7 @@
                     ?>">平台代付</a></li>
                 </ul>
                 <?php @$GetConditionArr['payWay'] = $_GET['payWay'];?>
-            </div>
+            </div>-->
             <div class="dtSortLis">
                 <div class="dtSortLis_t">星级要求：</div>
                 <div class="<?php echo !isset($_GET['BuyerJifen']) || @$_GET['BuyerJifen']=='noVal' || @$_GET['BuyerJifen']==''?'dtSortLis_pro':'dtSortLis_proBeore';?>"><a href="<?php
@@ -139,7 +139,7 @@
                 </ul>
                 <?php @$GetConditionArr['isMobile'] = $_GET['isMobile'];?>
             </div>
-            <div class="dtSortLis">
+            <!--<div class="dtSortLis">
                 <div class="dtSortLis_t">商品类型：</div>
                 <div class="<?php echo !isset($_GET['task_type']) || @$_GET['task_type']=='noVal' || @$_GET['task_type']==''?'dtSortLis_pro':'dtSortLis_proBeore';?>"><a href="<?php
                         @$GetConditionArr['task_type']='noVal';
@@ -156,7 +156,7 @@
                     ?>">实物商品</a></li>
                 </ul>
                 <?php @$GetConditionArr['task_type'] = $_GET['task_type'];?>
-            </div>
+            </div>-->
             <div class="dtSortLis">
                 <div class="dtSortLis_t">佣金奖励：</div>
                 <div class="<?php echo !isset($_GET['MinLi']) || @$_GET['MinLi']=='noVal' || @$_GET['MinLi']==''?'dtSortLis_pro':'dtSortLis_proBeore';?>"><a href="<?php
@@ -289,7 +289,7 @@
             ?>
             <li class="taskItem">
                 <div class="rebh">
-                    <img class="payWay" width="30" src="<?php 
+                    <!--<img class="payWay" width="30" src="<?php 
                         switch($item->payWay)
                         {
                             case 1://接手垫付
@@ -299,8 +299,8 @@
                                 echo VERSION2."/img/df.jpg";
                                 break;
                         }
-                    ?>" lang='<?php echo $item->payWay;?>' />
-                    <img class="platform" width="30" src="<?php 
+                    ?>" lang='<?php echo $item->payWay;?>' />-->
+                    <!--<img class="platform" width="30" src="<?php 
                         switch($item->platform)
                         {
                             case 1:
@@ -313,7 +313,7 @@
                                 echo VERSION2."/img/1688.jpg";
                                 break;
                         }
-                    ?>" lang='<?php echo $item->platform;?>' />
+                    ?>" lang='<?php echo $item->platform;?>' />-->
                     
                     <font>任务编号</font>：<span><?php echo $item->time.'*'.$item->id;?></span>
                     <img title="<?php 
@@ -407,15 +407,14 @@
                                     <li title="平台担保：此任务卖家已缴纳全额担保存款，接手可放心购买，任务完成后，买家平台账号自动获得相应存款">
                                         任务金额： <span><?php echo $item->txtPrice;?></span>元
                                     </li>
-                                    <li title="完成任务后，您能获得的任务奖励，可兑换成RMB">
+                                    <!--<li title="完成任务后，您能获得的任务奖励，可兑换成RMB">
                                     悬赏麦粒： <span><?php echo $item->MinLi;?></span>个
-                                    </li>
+                                    </li>-->
                                 </ul>
                             </div>
                             <div class="allRw_proLink">
                                 <?php
-                                    if($item->cbxIsSB)
-                                        echo '<a style="border-color:red; color:red;">商保</a>';
+                                    echo '<a style="border-color:red; color:red;">商保</a>';
                                     if($item->isLimitCity)
                                         echo '<a style="border-color:red; color:red;">'.$item->Province.'</a>';
                                     if($item->isMobile)
@@ -451,7 +450,11 @@
                             </div>
                         </div>
                     </div>
-                    <a href="javascript:;" class="qcrw taskTask" lang="<?php echo $item->id;?>" alt="<?php echo $item->publishid;?>">抢此任务</a>
+					<?php if($item->status <> 0){?>
+					<a href="javascript:;" class="qcrw" lang="<?php echo $item->id;?>" alt="<?php echo $item->publishid;?>">已经被抢</a>
+					<?php }else{?>
+                    <a href="javascript:;" class="qcrw taskTask" lang="<?php echo $item->id;?>" alt="<?php echo $item->publishid;?>">立即申请</a>
+					<?php } ?>
                 </div>
             </li>
             <?php }?>
@@ -511,7 +514,14 @@
                             	}, function(){
                             		window.location.href="<?php echo $this->createUrl('user/taobaoBindBuyer');?>";
                             	});
-                            }
+                            }else if(msg == 'NO_JOIN_PL'){
+								//询问框
+                            	layer.confirm('您还没有加入商保，请先加入商保', {
+                            		btn: ['确定'] //按钮
+                            	}, function(){
+                            		window.location.href="<?php echo $this->createUrl('user/userSBcenter');?>";
+                            	});
+							}
                             else//相应买号供选择并且去绑定且返回绑定结果
                             {
                                 //询问框
@@ -534,10 +544,18 @@
                                             	});
                                             }else if(msg=="NOJoinProtectPlan"){//没有加入商保
                                                 //询问框
-                                            	layer.confirm('<span style="color:red;">该任务要求接手加入商保，您还没有加入商保</span>', {
+                                            	layer.confirm('<span style="color:red;">接手必须加入商保才能接任务，您还没有加入商保</span>', {
                                             		btn: ['现在去加入商保','知道了'] //按钮
                                             	},function(){
                                             	   location.href="<?php echo $this->createUrl('user/userSBcenter');?>";
+                                            	});
+                                            }else if(msg == 'ALLOW_GET_300'){
+                                            	layer.confirm('<span style="color:red;">您只能接金额在300元以下的任务！</span>', {
+                                            		btn: ['知道了'] //按钮
+                                            	});
+                                            }else if(msg == 'ALLOW_GET_1000'){
+                                            	layer.confirm('<span style="color:red;">您只能接金额为您当前余额2倍以下的任务！</span>', {
+                                            		btn: ['知道了'] //按钮
                                             	});
                                             }else if(msg=="NOBuyerJifen"){//等级不符合要求
                                                 layer.confirm('<span style="color:red;">您选择的买号等级没有达到该任务的要求</span>', {
@@ -578,7 +596,16 @@
         })
     </script>
     <script>
+		function myrefresh()
+		{
+			   window.location.reload();
+		}
         $(function(){
+			<?php
+				if(empty($_GET['page']) || intval($_GET['page']) == 1){
+			?>
+			setTimeout('myrefresh()',10000); //指定1分钟刷新一次 
+			<?php }?>
             //垫付或者平台代付提示
             $(".payWay").click(function(){
                 if($(this).attr("lang")==1)

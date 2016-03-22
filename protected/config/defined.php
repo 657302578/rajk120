@@ -1,6 +1,6 @@
 <?php
     //设置系统常量
-    define('SITE_URL','http://www.lx.com/');//设置网站根目录
+    define('SITE_URL','http://shuadan.com/');//设置网站根目录
     define('ASSET_URL',SITE_URL.'assets/');//设置存放总路径
     define('STATIC_URL',SITE_URL.'assets/static/');//设置存放总路径
     

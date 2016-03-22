@@ -227,16 +227,28 @@ class SiteController extends Controller
             {
                 $userinfo=User::model()->findByPk(Yii::app()->user->getId());
                 //首先检查用户帐号是否符合任务的要求
-                //1.检查商保
-                if($taskInfo->cbxIsSB==1)//任务要求商保
+                //1.检查商保 - 必须加入商保
+                if($userinfo->JoinProtectPlan<>1)//没有加入商保
                 {
-                    if($userinfo->JoinProtectPlan<>1)//没有加入商保
-                    {
-                        echo "NOJoinProtectPlan";
-                        Yii::app()->end();
-                    }
+                    echo "NOJoinProtectPlan";
+                    Yii::app()->end();
                 }
-                
+                //检查任务金额是否符合条件
+                /**
+                 * 条件是：IF余额<=150，可接金额<=300以下任务
+                        IF余额<1000，可接金额 <余额*2的任务
+                        If余额>=1000，可接任意金额订单。
+                 */
+                if($userinfo->Money <= 150 &&  $taskInfo->txtPrice > 300)
+                {
+                    echo 'ALLOW_GET_300';
+                    Yii::app()->end();
+                }
+                if( $userinfo->Money >150 && $userinfo->Money < 1000 &&  $taskInfo->txtPrice > ($userinfo->Money*2))
+                {
+                    echo 'ALLOW_GET_1000';
+                    Yii::app()->end();
+                }
                 $wangwanginfo=Blindwangwang::model()->findByAttributes(array('wangwang'=>$_POST['taskerWangwang']));
                 //2.检测买号等级要求是否符合任务要求
                 if($taskInfo->BuyerJifen>$wangwanginfo->wangwanginfo)
@@ -248,15 +260,15 @@ class SiteController extends Controller
                 //3.地区限制
                 if($taskInfo->isLimitCity==1)//任务要求做接手区域限制
                 {
-                    $loginip=XUtils::getClientIP();//登录ip
-                    //登录地址
-                    $ipinfo=file_get_contents('http://ip.taobao.com/service/getIpInfo.php?ip='.$loginip);
-                    $placeinfo=json_decode($ipinfo,true);
-                    if(XUtils::cutstr($taskInfo->Province,4)!=XUtils::cutstr($placeinfo['data']['region'],4))//地区的前两个字
-                    {
-                        echo "NOProvince";
-                        Yii::app()->end();
-                    }
+//                     $loginip=XUtils::getClientIP();//登录ip
+//                     //登录地址
+//                     $ipinfo=file_get_contents('http://ip.taobao.com/service/getIpInfo.php?ip='.$loginip);
+//                     $placeinfo=json_decode($ipinfo,true);
+//                     if(XUtils::cutstr($taskInfo->Province,4)!=XUtils::cutstr($placeinfo['data']['region'],4))//地区的前两个字
+//                     {
+//                         echo "NOProvince";
+//                         Yii::app()->end();
+//                     }
                 }
                 
                 //4.检查接手是否在对方的黑名单中
@@ -268,11 +280,17 @@ class SiteController extends Controller
                 }
                 
                 //符合要求
-                $taskInfo->taskerid=Yii::app()->user->getId();//接手id
-                $taskInfo->taskerWangwang=$_POST['taskerWangwang'];//接手买号旺旺
-                $taskInfo->taskfristTime=time();//接手接任务时间
-                $taskInfo->status=1;//任务状态变1，等待商家审核
-                if($taskInfo->save())
+                //$taskInfo->taskerid=Yii::app()->user->getId();//接手id
+                //$taskInfo->taskerWangwang=$_POST['taskerWangwang'];//接手买号旺旺
+                //$taskInfo->taskfristTime=time();//接手接任务时间
+                //$taskInfo->status=1;//任务状态变1，等待商家审核
+                $user_tasklist = new Usertasklist();
+                $user_tasklist->uid = Yii::app()->user->getId();
+                $user_tasklist->task_id = $taskInfo->id;
+                $user_tasklist->user_wangwang = $_POST['taskerWangwang'];
+                $user_tasklist->accept_time = date('Y/m/d H:i:s');
+                $user_tasklist->state = 0;
+                if($user_tasklist->save())
                     echo "SUCCESS";
                 else
                     echo "FAIL";
@@ -473,41 +491,38 @@ class SiteController extends Controller
                 //任务完成，将金额与米粒加到接手帐户
                 //添加流水
                 //1.保存金额流水
-                $record=new Recordlist();
-                $record->userid=$taskInfo->taskerid;//接手id
-                $record->catalog=5;//发布任务使用金额
-                $record->number=$taskInfo->txtPrice;//操作金额
-                $record->time=time();//操作时间
-                $record->taskid=$taskInfo->id;//任务id
-                $record->save();//保存金额流水
+//                 $record=new Recordlist();
+//                 $record->userid=$taskInfo->taskerid;//接手id
+//                 $record->catalog=5;//发布任务使用金额
+//                 $record->number=$taskInfo->txtPrice;//操作金额
+//                 $record->time=time();//操作时间
+//                 $record->taskid=$taskInfo->id;//任务id
+//                 $record->save();//保存金额流水
                 
                 //2.保存米粒流水
-                $recordMinLi=new Recordlist();
-                $recordMinLi->userid=$taskInfo->taskerid;//接手id
-                $recordMinLi->catalog=6;//发布任务使用米粒
-                $recordMinLi->number=$taskInfo->MinLi;//操作数量
-                $recordMinLi->time=time();//操作时间
-                $recordMinLi->taskid=$taskInfo->id;//任务id
-                $recordMinLi->save();//保存米粒流水
+//                 $recordMinLi=new Recordlist();
+//                 $recordMinLi->userid=$taskInfo->taskerid;//接手id
+//                 $recordMinLi->catalog=6;//发布任务使用米粒
+//                 $recordMinLi->number=$taskInfo->MinLi;//操作数量
+//                 $recordMinLi->time=time();//操作时间
+//                 $recordMinLi->taskid=$taskInfo->id;//任务id
+//                 $recordMinLi->save();//保存米粒流水
                 
                 //3.改变接手帐户中的金额与米粒
                 $userinfo=User::model()->findByPk($taskInfo->taskerid);//获取接手信息
-                if($taskInfo->payWay==1)//如果任务为垫付则增加商品金额，否则只增加米粒
-                {
-                    $userinfo->Money=$userinfo->Money+$taskInfo->txtPrice;//在原有金额基础上增加任务金额
-                }
-                $userinfo->MinLi=$userinfo->MinLi+$taskInfo->MinLi;//在原有金额基础上增加任务金额
+//                 if($taskInfo->payWay==1)//如果任务为垫付则增加商品金额，否则只增加米粒
+//                 {
+//                     $userinfo->Money=$userinfo->Money+$taskInfo->txtPrice;//在原有金额基础上增加任务金额
+//                 }
+//                 $userinfo->MinLi=$userinfo->MinLi+$taskInfo->MinLi;//在原有金额基础上增加任务金额
                 $userinfo->Experience=$userinfo->Experience+1;//接手每完成一个任务，经验值增加一个
-                
                 //4.改变发布方经验值
                 $publishinfo=User::model()->findByPk($taskInfo->publishid);//获取发布方信息
                 $publishinfo->Experience=$publishinfo->Experience+1;//商家每有一个任务被完成，经验值增加一个
-  
                 if($userinfo->save() && $publishinfo->save())
                     echo "SUCCESS";
                 else
                     echo "FAIL";
-                    
             }
             else
                 echo "FAIL";

@@ -47,7 +47,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="d_con_right">
+                <!--<div class="d_con_right">
                 	<div class="d_con_right_top">
                         <p class="cunkuan1">麦粒</p>
                         <p class="shuzhi1"><?php echo $userInfo->MinLi;?></p>
@@ -60,15 +60,15 @@
                             <li class="li3"><a href="<?php echo $this->createUrl('user/userPayDetail');?>">明细</a></li>
                         </ul>
                     </div>
-                </div>
+                </div>-->
              </div>
              
              <div class="d_tisheng clearfix">
              	<ul class="d_tsul">
                 	<li><a href="<?php echo $this->createUrl('user/userSBcenter');?>"><img src="<?php echo VERSION2;?>img/d-sq_18.png" /><p>加入商保</p></a></li>
-                    <li><a href="<?php echo $this->createUrl('user/userZYWK');?>"><img src="<?php echo VERSION2;?>img/d-sq_20.png" /><p>成为职业威客</p></a></li>
+                    <li><a href="<?php echo $this->createUrl('site/taobaoTask');?>"><img src="<?php echo VERSION2;?>img/d-sq_20.png" /><p>接任务</p></a></li>
                     <li><a href="<?php echo $this->createUrl('user/userBuyPoint');?>"><img src="<?php echo VERSION2;?>img/d-sq_22.png" /><p>申请VIP</p></a></li>
-                    <li><a href="<?php echo $this->createUrl('user/taskPublishPT');?>"><img src="<?php echo VERSION2;?>img/d-sq_24.png" /><p>我要提升信誉</p></a></li>
+                    <li><a href="<?php echo $this->createUrl('user/taskPublishPT');?>"><img src="<?php echo VERSION2;?>img/d-sq_24.png" /><p>发任务</p></a></li>
                     <li><a href="<?php echo $this->createUrl('user/userSpread');?>"><img src="<?php echo VERSION2;?>img/d-sq_26.png" /><p>我要推广赚钱</p></a></li>
                 </ul>
              </div>

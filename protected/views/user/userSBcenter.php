@@ -36,7 +36,7 @@
                 <?php
                     if($myinfo->JoinProtectPlan==0){
                 ?>
-                <li class="d_timecolor">本次需缴纳：<span>300 </span>元保证金</li>
+                <li class="d_timecolor">本次需缴纳：<span>50 </span>元保证金</li>
                 <li class="shengyu">您剩余的存款：<span><?php echo $myinfo->Money;?> </span>元</li>
                 <?php
                     }
@@ -95,7 +95,7 @@
            }else
            {
                 //判断余额是否充足
-                if(300>parseFloat($(".MoneyOwn").html()))//余额不足
+                if(50>parseFloat($(".MoneyOwn").html()))//余额不足
                 {
                     layer.tips('您的余额不足', '.shengyu', {
                         tips: [1, '#0FA6D8'] //还可配置颜色

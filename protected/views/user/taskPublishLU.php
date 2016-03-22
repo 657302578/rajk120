@@ -45,7 +45,7 @@
           <ul class="pmm">
             <li style="display:block;" class="lili">
               <div class="drw">
-                <div class="pt"> <span class="h40"> <img class="h41" src="<?php echo VERSION2;?>taskcss/blue.png" alt="">商品信息： </span> <span class="h40" style="margin-left: 25px;"><a href="http://www.milioo.com/article/sell/122Q02015.html" target="_blank" style="color: red;font-size: 15px;">查看麦粒计算规则</a></span> </div>
+                <div class="pt"> <span class="h40"> <img class="h41" src="<?php echo VERSION2;?>taskcss/blue.png" alt="">商品信息： </span> <!--<span class="h40" style="margin-left: 25px;"><a href="http://www.milioo.com/article/sell/122Q02015.html" target="_blank" style="color: red;font-size: 15px;">查看麦粒计算规则</a></span>--> </div>
                 <!--来路任务不同与普通任务不同部分-->
                 <div class="product_content1">
                   <ul class="dowebok">
@@ -58,15 +58,7 @@
                             <option value="2">京东</option>
                             <option value="3">阿里巴巴</option>
                         </select>
-                    </li><br /><br />
-                    <li class="s38" style="width:176px;" title="请选择任务支付方式">
-                        <img src="<?php echo VERSION2;?>taskcss/c12.jpg" alt="" />任务支付方式：
-                    </li>
-                    <li>
-                        <select id="payWay" name="payWay" class="ui-select zhsr">
-                            <option value="1">威客垫付</option>
-                            <option value="2">平台代付</option>
-                        </select>
+						<input type="hidden" name="payWay" value="1" />
                     </li><br /><br />
                     <li class="s35" title="要求接手使用什么方式搜索进店">搜索进店方式：</li>
                     <li class="s39 searchway" title="要求接手搜索商品进店">
@@ -81,7 +73,7 @@
                     <li class="s40 s41 searchway" title="要求接手通过信用评价地址进店">
                       <input type="radio" name="visitWay" value="4">
                       信用评价</li>
-                    <li class="h32"><span>支付 <font class="pdfo">1.0</font> 个麦粒</span></li>
+                    <!--<li class="h32"><span>支付 <font class="pdfo">1.0</font> 个麦粒</span></li>-->
                   </ul>
                 </div>
                 <div class="product_content2">
@@ -102,6 +94,7 @@
                   <ul class="pc1">
                     <li class="s35" id="divkey">商品位置截图：</li>
                     <li>
+						<input type="hidden" name="task_type" value="1" />
                         <input type="text" id="url3" name="goodsImgPosition" class="pc11 inputp s36_ts" readonly="readonly" placeholder="上传商品位置截图" style="background: #F0F0F0;" /> <input type="button" id="image3" value="选择图片" style="font-weight: normal; background:#3498db; color:#fff; width: 70px; height:30px; font-size:12px;" /><span id="imagewarning" style="color: green; padding-left:10px;"></span>
                     </li>
                   </ul>
@@ -109,15 +102,6 @@
                 <!--来路任务不同与普通任务不同部分-->
                 <div class="product_content2">
                   <ul class="pc1">
-                    <li class="s38" style="width:176px;" title="请先把任务类型">
-                        <img src="<?php echo VERSION2;?>taskcss/c12.jpg" alt="">任务类型：
-                    </li>
-                    <li>
-                        <select id="task_type" name="task_type" class="ui-select zhsr">
-                            <option value="0">虚拟任务</option>
-                            <option value="1">实物任务</option>
-                        </select>
-                    </li><br /><br />
                     <li class="s38" style="width:176px;" title="选择您的淘宝掌柜名">
                         <img src="<?php echo VERSION2;?>taskcss/c12.jpg" alt="">淘宝掌柜名：
                     </li>
@@ -147,13 +131,13 @@
                     <li class="s34">
                       <select name="ddlOKDay" id="ddlOKDay" class="ui-select zhsr">
                         <option value="0" selected="selected">马上好评（虚拟任务）</option>
-                        <option value="1">24小时(基本麦粒×1.5+0)</option>
-                        <option value="2">48小时(基本麦粒×1.5+1)</option>
-                        <option value="3">72小时(基本麦粒×1.5+2)</option>
-                        <option value="4">96小时(基本麦粒×1.5+3)</option>
-                        <option value="5">120小时(基本麦粒×1.5+4)</option>
-                        <option value="6">144小时(基本麦粒×1.5+5)</option>
-                        <option value="7">168小时(基本麦粒×1.5+6)</option>
+                        <option value="1"></option>
+                        <option value="2"></option>
+                        <option value="3"></option>
+                        <option value="4"></option>
+                        <option value="5"></option>
+                        <option value="6"></option>
+                        <option value="7"></option>
                       </select>
                     </li>
                   </ul>
@@ -173,9 +157,9 @@
                     <li class="h38" title="取消商品价格限制" style="display:none">打折：
                       <input type="checkbox" name="chssp" class="h39">
                     </li>
-                    <li class="s37" title="与商品价格、收货时长相关">基本麦粒：
+                    <!--<li class="s37" title="与商品价格、收货时长相关">基本麦粒：
                       <input type="text" id="txtMinMPrice" readonly="" style="background:#F0F0F0;" name="txtMinMPrice" class="inputp">
-                    </li>
+                    </li>-->
                   </ul>
                 </div>
                 <div style="clear:both;"></div>
@@ -193,36 +177,36 @@
               <div id="a1" lang="1" alt="0" class="nulldiv" title="在拍下商品前使用旺旺或旺信与商家聊天"></div>
               <input type="hidden" name="cbxIsWW" id="aa1" />
             </li>
-            <li class="pdli"><span>支付<font class="pdfo">1.0</font>个麦粒</span></li>
+            <!--<li class="pdli"><span>支付<font class="pdfo">1.0</font>个麦粒</span></li>-->
             <li>
               <div id="a2" lang="2" alt="0" class="nulldiv" title="收藏商家发布的商品"></div>
               <input type="hidden" name="shopcoller" id="aa2">
             </li>
-            <li class="pdli"><span>支付<font class="pdfo">0.5</font>个麦粒</span></li>
+            <!--<li class="pdli"><span>支付<font class="pdfo">0.5</font>个麦粒</span></li>-->
             <li>
               <div id="a3" lang="3" alt="0" class="nulldiv" title="要求接手使用手机付款" style="background-position: 0px -68px;"></div>
               <input type="hidden" name="isMobile" id="aa3" value="0">
             </li>
-            <li class="pdli"><span>支付<font class="pdfo">2.0</font>个麦粒</span></li>
+            <!--<li class="pdli"><span>支付<font class="pdfo">2.0</font>个麦粒</span></li>-->
           </ul>
           <ul class="pdul">
             <li>
               <div id="a4" lang="4" alt="0" class="nulldiv" title="接手确认收货前在旺旺与您聊天确认。如：已收到货，下次还会再来"></div>
               <input type="hidden" name="cbxIsLHS" id="aa4">
             </li>
-            <li class="pdli"><span>支付<font class="pdfo">0.5</font>个麦粒</span></li>
+            <!--<li class="pdli"><span>支付<font class="pdfo">0.5</font>个麦粒</span></li>-->
             <li>
               <div id="a5" lang="5" alt="0" class="nulldiv" title="从头到尾浏览宝贝，并提供底图截图"></div>
               <input type="hidden" name="isViewEnd" id="aa5">
             </li>
-            <li class="pdli"><span>支付<font class="pdfo">0.5</font>个麦粒</span></li>
+            <!--<li class="pdli"><span>支付<font class="pdfo">0.5</font>个麦粒</span></li>-->
           </ul>
           <ul class="pdul">
             <li>
               <div id="a9" lang="8" alt="0" class="nulldiv" title="接手确认收货好评时需要上传的好评图片"></div>
               <input type="hidden" name="pinimage" id="aa9">
             </li>
-            <li class="pdli"><span>每张支付<font class="pdfo">0.5</font>个麦粒</span></li>
+            <!--<li class="pdli"><span>每张支付<font class="pdfo">0.5</font>个麦粒</span></li>-->
             <li class="pdli">
               <div class="haoPingWrap" style="float:left;margin-left:-68px;"> <span class="uploadImg" style="float:left;height:39px;margin-left:0px;width:131px;">
                 <input type="file" name="file" class="file" id="upfile-haoping" size="25">
@@ -242,13 +226,13 @@
             </li>
             <li class="pdli11">
               <input type="radio" name="stopTime" value="1" checked="checked">
-              停1分钟<span class="f12"> （<font class="pdfo">0.1</font>个麦粒）</span></li>
+              停1分钟<span class="f12"> <!--（<font class="pdfo">0.1</font>个麦粒）--></span></li>
             <li class="pdli11">
               <input type="radio" name="stopTime" value="2">
-              停2分钟<span class="f12"> （<font class="pdfo">0.3</font>个麦粒）</span></li>
+              停2分钟<span class="f12"> <!--（<font class="pdfo">0.3</font>个麦粒）--></span></li>
             <li class="pdli11">
               <input type="radio" name="stopTime" value="3">
-              停3分钟<span class="f12"> （<font class="pdfo">0.5</font>个麦粒）</span></li>
+              停3分钟<span class="f12"> <!--（<font class="pdfo">0.5</font>个麦粒）--></span></li>
           </ul>
           <ul class="pdul">
             <li>
@@ -257,7 +241,7 @@
             </li>
             <li class="pdlli12">
               <input id="hpnr" type="text" class="inputp" name="txtMessage" placeholder="如果需要接手方带字好评请勾选，并填写规定好评内容。不勾选则默认不带字好评">
-              支付<font class="pdfo">0.5</font>个麦粒</li>
+              <!--支付<font class="pdfo">0.5</font>个麦粒--></li>
           </ul>
           <ul class="pdul">
             <li>
@@ -278,17 +262,17 @@
               <div id="a14" lang="14" alt="0" class="nulldiv" title="您手动审核接手，通过后才可接手任务"></div>
               <input type="hidden" name="cbxIsAudit" id="aa14">
             </li>
-            <li class="pdli"><span>支付<font class="pdfo">0.5</font>个麦粒</span></li>
+            <!--<li class="pdli"><span>支付<font class="pdfo">0.5</font>个麦粒</span></li>-->
             <li>
               <div id="a15" lang="15" alt="0" class="nulldiv" title="要求接手使用实名认证的买号"></div>
               <input type="hidden" name="isReal" id="aa15">
             </li>
-            <li class="pdli"><span>支付<font class="pdfo">0.5</font>个麦粒</span></li>
+            <!--<li class="pdli"><span>支付<font class="pdfo">0.5</font>个麦粒</span></li>-->
             <li>
               <div id="a16" lang="16" alt="0" class="nulldiv" title="要求接手方必须是已加入平台商保的接手"></div>
               <input type="hidden" name="cbxIsSB" id="aa16">
             </li>
-            <li class="h32"><span>支付<font class="pdfo">2.0</font>个麦粒</span></li>
+            <!--<li class="h32"><span>支付<font class="pdfo">2.0</font>个麦粒</span></li>-->
           </ul>
           <ul class="pdul">
             <li>
@@ -297,13 +281,13 @@
             </li>
             <li class="pdli11">
               <input type="radio" name="fmaxmc" value="1" checked="checked">
-              1天接1个<span class="f12"> （<font class="pdfo">0.5</font>个麦粒）</span></li>
+              1天接1个<span class="f12"> <!--（<font class="pdfo">0.5</font>个麦粒）--></span></li>
             <li class="pdli11">
               <input type="radio" name="fmaxmc" value="2">
-              1天接2个<span class="f12"> （<font class="pdfo">0.2</font>个麦粒）</span></li>
+              1天接2个<span class="f12"> <!--（<font class="pdfo">0.2</font>个麦粒）--></span></li>
             <li class="pdli11">
               <input type="radio" name="fmaxmc" value="3">
-              1周接1个<span class="f12"> （<font class="pdfo">1.0</font>个麦粒）</span></li>
+              1周接1个<span class="f12"> <!--（<font class="pdfo">1.0</font>个麦粒）--></span></li>
           </ul>
           <ul class="pdul">
             <li>
@@ -347,7 +331,7 @@
               </select>
             </li>
             <li class="scli1" title="按住Shifl键加单击选项，可多选！">
-              (支付<font class="pdfo">2.0</font>个麦粒)</span></li>
+             <!-- (支付<font class="pdfo">2.0</font>个麦粒)--></span></li>
           </ul>
           <ul class="pdul">
             <li>
@@ -368,7 +352,7 @@
                 <option value="10">五钻及以上  （支付 9.0 麦粒）</option>
               </select>
             </li>
-            <li class="scli2">此等级以上可接任务<span>（支付<font class="pdfo">0.5 - 9.0</font>个麦粒）</span></li>
+            <li class="scli2">此等级以上可接任务<span><!--（支付<font class="pdfo">0.5 - 9.0</font>个麦粒）--></span></li>
           </ul>
           <ul class="pduzz">
             <li>
@@ -392,7 +376,7 @@
               <li class="h99">
                 <input type="radio" name="fmingrade" value="100">
                 100</li>
-              <li class="s32"><span>支付<font class="pdfo">0.5</font>个麦粒</span></li>
+              <li class="s32"><!--<span>支付<font class="pdfo">0.5</font>个麦粒</span>--></li>
             </ul>
             <ul class="pdul_1">
               <li class="h100">接手好评率不低于 :
@@ -444,7 +428,7 @@
               <div id="a21" lang="21" alt="0" class="nulldiv" title="要求接手使用真实地址签收快递"></div>
               <input type="hidden" name="isSign" id="aa21">
             </li>
-            <li class="pdli"><span>支付<font class="pdfo">2.0</font>个麦粒</span></li>
+            <!--<li class="pdli"><span>支付<font class="pdfo">2.0</font>个麦粒</span></li>-->
           </ul>
           <ul class="pdul" style="display:none">
             <li>
@@ -469,7 +453,7 @@
             <li class="h97">邮编：
               <input type="text" name="cbxcode" id="cbxcode" class="pc11 inputp shdz">
             </li>
-            <li class="s33"><span>支付<font class="pdfo">0.5</font>个麦粒</span></li>
+            <!--<li class="s33"><span>支付<font class="pdfo">0.5</font>个麦粒</span></li>-->
           </ul>
           <div class="address1">
             <div class="add1"> 地址： </div>
