@@ -1650,8 +1650,9 @@ li.yjrwProSelected>a:hover{ background-color:#57a0ff;}
 }
 .d_con_left{
 	display:block;
-	float:left;
 	width:411px;
+	margin-left:auto;
+	margin-right:auto;
 	height:210px;
 	border-radius:10px;
 	padding-left:75px;
