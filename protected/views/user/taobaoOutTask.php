@@ -297,7 +297,16 @@
                 ?>
                 <div class="taskFunMan"><!--taskFunMan start-->
                     <span style="cursor: pointer;" class="lookuptxtGoodsUrl" alt="<?php echo $item->txtGoodsUrl;?>">查看淘宝地址</span>
-                    
+					<?php
+						//查看是否有人申请此任务
+						$count = Usertasklist::model()->count('task_id='.$item->id.' AND state=0');
+						if($count > 0)
+						{ 
+					?>
+                    <span style="cursor: pointer; color:#FF0000;" class="showAcceptUserList" title="审核刷手" onclick="shAcceptUser(<?php echo $item->id;?>);">审核</span>
+					<?php
+						}
+					?>
                     <!--已发任务功能操作-->
                     <!--<font><a href="javascript:;" class="delTask">取消</a></font>-->
                     <?php
@@ -305,12 +314,6 @@
                         if($item->status==0){
                     ?>
                     <font><a href="javascript:;" class="stopTask" lang="<?php echo $item->taskerid;?>" alt="<?php echo $item->id;?>">暂停</a></font>
-                    <?php }?>
-                    <?php
-                        //任务没有完成的状态下，商家都可以进行追加麦粒
-                        if($item->taskCompleteStatus==0 && $item->complian_status<>1){
-                    ?>
-                    <font><a href="javascript:;" class="addMinLi" lang="<?php echo $item->taskerid;?>" alt="<?php echo $item->id;?>">追加麦粒</a></font>
                     <?php }?>
                     <?php
                         //接手收货好评完成之前，商家都可以修改好评内容
@@ -496,6 +499,47 @@
     <script src="<?php echo ASSET_URL;?>layer/laycode.min.js"></script>
     <link href="<?php echo ASSET_URL;?>layer/layer.css" rel="stylesheet" type="text/css" />
     <script>
+	
+		function shAcceptUser(task_id)
+		{
+				$.ajax({
+					type:"POST",url:"<?php echo $this->createUrl('user/getAcceptList');?>",data:"task_id="+task_id,
+					success:function(msg){
+						if(msg == "NO_TASK_ID")
+						{
+							layer.confirm('无效的任务', {
+            						btn: ['知道了'] //按钮
+            				});
+						}else if(msg == "NO_ACCEPT_USER"){
+							layer.confirm('暂无任务申请者', {
+            						btn: ['知道了'] //按钮
+            				});
+						}else{
+							layer.confirm(msg, {
+            						btn: ['确定','取消'] //按钮
+            				},function(){
+								$.ajax({
+									type:"POST",
+									url:"<?php echo $this->createUrl('user/taskBindingBuyer');?>",
+									data:{buyer:$('input:radio[name="buyerSelected"]:checked').val(),task_id:task_id},
+									success:function(msg){
+										if(msg=="SUCCESS")//绑定成功
+										{
+											//询问框
+											layer.confirm('审核成功！', {
+												btn: ['确定'] //按钮
+											}, function(){
+												location.reload();
+											});
+										}
+									}
+								});
+							});
+						}
+					}
+				});
+		}
+			
         $(function(){
             //商家查看淘宝地址
             $(".lookuptxtGoodsUrl").click(function(){
@@ -913,7 +957,6 @@
                 	});
                 }
             });
-            
             //垫付或者平台代付提示
             $(".payWay").click(function(){
                 if($(this).attr("lang")==1)

@@ -35,6 +35,77 @@ class UserController extends Controller
 				),
 			);
     }
+    
+    public function actionGetAcceptList()
+    {
+       $task_id = isset($_POST['task_id']) ? intval($_POST['task_id']) : 0;
+       if(!$task_id) exit('NO_TASK_ID');
+       //寻找该任务的申请者
+       $count = Usertasklist::model()->count('task_id='.$task_id.' AND state=0');
+       if($count > 0)
+       {
+            $userList = Usertasklist::model()->findAll(
+                array('condition' => 'task_id='.$task_id.' AND state=0') 
+            );
+            $divStart="<div class='choseBuyer'><div style='font-size:14px; line-height:35px;'>选择接此任务的买号：</div>";
+            $divEnd="</div>";
+            $radioItemStr="";
+            foreach($userList as $k=>$v)
+            {
+                //获取此买手的等级
+                
+                if($k==0)
+                {
+                    $radioItemStr=$radioItemStr."<li><input type='radio' name='buyerSelected' checked='checked' value='".$v['id']."' />&nbsp;".$v['user_wangwang']."[".$this->getUserLevelInfo($v->uid)."]</li>";
+                }
+                else
+                {
+                    $radioItemStr=$radioItemStr."<li><input type='radio' name='buyerSelected' value='".$v['id']."' />&nbsp;".$v['user_wangwang']."[".$this->getUserLevelInfo($v->uid)."]</li>";
+                }
+            }
+            echo $divStart.$radioItemStr.$divEnd;
+       }else{
+           exit('NO_ACCEPT_USER');
+       }
+       
+    }
+    
+    public function actionTaskBindingBuyer()
+    {
+        $buyerId = intval($_POST['buyer']);
+        $taskId = intval($_POST['task_id']);
+        //查询旺旺信息
+        $buyer = Usertasklist::model()->findByPk($buyerId);
+        //处理任务信息
+        $taskInfo=Companytasklist::model()->findByPk($taskId);//查询任务基本信息
+        $taskInfo->taskerid=$buyer->uid;//接手id
+        $taskInfo->taskerWangwang=$buyer->user_wangwang;//接手买号旺旺
+        $taskInfo->taskfristTime=time();//接手接任务时间
+        $taskInfo->status=2;//任务状态变2，即暂停通过审核，等待接手付款
+        $taskInfo->tasksecondTime=time();//商家审核通过，即设置任务开始时间
+        $taskInfo->save();
+        $buyer->state=1;
+        $buyer->save();
+        //删除此任务的其他申请者
+        Usertasklist::model()->deleteAll('task_id='.$taskId.' AND state=0');
+        echo 'SUCCESS';
+    }
+    
+    /**
+     * 获取用户的等级信息
+     * @param unknown $uid
+     */
+    public function getUserLevelInfo($uid)
+    {
+        $userInfo = User::model()->find('id='.$uid);
+        if($userInfo)
+        {
+            if($userInfo->VipLv == 0 ) return '新手会员';
+            if($userInfo->VipLv == 1 ) return 'VIP会员';
+        }
+        return false;
+    }
+    
     /*
         任务大厅-任务投诉
     */
@@ -547,6 +618,8 @@ class UserController extends Controller
     	    $criteria = new CDbCriteria;
             $criteria->condition=' id IN(select task_id from zxjy_usertasklist WHERE uid='.Yii::app()->user->getId().') and taskCompleteStatus<>1 and time='.trim($keywordsArr[0]).' and id='.trim($keywordsArr[1]);
             $criteria->order ="time desc";
+            
+            
         
             //分页开始
             $total =Companytasklist::model()->count($criteria);

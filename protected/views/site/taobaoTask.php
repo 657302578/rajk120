@@ -454,9 +454,9 @@
 					   //查看此会员是否申请过此任务
 					   if(Yii::app()->user->getId())
 					   {
-					       $aTinfo = Usertasklist::model()->findByAttributes( array('task_id' => $item->id));
+					       $aTinfo = Usertasklist::model()->findByAttributes( array('task_id' => $item->id, 'uid' => Yii::app()->user->getId()));
 					   }
-					   if($aTinfo)
+					   if(isset($aTinfo))
 					   {
 					       //获取卖家家的信息
 					       $sellerInfo = User::model()->findByPk($item->publishid);  
@@ -591,6 +591,10 @@
                                             		btn: ['确定'] //按钮
                                             	},function(){
                                             	   location.reload();//重新刷新当前页面
+                                            	});
+                                            }else if(msg == "ACCEPT_NUM_MAX"){
+                                            	layer.confirm('<span style="color:red;">您已有5个任务正在等待审核，请稍后再申请！</span>', {
+                                            		btn: ['知道了'] //按钮
                                             	});
                                             }
                                             else//绑定失败

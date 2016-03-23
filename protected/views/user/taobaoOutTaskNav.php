@@ -3,7 +3,7 @@
                 
                 //1.我发布的-可处理的任务数量
                 $taobaoOutTaskCount=Companytasklist::model()->findAll(array(
-                    'condition'=>'publishid='.Yii::app()->user->getId().' and taskCompleteStatus<>1 and status<>0'
+                    'condition'=>'publishid='.Yii::app()->user->getId().' and taskCompleteStatus<>1 AND status<> 0  OR id IN(select task_id from zxjy_usertasklist WHERE task_id IN(select id from zxjy_companytasklist  WHERE publishid='.Yii::app()->user->getId().' AND state=0))'
                 ));
                 
                 //2.我发布的-暂停中的任务数量

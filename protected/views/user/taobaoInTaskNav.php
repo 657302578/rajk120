@@ -3,8 +3,9 @@
                 
                 //1.我接手的-可处理的任务数量
                 $taobaoInTaskCount=Companytasklist::model()->findAll(array(
-                    'condition'=>'taskerid='.Yii::app()->user->getId().' and status<>6 and taskCompleteStatus<>1'
+                    'condition'=>' status<>6 and taskCompleteStatus<>1 AND id IN(select task_id from zxjy_usertasklist WHERE uid='.Yii::app()->user->getId().')'
                 ));
+               
                 //2.我接手的-等待我商品付款任务数量
                 $taobaoInTaskWaitPay=Companytasklist::model()->findAll(array(
                     'condition'=>'taskerid='.Yii::app()->user->getId().' and status<>6 and status=2'
