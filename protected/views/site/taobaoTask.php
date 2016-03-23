@@ -450,11 +450,26 @@
                             </div>
                         </div>
                     </div>
-					<?php if($item->status <> 0){?>
-					<a href="javascript:;" class="qcrw" lang="<?php echo $item->id;?>" alt="<?php echo $item->publishid;?>">已经被抢</a>
+					<?php
+					   //查看此会员是否申请过此任务
+					   if(Yii::app()->user->getId())
+					   {
+					       $aTinfo = Usertasklist::model()->findByAttributes( array('task_id' => $item->id));
+					   }
+					   if($aTinfo)
+					   {
+					       //获取卖家家的信息
+					       $sellerInfo = User::model()->findByPk($item->publishid);  
+					?>
+					   <a href="javascript:;" class="qcrw" lang="<?php echo $item->id;?>" alt="<?php echo $item->publishid;?>">等待审核</a>
+					   <?php if($sellerInfo && $aTinfo->state == 0){?>
+					   <br/>
+					   <br/>
+					   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img  style="CURSOR: pointer" onclick="javascript:window.open('http://b.qq.com/webc.htm?new=0&sid=<?php echo $sellerInfo->QQToken;?>&o=联系卖家&q=7', '_blank', 'height=502, width=644,toolbar=no,scrollbars=no,menubar=no,status=no');"  border="0" SRC=http://wpa.qq.com/pa?p=1:<?php echo $sellerInfo->QQToken;?>:1 alt="请及时联系商家QQ，并将您的旺旺号等级信息截图给商家，以便更快被审核" title="请及时联系商家QQ，并将您的旺旺号等级信息截图给商家，以便更快被审核">
+					   <?php }?>
 					<?php }else{?>
                     <a href="javascript:;" class="qcrw taskTask" lang="<?php echo $item->id;?>" alt="<?php echo $item->publishid;?>">立即申请</a>
-					<?php } ?>
+                    <?php }?>
                 </div>
             </li>
             <?php }?>
@@ -540,7 +555,7 @@
                                             	layer.confirm('<span style="color:red;">您已经成功绑定了买号，如果您已经在淘宝上给对方支付了金额，请务必在平台的20分钟读秒完成前点击【等待您对商品付款】，否则将可能损失在淘宝上支付给对方的金额</span>', {
                                             		btn: ['我知道了，去查看任务'] //按钮
                                             	}, function(){
-                                            		window.location.href="<?php echo $this->createUrl('user/taobaoInTask');?>";
+                                            		window.location.href="<?php echo $this->createUrl('site/taobaoTask');?>";
                                             	});
                                             }else if(msg=="NOJoinProtectPlan"){//没有加入商保
                                                 //询问框
@@ -604,7 +619,7 @@
 			<?php
 				if(empty($_GET['page']) || intval($_GET['page']) == 1){
 			?>
-			setTimeout('myrefresh()',10000); //指定1分钟刷新一次 
+			//setTimeout('myrefresh()',10000); //指定1分钟刷新一次 
 			<?php }?>
             //垫付或者平台代付提示
             $(".payWay").click(function(){

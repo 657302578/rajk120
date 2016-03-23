@@ -204,10 +204,8 @@ class SiteController extends Controller
         $pages = new CPagination($total);
         $pages->pageSize=10;//分页大小
         $pages->applyLimit($criteria);
-        
         $proreg = Companytasklist::model()->findAll($criteria);
         //分页结束
-        
         $this->render('taobaoTask',array(
             'proInfo' => $proreg,
             'pages' => $pages
@@ -278,7 +276,14 @@ class SiteController extends Controller
                     echo "INBlack";
                     Yii::app()->end();
                 }
-                
+                //检查指定的旺旺号是否可以继续接任务
+                $hasAcceptNum = Usertasklist::model()->countByAttributes(array('state'=>0, 'user_wangwang'=> $_POST['taskerWangwang'], 'uid' => Yii::app()->user->getId() ));
+                //一个买号最多接5个任务
+                if($hasAcceptNum >= 5)
+                {
+                    echo "ACCEPT_NUM_MAX";
+                    Yii::app()->end();
+                }
                 //符合要求
                 //$taskInfo->taskerid=Yii::app()->user->getId();//接手id
                 //$taskInfo->taskerWangwang=$_POST['taskerWangwang'];//接手买号旺旺
