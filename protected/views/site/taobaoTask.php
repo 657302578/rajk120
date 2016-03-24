@@ -557,7 +557,15 @@
                                             	}, function(){
                                             		window.location.href="<?php echo $this->createUrl('site/taobaoTask');?>";
                                             	});
-                                            }else if(msg=="NOJoinProtectPlan"){//没有加入商保
+                                            }else if(msg == 'NO_binding_ADDRESS'){
+                                            	//询问框
+                                            	layer.confirm('<span style="color:red;">接手必须绑定收货地址才能接任务！</span>', {
+                                            		btn: ['现在去绑定','知道了'] //按钮
+                                            	},function(){
+                                            	   location.href="<?php echo $this->createUrl('user/userAccountCenter');?>";
+                                            	});
+                                            }
+                                            else if(msg=="NOJoinProtectPlan"){//没有加入商保
                                                 //询问框
                                             	layer.confirm('<span style="color:red;">接手必须加入商保才能接任务，您还没有加入商保</span>', {
                                             		btn: ['现在去加入商保','知道了'] //按钮

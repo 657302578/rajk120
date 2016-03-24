@@ -224,6 +224,12 @@ class SiteController extends Controller
             if($taskInfo->status!=6 && $taskInfo->status==0)//任务处于可接状态
             {
                 $userinfo=User::model()->findByPk(Yii::app()->user->getId());
+                //检查是否填写了地址
+                $address = Useraddress::model()->findByAttributes(array('uid' => Yii::app()->user->getId()));
+                if(!$address){
+                    echo "NO_binding_ADDRESS";
+                    Yii::app()->end();
+                }
                 //首先检查用户帐号是否符合任务的要求
                 //1.检查商保 - 必须加入商保
                 if($userinfo->JoinProtectPlan<>1)//没有加入商保

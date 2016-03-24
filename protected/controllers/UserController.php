@@ -1789,7 +1789,46 @@ class UserController extends Controller
             $userinfo->id_photo_front = $_POST['id_photo_front'];
             $userinfo->id_photo_rear = $_POST['id_photo_rear'];
             if($userinfo->save())
+            {
+                $data['uid'] = Yii::app()->user->getId();
+                $data['sheng_id'] = intval($_POST['idProvince']);
+                $data['shi_id'] = intval($_POST['idCity']);
+                $data['qu_id'] = intval($_POST['idDistrict']);
+                $data['mobile'] = $_POST['addr']['mobile'];
+                $data['address'] = $_POST['addr']['address'];
+                $data['user_name'] = $_POST['addr']['user_name'];
+                $data['create_time'] = date('Y/m/d H:i:s');
+                //更新收货地址
+                $userAddressInfo = Useraddress::model()->find('uid='.Yii::app()->user->getId());
+                if(!$userAddressInfo)
+                {
+                    $userAddModel = new Useraddress();
+                    $userAddModel->uid = Yii::app()->user->getId();
+                    $userAddModel->sheng_id = intval($_POST['idProvince']);
+                    $userAddModel->shi_id = intval($_POST['idCity']);
+                    $userAddModel->qu_id = intval($_POST['idDistrict']);
+                    $userAddModel->mobile = $_POST['addr']['mobile'];
+                    $userAddModel->address = $_POST['addr']['address'];
+                    $userAddModel->user_name = $_POST['addr']['user_name'];
+                    $userAddModel->create_time = date('Y/m/d H:i:s');
+                    $userAddModel->save();
+                }else{
+                    Useraddress::model()->updateByPk($userAddressInfo->id, $data);
+                }
+                //查询是否绑定了买号
+                $otherAddr = Useraddress::model()->find('occupy_uid='.Yii::app()->user->getId());
+                if(!$otherAddr)
+                {
+                    //没有绑定就自动绑定一个
+                    $targetAddr = Useraddress::model()->find('occupy_uid=0 AND uid != '.Yii::app()->user->getId());
+                    if($targetAddr)
+                    {
+                        $targetAddr->occupy_uid = Yii::app()->user->getId();
+                        $targetAddr->save();
+                    }
+                }
                 echo "SUCCESS";
+            }
             else
                 echo "FAIL";
             Yii::app()->end();
@@ -1797,10 +1836,58 @@ class UserController extends Controller
         else
         {
             $userinfo=User::model()->findByPk(Yii::app()->user->getId());
+            //获取地址信息
+            $query = Yii::app()->db->createCommand('select id,name from zxjy_area where parentid=0');
+            $areaList = $query->queryAll();
+            //获取用户的地址信息
+            $userAddressInfo = Useraddress::model()->find('uid='.Yii::app()->user->getId());
+            if($userAddressInfo)
+            {
+                $query = Yii::app()->db->createCommand('select id,name from zxjy_area where parentid='.$userAddressInfo->sheng_id);
+                $shiList = $query->queryAll();
+                $query = Yii::app()->db->createCommand('select id,name from zxjy_area where parentid='.$userAddressInfo->shi_id);
+                $quList = $query->queryAll();
+            }else{
+                $shiList = $quList = array();
+            }
             $this->render('userAccountCenter',array(
-                'userinfo'=>$userinfo
+                'userinfo'=>$userinfo,
+                'area' => $areaList,
+                'address' => $userAddressInfo,
+                'shi' => $shiList,
+                'qu' => $quList
             ));
         }
+    }
+    
+    public function actionGetAreaShiList()
+    {
+        
+    }
+    
+    public function actionUpdateCities()
+    {
+        $query = Yii::app()->db->createCommand('select id,name from zxjy_area where parentid='.intval($_POST['idProvince']));
+        $data = $query->queryAll();
+        $data = CHtml::listData($data,'id','name');
+        $dropDownCities = "<option value=''>选择城市</option>";
+        foreach($data as $value=>$name)
+            $dropDownCities .= CHtml::tag('option', array('value'=>$value),CHtml::encode($name),true);
+        $dropDownDistricts = "<option value=''>选择区域</option>";
+        echo CJSON::encode(array(
+            'dropDownCities'=>$dropDownCities,
+            'dropDownDistricts'=>$dropDownDistricts
+        ));
+    }
+    
+    public function actionUpdateDistricts()
+    {
+        $query = Yii::app()->db->createCommand('select id,name from zxjy_area where parentid='.intval($_POST['idCity']));
+        $data = $query->queryAll();
+        $data = CHtml::listData($data,'id','name');
+        echo "<option value=''>选择区域</option>";
+        foreach($data as $value=>$name)
+            echo CHtml::tag('option', array('value'=>$value),CHtml::encode($name),true);
     }
     
     /*

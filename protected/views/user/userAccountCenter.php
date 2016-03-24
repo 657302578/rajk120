@@ -36,20 +36,22 @@
               <input type="text" name="truename" value="<?php echo $userinfo->TrueName;?>" class="text2 myname" <?php echo $userinfo->TrueName!=""?'readonly="readonly" style="background:#e9e8e8"':''?> />
               <span>真实姓名和身份证号码一经设置，无法更改，请谨慎填写，这将关系到您后期的提现等操作！！</span></li>
             <li class="input2">身份证号：
-              <input type="text"  <?php echo $userinfo->id_card != ""?'readonly="readonly" style="background:#e9e8e8"':''?> name="id_card" value="<?php echo $userinfo->id_card;?>" class="text2 myname"  />
+              <input type="text"  <?php echo ($userinfo->id_card != "" && $userinfo->id_is_check == 1 ) ? 'readonly="readonly" style="background:#e9e8e8"':''?> name="id_card" value="<?php echo $userinfo->id_card;?>" class="text2 myname"  />
             </li>
             <li class="input2">身份证正面：
-              <input type="text" name="id_photo_front" <?php echo $userinfo->id_photo_front != ""?'readonly="readonly" style="background:#e9e8e8"':''?> id="id_photo_front_show" value="<?php echo $userinfo->id_photo_front;?>" class="text2 myname"  />
-			  <?php if(empty($userinfo->id_photo_front)){?>
+              <input type="text" name="id_photo_front" <?php echo ($userinfo->id_photo_front != "" && $userinfo->id_is_check == 1 )?'readonly="readonly" style="background:#e9e8e8"':''?> id="id_photo_front_show" value="<?php echo $userinfo->id_photo_front;?>" class="text2 myname"  />
+			  <?php if($userinfo->id_is_check != 1){?>
 			  <a id="id_photo_front" href="javascript:;">点击上传照片</a>
+			  <?php if(!empty($userinfo->id_photo_front)){?> <a href="<?php echo $userinfo->id_photo_front;?>" target="_blank" title="查看">查看</a> <?php }?>
 			  <?php }else{?>
 			  	<a href="<?php echo $userinfo->id_photo_front;?>" target="_blank" title="查看">查看</a>
 			  <?php }?>
             </li>
             <li class="input2">身份证反面：
-              <input type="text" <?php echo $userinfo->id_photo_rear != ""?'readonly="readonly" style="background:#e9e8e8"':''?> name="id_photo_rear" id="id_photo_rear_show" value="<?php echo $userinfo->id_photo_rear;?>" class="text2 myname"  />
-			  <?php if(empty($userinfo->id_photo_rear)){?>
+              <input type="text" <?php echo ($userinfo->id_photo_rear && $userinfo->id_is_check == 1) != ""?'readonly="readonly" style="background:#e9e8e8"':''?> name="id_photo_rear" id="id_photo_rear_show" value="<?php echo $userinfo->id_photo_rear;?>" class="text2 myname"  />
+			  <?php if($userinfo->id_is_check != 1){?>
 			 <a id="id_photo_rear" href="javascript:;">点击上传照片</a>
+			     <?php if(!empty($userinfo->id_photo_rear)){?> <a href="<?php echo $userinfo->id_photo_rear;?>" target="_blank" title="查看">查看</a> <?php }?>
 			 <?php }else{?>
 			  	<a href="<?php echo $userinfo->id_photo_rear;?>" target="_blank" title="查看">查看</a>
 			  <?php }?>
@@ -74,6 +76,49 @@
               <label>
               <input type="radio" name="PlaceOtherLogin" class="d_radio4 PlaceOtherLogin" <?php echo $userinfo->PlaceOtherLogin==0?'checked="checked"':'';?>  value="0"/>
               <span>关闭</span></label>
+            </li>
+          </ul>
+        </div>
+        <div class="d_check clearfix">
+            <ul>
+            <li class="d_radio">
+              <label>
+                                             收货地址 :
+                  <?php
+                  echo CHtml::dropDownList('idProvince', ''.isset($address) ? $address->sheng_id : ''.'', CHtml::listData($area, 'id', 'name'),
+                      array(
+                          'prompt' => '选择省份',
+                          'ajax' => array(
+                              'type' => 'POST',
+                              'url' => $this->createUrl('user/updateCities'),
+                              'dataType' => 'json',
+                              'data' => array('idProvince' => 'js:this.value'),
+                              'success' => 'function(data) {
+                            $("#idCity").html(data.dropDownCities);
+                            $("#idDistrict").html(data.dropDownDistricts);
+                        }',
+                          )));
+                  echo CHtml::dropDownList('idCity', ''.isset($address) ? $address->shi_id : ''.'',  CHtml::listData($shi, 'id', 'name'),
+                      array(
+                          'prompt' => '选择城市',
+                          'ajax' => array(
+                              'type' => 'POST',
+                              'url' => $this->createUrl('user/updateDistricts'),
+                              'update' => '#idDistrict',
+                              'data' => array('idCity' => 'js:this.value'),
+                          )));
+                  echo CHtml::dropDownList('idDistrict', ''.isset($address) ? $address->qu_id : ''.'',  CHtml::listData($qu, 'id', 'name'), array('prompt' => '选择区域'));
+                  ?>
+              </label>
+              <br/>
+              <label>
+                收货人姓名：<input type="text" name="addr[user_name]" value="<?php if($address) echo  $address->user_name;?>" />
+                </label><br/>
+                <label>收货人手机号：<input type="text" name="addr[mobile]" value="<?php if($address) echo  $address->mobile;?>" /></label><br/>
+                <label>收货人地址：<input type="text" name="addr[address]" value="<?php if($address) echo  $address->address;?>" />
+              </label>
+              <br/>
+              <span>仅发任务可不填写，接任务必须填写！</span>
             </li>
           </ul>
         </div>
@@ -141,6 +186,9 @@
 	});
     
     $(function(){
+        $("#sheng_id").change(function(){
+            alert('ddd');
+        });
         //修改个人资料
         $(".changMyInfo").click(function(){
             if($(".myqq").val()=="")//QQ不为空
