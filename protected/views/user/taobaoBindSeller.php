@@ -2,8 +2,8 @@
         echo $this->renderPartial('/user/taobaoTaskNav');//载入淘宝大厅导航
     ?>
     <div class="bdmhIntr">
-        <p>1、您目前是新手会员用户，可以绑定2个掌柜 <a href="<?php echo $this->createUrl('user/userBuyPoint');?>" target="_blank">申请VIP</a>最高可绑定30个掌柜！<a href="<?php echo $this->createUrl('site/userLeveldoc');?>" target="_blank">查看VIP限权</a></p>
-        <p>2、如果您的帐号还没有发布过任务，可以自己免费删除掌柜一次；发布过任务的帐号删除掌柜需要付费5元！</p>
+        <p style="display:none;">1、您目前是新手会员用户，可以绑定2个掌柜 <a href="<?php echo $this->createUrl('user/userBuyPoint');?>" target="_blank">申请VIP</a>最高可绑定30个掌柜！<a href="<?php echo $this->createUrl('site/userLeveldoc');?>" target="_blank">查看VIP限权</a></p>
+        <p>1、如果您的帐号还没有发布过任务，可以自己免费删除掌柜一次；发布过任务的帐号删除掌柜需要付费5元！</p>
     </div>
     <div class="bdmh">
         <form action="<?php $this->createUrl('user/taobaoBindSeller');?>" method="post">
@@ -11,14 +11,25 @@
                 <img src="<?php echo VERSION2;?>img/wang.jpg" alt="" class="wang">
                 <div class="bd_zht">淘宝掌柜名（旺旺名）：</div>
                 <input type="text" class="zhsr" name="bdmh"/>
-                <button class="bdtbmh">绑定淘宝掌柜</button>
+				<div class="bd_zht">认证链接：</div>
+                <input type="text" class="zhsr" name="auth_url" />
+				<button class="bdtbmh">绑定淘宝掌柜</button>
+				<br/>
                 <span style="padding-left: 10px; color:red;"><?php echo @$warning;?></span>
             </div>
+			<div style="font-weight:bold; font-size:12px; margin-left:20px; margin-top:30px;">
+				<?php
+					$auth_price = mt_rand(1,9).'.'.mt_rand(1,9);
+				?>
+				<input type="hidden" name="auth_price" value="<?php echo $auth_price;?>" />
+				请在您要认证的店铺中新建一个宝贝，命名为“认证链接”，价格为<?php echo $auth_price;?>元，然后复制链接填写到“认证链接中”，然后点击“绑定淘宝掌柜”
+			</div>
             <div class="zh_infs clearfix" style="color: #0099cc; font-weight: bold;">
                 <div class="zgPro1">淘宝掌柜帐号</div>
                 <div class="zgPro2">总发布任务</div>
                 <div class="zgPro3">绑定时间</div>
                 <div class="zgPro4">是否激活</div>
+                <div class="zgPro4">是否审核</div>
                 <div class="zgPro5">操作</div>
             </div>
         </form>
@@ -46,6 +57,12 @@
                         <input type="checkbox" class="changeStatusOn" id="changeStatusOn" style="position: relative; top:15px;" value="<?php echo $item->statue;?>" <?php echo $item->statue==1?'checked="checked"':"";?>/>
                     </p>
                 </div>
+                <div class="zgPro4">
+                    <p style="color:#FF0000; font-weight:bold;" alt='<?php echo $item->id;?>'>
+                       <?php if($item->is_check){?>审核通过<?php }elseif($item->is_check == 2){ ?>未通过<?php }else{ ?>未审核<?php }?>
+                    </p>
+                </div>
+				
                 <div class="zgPro5">
                     <a onclick="if(confirm('您确定要删除吗？')) return true; else return false;" href="<?php echo $this->createUrl('user/taobaoBindSellerDel',array('id'=>$item->id));?>" class="del_seller">删除掌柜</a>
                 </div>

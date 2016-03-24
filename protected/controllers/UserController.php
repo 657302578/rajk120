@@ -1108,7 +1108,11 @@ class UserController extends Controller
                 $blindwangwang->taotaorz=$_POST['taotaorz'];//是否通过淘宝实名认证
                 $blindwangwang->ip=XUtils::getClientIP();//操作ip
                 $blindwangwang->blindtime=time();//绑定时间
-                
+                $blindwangwang->id_card = $_POST['id_card'];
+                $blindwangwang->alipay_account = $_POST['alipay_account'];
+                $blindwangwang->real_name = $_POST['real_name'];
+                $blindwangwang->bank_no = $_POST['bank_no'];
+                $blindwangwang->bank_name = $_POST['bank_name'];
                 if($blindwangwang->save())
                     $warning="恭喜您，买号绑定成功！";
                 else
@@ -1249,7 +1253,8 @@ class UserController extends Controller
                 $blindwangwang->catalog=2;//帐号类型为2即掌柜帐号
                 $blindwangwang->ip=XUtils::getClientIP();//操作ip
                 $blindwangwang->blindtime=time();//绑定时间
-                
+                $blindwangwang->auth_url=$_POST['auth_url'];
+                $blindwangwang->auth_price = $_POST['auth_price'];
                 if($blindwangwang->save())
                     $warning="恭喜您，买号绑定成功！";
                 else
@@ -1592,15 +1597,15 @@ class UserController extends Controller
             $task->filtertasker=$_POST['filtertasker'];//是否选中过滤接手，1选中，0未选中
                 $_POST['filtertasker']==1?$MinLi=$MinLi+0.5:$MinLi=$MinLi+0;//选中过滤接手米粒基数加0.5
                 
-            $task->fmaxabc=$_POST['fmaxabc']!=false?$_POST['fmaxabc']:0;//好评率,0表示未选择
+            $task->fmaxabc=isset($_POST['fmaxabc'])?$_POST['fmaxabc']:0;//好评率,0表示未选择
             
-            $task->fmaxbbc=$_POST['fmaxbbc']!=false?$_POST['fmaxbbc']:0;//接手被拉黑次数不大于,0表示未选择
+            $task->fmaxbbc=isset($_POST['fmaxbbc'])!=false?$_POST['fmaxbbc']:0;//接手被拉黑次数不大于,0表示未选择
             
-            $task->fmaxbtsc=$_POST['fmaxbtsc']!=false?$_POST['fmaxbtsc']:0;//接手被有效投诉次数不大于,0表示未选择
+            $task->fmaxbtsc=isset($_POST['fmaxbtsc'])!=false?$_POST['fmaxbtsc']:0;//接手被有效投诉次数不大于,0表示未选择
             
             //第四步：快递空包
-            $task->isSign=$_POST['isSign'];//是否选中真实签收，1选中，0未选中
-                $_POST['isSign']==1?$MinLi=$MinLi+2:$MinLi=$MinLi+0;//选中真实签收米粒基数加2
+            $task->isSign= isset($_POST['isSign']) ? 1 : 0;//是否选中真实签收，1选中，0未选中
+                //$_POST['isSign']==1?$MinLi=$MinLi+2:$MinLi=$MinLi+0;//选中真实签收米粒基数加2
                 
             $task->cbxIsAddress=$_POST['cbxIsAddress'];//是否选中收货地址，1选中，0未选中
                 $_POST['cbxIsAddress']==1?$MinLi=$MinLi+0.5:$MinLi=$MinLi+0;//选中收货地址米粒基数加0.5
@@ -1614,6 +1619,8 @@ class UserController extends Controller
             $task->MinLi=0;//消耗总米粒-不消耗米粒了
             $MinLi=0;//重置米粒数量
             $taskPublistStatus=0;
+            $task->yongjin_money = $_POST['yongjin_money'];
+            $task->operate_pt = $_POST['operate_pt'];
             $taskmoreArr=$task->attributes;
             if($_POST['txtFCount']<2)//单任务
             {
@@ -1659,9 +1666,9 @@ class UserController extends Controller
             {
                 $userinfoDone=User::model()->findByPk(Yii::app()->user->getId());
                 //前提条件判断一.帐户余额充足，同时米粒充足
-                if(($_POST['txtPrice']*$_POST['txtFCount'])>$userinfoDone->Money || ($MinLi*$_POST['txtFCount'])>$userinfoDone->MinLi)
+                if((1*$_POST['txtFCount'])>$userinfoDone->Money)
                 {
-                    $this->redirect_message('您的余额或者米粒不足','success',3,$this->createUrl('user/index'));
+                    $this->redirect_message('您的余额不足','success',3,$this->createUrl('user/index'));
                     Yii::app()->end();
                 }
                 //添加流水
@@ -1669,23 +1676,23 @@ class UserController extends Controller
                 $record=new Recordlist();
                 $record->userid=Yii::app()->user->getId();//用户id
                 $record->catalog=3;//发布任务使用金额
-                $record->number=$_POST['txtPrice']*$_POST['txtFCount'];//操作数量
+                $record->number=1*$_POST['txtFCount'];//操作数量
                 $record->tasknum=$_POST['txtFCount'];//1个任务
                 $record->time=time();//操作时间
                 $record->save();//保存金额流水
                 
                 //2.保存米粒流水
-                $recordMinLi=new Recordlist();
-                $recordMinLi->userid=Yii::app()->user->getId();//用户id
-                $recordMinLi->catalog=4;//发布任务使用米粒
-                $recordMinLi->number=$MinLi*$_POST['txtFCount'];//操作数量
-                $recordMinLi->tasknum=$_POST['txtFCount'];//1个任务
-                $recordMinLi->time=time();//操作时间
-                $recordMinLi->save();//保存米粒流水
+//                 $recordMinLi=new Recordlist();
+//                 $recordMinLi->userid=Yii::app()->user->getId();//用户id
+//                 $recordMinLi->catalog=4;//发布任务使用米粒
+//                 $recordMinLi->number=$MinLi*$_POST['txtFCount'];//操作数量
+//                 $recordMinLi->tasknum=$_POST['txtFCount'];//1个任务
+//                 $recordMinLi->time=time();//操作时间
+//                 $recordMinLi->save();//保存米粒流水
                 
                 //3.改变充值后帐户的余额
-                $userinfoDone->Money=$userinfoDone->Money-($_POST['txtPrice']*$_POST['txtFCount']);//在原有余额基本上减去任务需要的金额
-                $userinfoDone->MinLi=$userinfoDone->MinLi-($MinLi*$_POST['txtFCount']);//在原有米粒基本上减去任务需要的米粒
+                $userinfoDone->Money=$userinfoDone->Money-(1*$_POST['txtFCount']);//在原有余额基本上减去任务需要的金额
+                //$userinfoDone->MinLi=$userinfoDone->MinLi-($MinLi*$_POST['txtFCount']);//在原有米粒基本上减去任务需要的米粒
                 $userinfoDone->save();
                 
                 for($i=0;$i<$_POST['txtFCount'];$i++)
@@ -1721,7 +1728,7 @@ class UserController extends Controller
     {
         //获取掌柜号
         $sellerInfo=Blindwangwang::model()->findAll(array(
-            'condition'=>'userid='.Yii::app()->user->getId().' and statue=1 and catalog=2',
+            'condition'=>'userid='.Yii::app()->user->getId().' and statue=1 and catalog=2 AND is_check=1',
             'select'=>'id,wangwang',
             'order'=>'id desc'
         ));

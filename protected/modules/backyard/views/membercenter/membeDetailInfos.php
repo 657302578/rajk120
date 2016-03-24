@@ -78,6 +78,7 @@
         					<div class="panel panel-default">
         						<div class="panel-body inbox-menu">
         							<a class="btn btn-danger btn-block">基本信息</a>
+									<form name="form1" class="changeMyInfos" method="post" action="<?php echo $this->createUrl('membercenter/saveUserInfo');?>" >
         							<ul>
         								<li>
         									<a>用户ID：<?php echo $userinfo->id?></a>
@@ -87,14 +88,11 @@
         								</li>
                                         <li>
         									<span>帐户状态：
-                                                <?php
-                                                    echo $userinfo->Status==0?"<span style='color:green; font-weight:bold;'>正常</span><a href='".$this->createUrl('membercenter/stopaccount',array('userid'=>$userinfo->id))."' style='margin-left:10px; display:inline; color:red;'>冻结</a>":"<font style='color:red; font-weight:bold; margin-right:10px;'>冻结中</font><a href='".$this->createUrl('membercenter/startaccount',array('userid'=>$userinfo->id))."' style=' display:inline; color:green;'>解冻</span>";
-                                                ?>
-                                            </a>
+												<input type="radio" <?php if($userinfo->Status == 0){?> checked="checked" <?php  } ?> name="Status" value="0" />正常 <input <?php if($userinfo->Status == 1){?> checked="checked" <?php  } ?> type="radio" name="Status" value="1" />冻结中
                                             </span>
         								</li>
                                         <li>
-        									<a>真实姓名：<?php echo $userinfo->TrueName!=""?$userinfo->TrueName:"暂未绑定"?></a>
+										真实姓名：<input type="text" name="TrueName" value="<?php echo $userinfo->TrueName;?>" />
         								</li>
         								<li>
         									<a style="cursor: pointer;" class="changePwd" alt="<?php echo $userinfo->id;?>">登录密码：<font style="color:#57A0FF;">修改新密码</font></a>
@@ -102,6 +100,10 @@
                                         <li>
         									<a>经验数值：<font style="font-weight:bold; font-size:14px; color:red;"><?php echo $userinfo->Experience;?></font></a>
         								</li>
+                                        <li>
+        									会员积分：<input type="text" name="Score" value="<?php echo $userinfo->Score;?>" />
+        								</li>
+										
                                         <li>
         									<a>会员等级：
                                                 <?php
@@ -112,14 +114,7 @@
                                                 ?>
                                             </a>
         								</li>
-                                        <li>
-        									<a>加入商保：
-                                            <font style=" color:green;">
-                                                <?php 
-                                                    echo $userinfo->JoinProtectPlan!=0?"<font style='font-weight:bold; color:green;'>已加入</font>":"<font style='font-weight:bold; color:red;'>未加入</span>";
-                                                ?>
-                                            </font></a>
-        								</li>
+                                        
                                         <li>
         									<a>用户手机：
                                                 <?php 
@@ -129,22 +124,37 @@
                                             </a>
         								</li>
                                         <li>
-        									<a>新手考试：
-                                                <?php
-                                                    echo $userinfo->PhonActive!=0?"&nbsp;&nbsp;<span style='color:green; font-weight:bold;'>已通过</span>":"&nbsp;&nbsp;<span style='color:green; font-weight:bold;'>未通过</span>";
-                                                ?>
-                                            </a>
+        									新手考试：
+												<input <?php if($userinfo->PhonActive == 0){?> checked="checked" <?php }?> type="radio" name="PhonActive" value="0" />未通过 <input <?php if($userinfo->PhonActive == 1){?> checked="checked" <?php }?> type="radio" name="PhonActive" value="1" />已通过
+        								</li>
+										<li>
+        									身份证号码：<input type="text" name="id_card" value="<?php echo $userinfo->id_card?>" />
+        								</li>
+										<li>
+        									身份证正面：<?php if($userinfo->id_photo_front){?><a style="color:#FF0000;" href="<?php echo $userinfo->id_photo_front; ?>" target="_blank" title="查看" >查看</a><?php }else{?>未上传<?php }?>
+        								</li>
+										<li>
+        									身份证反面：<?php if($userinfo->id_photo_rear){?><a style="color:#FF0000;" href="<?php echo $userinfo->id_photo_rear; ?>" target="_blank" title="查看" >查看</a><?php }else{?>未上传<?php }?>
+        								</li>
+                                        <li>
+        									身份证信息是否通过审核：
+												<input <?php if($userinfo->id_is_check == 0){?> checked="checked" <?php }?> type="radio" name="id_is_check" value="0" />未通过 <input <?php if($userinfo->id_is_check == 1){?> checked="checked" <?php }?> type="radio" name="id_is_check" value="1" />已通过
         								</li>
         								<li>
-        									<a>登录邮箱：<?php echo $userinfo->Email?></a>
+        									登录邮箱：<input type="text" name="Email" value="<?php echo $userinfo->Email;?>" />
         								</li>
         								<li>
-        									<a>用户QQ：<?php echo $userinfo->QQToken!=""?$userinfo->QQToken:"<font style=''font-weight:bold; font-size:14px; color:red;'>暂无</font>"?></a>
+        									用户QQ：<input type="text" name="QQToken" value="<?php echo $userinfo->QQToken;?>" />
         								</li>
                                         <li>
         									<a>注册时间：<?php echo date('Y年m月d日 H:i:s',$userinfo->RegTime)?></a>
         								</li>
+										<li>
+										<input type="hidden" name="uid" value="<?php echo $userinfo->id;?>" />
+        									<input type="button" name="button" id="saveUserInfo" value="更新会员信息" />
+        								</li>
         							</ul>
+									</form>
         						</div>
         					</div>
         				</div><!--/.col-->
@@ -492,7 +502,35 @@
     <link href="<?php echo ASSET_URL;?>layer/layer.css" rel="stylesheet" type="text/css" />
     <script>
         $(function(){
-            
+            $("#saveUserInfo").click(function(){
+				$.ajax({
+						type:"POST",
+						url:"<?php echo $this->createUrl('membercenter/saveUserInfo');?>",
+						data:$(".changeMyInfos").serialize(),
+						success:function(msg){
+							if(msg == "NO_UID")
+							{
+								layer.confirm('无效的UID', {
+                                	btn: ['知道了'] //按钮
+                                });
+							}else if(msg == "NO_USER"){
+								layer.confirm('该用户不存在!', {
+                                	btn: ['知道了'] //按钮
+                                });
+							}else if(msg == "FAIL"){
+								layer.confirm('修改失败!', {
+                                	btn: ['知道了'] //按钮
+                                });
+							}else{
+							layer.confirm('修改成功!', {
+                                	btn: ['知道了'] //按钮
+                                },function(){
+									location.reload();
+								});
+							}
+						}
+				 });
+			});
             //修改用户密码
             $(".changePwd").click(function(){
                 var uid=$(this).attr("alt");//会员id

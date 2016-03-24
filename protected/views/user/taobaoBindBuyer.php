@@ -29,10 +29,19 @@
                     <option value="1">已通过淘宝实名认证</option>
                     <option value="0">未通过淘宝实名认证</option>
                 </select>
+				<br/><br/>
+				<div class="bd_zht">实名认证的姓名：</div><input style="width:100px;" type="text" name="real_name" class="zhsr">
+				<div class="bd_zht">实名认证的身份证号码：</div><input type="text" name="id_card" class="zhsr">
+				<br/><br/>
+				<div class="bd_zht">绑定的支付宝账户：</div><input type="text" name="alipay_account" class="zhsr">
+				<div class="bd_zht">实名认证时的银行名称：</div><input type="text" name="bank_name" class="zhsr">
+				<br/><br/>
+				<div class="bd_zht">实名认证的银行卡号：</div><input type="text" name="bank_no" class="zhsr">
                 <button class="bdtbmh">绑定淘宝买号</button><br />
                 <span class="span" style=" text-align: right; color: red; position: relative; left: 920px; top: -35px;"><?php echo @$warning;?></span>
             </div>
         </form>
+		<br/><br/><br/><br/><br/><br/><br/><br/><br/>
             <div class="bdzhzy">注意：买号信息绑定数据务必真实填写，一旦发现虚假，罚金10元/次。【查处达三次，永久封号】</div>
             <!--买号列表-->
             <table class="t4" style="width: 100%;">
@@ -43,11 +52,12 @@
                         <tr id="row-head" style="color: #0099cc; font-weight: bold;">
                             <td width="10" height="37" class="txjl_bg1"></td>
                             <td width="15%" height="37" align="center" valign="middle" class="txjl_bg2" style="font-size:14px">淘宝账号</td>
-                            <td width="25%" height="37" align="center" valign="middle" class="txjl_bg2" style="font-size:14px" "="">信誉</td>
-                            <td width="20%" height="37" align="center" valign="middle" class="txjl_bg2" style="font-size:14px" "="">当日/本周/已完成任务数</td>
-                            <td width="10%" height="37" align="center" valign="middle" class="txjl_bg2" style="font-size:14px" "="">买号状态</td>
-                            <td width="10%" height="37" align="center" valign="middle" class="txjl_bg2" style="font-size:14px" "="">是否启用</td>
-                            <td width="15%" height="37" align="center" valign="middle" class="txjl_bg2" style="font-size:14px" "="">操作</td>
+                            <td width="25%" height="37" align="center" valign="middle" class="txjl_bg2" style="font-size:14px" >信誉</td>
+                            <td width="20%" height="37" align="center" valign="middle" class="txjl_bg2" style="font-size:14px">当日/本周/已完成任务数</td>
+                            <td width="10%" height="37" align="center" valign="middle" class="txjl_bg2" style="font-size:14px" >买号状态</td>
+                            <td width="10%" height="37" align="center" valign="middle" class="txjl_bg2" style="font-size:14px" >买号状态</td>
+                            <td width="10%" height="37" align="center" valign="middle" class="txjl_bg2" style="font-size:14px" >是否启用</td>
+                            <td width="15%" height="37" align="center" valign="middle" class="txjl_bg2" style="font-size:14px">操作</td>
                             <td width="10" height="37" class="txjl_bg3"></td>
                         </tr>
                         <?php
@@ -98,6 +108,9 @@
                              <td align="center" valign="middle" class="t42">
                                 1 / 1 / 1
                              </td>
+							 <td align="center">
+							 <span style="color:#FF0000; font-weight:bold;"><?php if($item->is_check){?>审核通过<?php }elseif($item->is_check == 2){?>审核未通过<?php }else{ ?>未审核<?php } ?></span>
+							 </td>
                              <td align="center" valign="middle" class="mh_xxian">
                                 <span class="green">
                                     <?php

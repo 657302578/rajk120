@@ -454,9 +454,9 @@
 					   //查看此会员是否申请过此任务
 					   if(Yii::app()->user->getId())
 					   {
-					       $aTinfo = Usertasklist::model()->findByAttributes( array('task_id' => $item->id, 'uid' => Yii::app()->user->getId()));
+					       $aTinfo = Usertasklist::model()->findByAttributes( array('task_id' => $item->id, 'uid' => Yii::app()->user->getId(), 'state' => 0));
 					   }
-					   if(isset($aTinfo))
+					   if(isset($aTinfo) && $aTinfo->id > 0)
 					   {
 					       //获取卖家家的信息
 					       $sellerInfo = User::model()->findByPk($item->publishid);  
@@ -524,7 +524,7 @@
                             }else if(msg=="NOBUYSER")//没有绑定买号，去绑定
                             {
                                 //询问框
-                            	layer.confirm('您还没有符合条件的买号，去绑定吗？', {
+                            	layer.confirm('您还没有符合条件的买号或买号未通过审核，去绑定吗？', {
                             		btn: ['确定','取消'] //按钮
                             	}, function(){
                             		window.location.href="<?php echo $this->createUrl('user/taobaoBindBuyer');?>";
@@ -557,7 +557,18 @@
                                             	}, function(){
                                             		window.location.href="<?php echo $this->createUrl('site/taobaoTask');?>";
                                             	});
-                                            }else if(msg == 'NO_binding_ADDRESS'){
+                                            }else if(msg == 'ID_INFO_BE_EMPTY'){
+												//询问框
+                                            	layer.confirm('<span style="color:red;">必须完善身份证信息才能接单！</span>', {
+                                            		btn: ['现在去完善','知道了'] //按钮
+                                            	},function(){
+                                            	   location.href="<?php echo $this->createUrl('user/userAccountCenter');?>";
+                                            	});
+											}else if(msg == 'ID_NOT_CHECK'){
+												layer.confirm('<span style="color:red;">您的身份证信息未通过审核，暂时不能接单，请联系客服进行审核！</span>', {
+                                            		btn: ['知道了'] //按钮
+                                            	});
+											}else if(msg == 'NO_binding_ADDRESS'){
                                             	//询问框
                                             	layer.confirm('<span style="color:red;">接手必须绑定收货地址才能接任务！</span>', {
                                             		btn: ['现在去绑定','知道了'] //按钮

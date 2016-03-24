@@ -224,6 +224,16 @@ class SiteController extends Controller
             if($taskInfo->status!=6 && $taskInfo->status==0)//任务处于可接状态
             {
                 $userinfo=User::model()->findByPk(Yii::app()->user->getId());
+                if( empty($userinfo->id_card) || empty($userinfo->id_photo_front) || empty($userinfo->id_photo_rear))
+                {
+                    echo 'ID_INFO_BE_EMPTY';
+                    Yii::app()->end();
+                }
+                if($userinfo->id_is_check != 1)
+                {
+                    echo 'ID_NOT_CHECK';
+                    Yii::app()->end();
+                }
                 //检查是否填写了地址
                 $address = Useraddress::model()->findByAttributes(array('uid' => Yii::app()->user->getId()));
                 if(!$address){
@@ -319,7 +329,7 @@ class SiteController extends Controller
         {
             //查询符合条件的买号 
             $buyerInfo=Blindwangwang::model()->findAll(array(
-                'condition'=>'userid='.Yii::app()->user->getId().' and statue=1 and catalog=1',
+                'condition'=>'userid='.Yii::app()->user->getId().' and statue=1 and catalog=1 AND is_check=1',
                 'order'=>'id desc'
             ));
             if($buyerInfo)//返回符合条件的买号

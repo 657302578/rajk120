@@ -30,6 +30,8 @@
 								<a href="javascript:;"><i class="fa fa-signal"></i><span class="text"> 会员管理中心</span> <span class="fa fa-angle-down pull-right"></span></a>
 								<ul class="nav sub" <?php echo Yii::app()->controller->id=="membercenter"?"style='display:block;'":"";?>>
                                     <li <?php echo in_array($this->getAction()->getId(),array("memberlist","membeDetailInfos"))?"class='active opened'":"";?>><a href="<?php echo $this->createUrl('membercenter/memberlist');?>"><i class="fa fa-random"></i><span class="text"> 会员管理</span></a></li>
+									<li <?php echo in_array($this->getAction()->getId(),array("buyerlist"))?"class='active opened'":"";?>><a href="<?php echo $this->createUrl('membercenter/buyerlist');?>"><i class="fa fa-random"></i><span class="text"> 买号审核</span></a></li>
+									<li <?php echo in_array($this->getAction()->getId(),array("zhangguilist"))?"class='active opened'":"";?>><a href="<?php echo $this->createUrl('membercenter/zhangguilist');?>"><i class="fa fa-random"></i><span class="text"> 掌柜审核</span></a></li>
 								</ul>
 							</li>
                             <li>

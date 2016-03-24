@@ -37,6 +37,7 @@
               <span>真实姓名和身份证号码一经设置，无法更改，请谨慎填写，这将关系到您后期的提现等操作！！</span></li>
             <li class="input2">身份证号：
               <input type="text"  <?php echo ($userinfo->id_card != "" && $userinfo->id_is_check == 1 ) ? 'readonly="readonly" style="background:#e9e8e8"':''?> name="id_card" value="<?php echo $userinfo->id_card;?>" class="text2 myname"  />
+			  <span style="color:#FF0000; font-weight:bold;"><?php if($userinfo->id_is_check) {?>审核通过<?php }elseif($userinfo->id_is_check == 2){?>审核未通过，请修改<?php }else{?>未审核(审核通过后才能接单)<?php }?></span>
             </li>
             <li class="input2">身份证正面：
               <input type="text" name="id_photo_front" <?php echo ($userinfo->id_photo_front != "" && $userinfo->id_is_check == 1 )?'readonly="readonly" style="background:#e9e8e8"':''?> id="id_photo_front_show" value="<?php echo $userinfo->id_photo_front;?>" class="text2 myname"  />

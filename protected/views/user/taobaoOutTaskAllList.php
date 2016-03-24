@@ -50,32 +50,6 @@
             ?>
             <li class="taskItem">
                 <div class="rebh">
-                    <img class="payWay" width="30" src="<?php 
-                        switch($item->payWay)
-                        {
-                            case 1://接手垫付
-                                echo VERSION2."/img/ykdf.jpg";
-                                break;
-                            default://平台代付
-                                echo VERSION2."/img/df.jpg";
-                                break;
-                        }
-                    ?>" lang='<?php echo $item->payWay;?>' />
-                    <img class="platform" width="30" src="<?php 
-                        switch($item->platform)
-                        {
-                            case 1:
-                                echo VERSION2."/img/tm.jpg";
-                                break;
-                            case 2:
-                                echo VERSION2."/img/jd.jpg";
-                                break;
-                            default:
-                                echo VERSION2."/img/1688.jpg";
-                                break;
-                        }
-                    ?>" lang='<?php echo $item->platform;?>' />
-                    
                     <font>任务编号</font>：<span><?php echo $item->time.'*'.$item->id;?></span>
                     <img title="<?php 
                         switch($item->BuyerJifen)

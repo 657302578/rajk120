@@ -152,7 +152,7 @@
                 <li <?php echo Yii::app()->controller->id=="site" && $this->getAction()->getId()=="index"?"class='selected'":"";?>><a href="<?php echo $this->createUrl('site/index');?>">首页</a></li>
                 <li <?php echo Yii::app()->controller->id=="site" && $this->getAction()->getId()=="taobaoTask"?"class='selected'":"";?>><a href="<?php echo $this->createUrl('site/taobaoTask');?>">任务大厅</a></li>
                 <li style="display: none;" <?php echo Yii::app()->controller->id=="site" && $this->getAction()->getId()=="1688Task"?"class='selected'":"";?>><a href="<?php echo $this->createUrl('site/1688Task');?>">阿里巴巴</a></li>
-                <li <?php echo Yii::app()->controller->id=="site" && $this->getAction()->getId()=="buyPoint"?"class='selected'":"";?>><a href="<?php echo $this->createUrl('user/userBuyPoint');?>">麦粒购买</a></li>
+                <li <?php echo Yii::app()->controller->id=="user" && $this->getAction()->getId()=="userSpread"?"class='selected'":"";?>><a href="<?php echo $this->createUrl('user/userSpread');?>">我要推广</a></li>
                 <li <?php echo in_array(Yii::app()->controller->id,array('site','news')) && in_array($this->getAction()->getId(),array('help','list','deatailInfo'))?"class='selected'":"";?>><a href="<?php echo $this->createUrl('site/help');?>">新手帮助</a></li>
                 <li <?php echo Yii::app()->controller->id=="user"?"class='selected'":"";?>><a href="<?php echo $this->createUrl('user/index');?>">会员中心</a></li>
             </ul>

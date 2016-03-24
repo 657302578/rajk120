@@ -85,6 +85,72 @@
             }
         }
         
+        public function actionSaveUserInfo()
+        {
+            if(!isset($_POST['uid']))
+            {
+                echo 'NO_UID';
+                exit;
+            }
+            $userInfo = User::model()->findByPk($_POST['uid']);
+            if(!$userInfo) exit('NO_USER');
+            unset($_POST['uid'], $_POST['submit']);
+            foreach ($_POST as $k => $v)
+            {
+                $userInfo->$k = $v;
+            }
+            echo $userInfo->save() ? 'SUCCESS' : 'FAIL';
+        }
+        
+        public function actionBuyerlist()
+        {
+            //读取系统中的买号
+            parent::acl();
+            if(isset($_POST['keyword']))//关键词搜索
+            {
+                $criteria = new CDbCriteria;
+                $criteria->condition='wangwang="'.$_POST['keyword'].'"';
+                //分页开始
+                $total = Blindwangwang::model()->count($criteria);
+                $pages = new CPagination($total);
+                $pages->pageSize=12;//分页大小
+                $pages->applyLimit($criteria);
+            
+                $proreg = Blindwangwang::model()->findAll($criteria);
+                //分页结束
+                $this->renderPartial('buyerlist',array(
+                    'proInfo' => $proreg,
+                    'pages' => $pages
+                ));
+                Yii::app()->end();
+            }
+            $criteria = new CDbCriteria;
+            $criteria->order ="id desc";
+            
+            //分页开始
+            $total = Blindwangwang::model()->count($criteria);
+            $pages = new CPagination($total);
+            $pages->pageSize=12;//分页大小
+            $pages->applyLimit($criteria);
+            
+            $proreg = Blindwangwang::model()->findAll($criteria);
+            //分页结束
+            $this->renderPartial('buyerlist',array(
+                'proInfo' => $proreg,
+                'pages' => $pages
+            ));
+        }
+        
+        public function actionChangeBuyerState()
+        {
+            $uid = intval($_POST['buyerId']);
+            $info = Blindwangwang::model()->findByPk($uid);
+            if(!$info) exit('BUYER_NO');
+            $info->is_check = $_POST['state'];
+            $info->updatetime = time();
+            echo $info->save() ? 'SUCCESS' : 'fail';
+        }
+        
         /*
             会员管理-修改会员密码
         */
