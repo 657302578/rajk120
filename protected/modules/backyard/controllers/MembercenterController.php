@@ -84,7 +84,9 @@
                 ));
             }
         }
-        
+        /**
+         * 保存会员信息
+         */
         public function actionSaveUserInfo()
         {
             if(!isset($_POST['uid']))
@@ -102,6 +104,9 @@
             echo $userInfo->save() ? 'SUCCESS' : 'FAIL';
         }
         
+        /**
+         * 买手审核
+         */
         public function actionBuyerlist()
         {
             //读取系统中的买号
@@ -109,7 +114,7 @@
             if(isset($_POST['keyword']))//关键词搜索
             {
                 $criteria = new CDbCriteria;
-                $criteria->condition='wangwang="'.$_POST['keyword'].'"';
+                $criteria->condition='wangwang="'.$_POST['keyword'].'" AND catalog=1';
                 //分页开始
                 $total = Blindwangwang::model()->count($criteria);
                 $pages = new CPagination($total);
@@ -125,6 +130,7 @@
                 Yii::app()->end();
             }
             $criteria = new CDbCriteria;
+            $criteria->condition = 'catalog=1';
             $criteria->order ="id desc";
             
             //分页开始
@@ -141,6 +147,9 @@
             ));
         }
         
+        /**
+         * 审核买手状态
+         */
         public function actionChangeBuyerState()
         {
             $uid = intval($_POST['buyerId']);
@@ -150,6 +159,51 @@
             $info->updatetime = time();
             echo $info->save() ? 'SUCCESS' : 'fail';
         }
+        
+        /**
+         * 买手审核
+         */
+        public function actionZhangguilist()
+        {
+            //读取系统中的买号
+            parent::acl();
+            if(isset($_POST['keyword']))//关键词搜索
+            {
+                $criteria = new CDbCriteria;
+                $criteria->condition='wangwang="'.$_POST['keyword'].'" AND catalog=2';
+                //分页开始
+                $total = Blindwangwang::model()->count($criteria);
+                $pages = new CPagination($total);
+                $pages->pageSize=12;//分页大小
+                $pages->applyLimit($criteria);
+        
+                $proreg = Blindwangwang::model()->findAll($criteria);
+                //分页结束
+                $this->renderPartial('sellerlist',array(
+                    'proInfo' => $proreg,
+                    'pages' => $pages
+                ));
+                Yii::app()->end();
+            }
+            $criteria = new CDbCriteria;
+            $criteria->condition = 'catalog=2';
+            $criteria->order ="id desc";
+        
+            //分页开始
+            $total = Blindwangwang::model()->count($criteria);
+            $pages = new CPagination($total);
+            $pages->pageSize=12;//分页大小
+            $pages->applyLimit($criteria);
+        
+            $proreg = Blindwangwang::model()->findAll($criteria);
+            //分页结束
+            $this->renderPartial('sellerlist',array(
+                'proInfo' => $proreg,
+                'pages' => $pages
+            ));
+        }
+        
+        
         
         /*
             会员管理-修改会员密码
