@@ -1622,6 +1622,7 @@ class UserController extends Controller
             $task->yongjin_money = $_POST['yongjin_money'];
             $task->operate_pt = $_POST['operate_pt'];
             $taskmoreArr=$task->attributes;
+            $plConfig = Config::model()->findByPk(1);
             if($_POST['txtFCount']<2)//单任务
             {
                 
@@ -1638,7 +1639,7 @@ class UserController extends Controller
                 $record=new Recordlist();
                 $record->userid=Yii::app()->user->getId();//用户id
                 $record->catalog=3;//发布任务使用金额
-                $record->number=1;//$_POST['txtPrice'];//操作数量--扣除1元
+                $record->number=intval($plConfig->task_price);//$_POST['txtPrice'];//操作数量--扣除1元
                 $record->tasknum=$_POST['txtFCount'];//1个任务
                 $record->time=time();//操作时间
                 $record->save();//保存金额流水
@@ -1676,7 +1677,7 @@ class UserController extends Controller
                 $record=new Recordlist();
                 $record->userid=Yii::app()->user->getId();//用户id
                 $record->catalog=3;//发布任务使用金额
-                $record->number=1*$_POST['txtFCount'];//操作数量
+                $record->number=(intval($plConfig->task_price)*$_POST['txtFCount']);//操作数量
                 $record->tasknum=$_POST['txtFCount'];//1个任务
                 $record->time=time();//操作时间
                 $record->save();//保存金额流水
@@ -1691,7 +1692,7 @@ class UserController extends Controller
 //                 $recordMinLi->save();//保存米粒流水
                 
                 //3.改变充值后帐户的余额
-                $userinfoDone->Money=$userinfoDone->Money-(1*$_POST['txtFCount']);//在原有余额基本上减去任务需要的金额
+                $userinfoDone->Money=$userinfoDone->Money-(intval($plConfig->task_price)*$_POST['txtFCount']);//在原有余额基本上减去任务需要的金额
                 //$userinfoDone->MinLi=$userinfoDone->MinLi-($MinLi*$_POST['txtFCount']);//在原有米粒基本上减去任务需要的米粒
                 $userinfoDone->save();
                 
@@ -1795,6 +1796,7 @@ class UserController extends Controller
             $userinfo->id_card = $_POST['id_card'];
             $userinfo->id_photo_front = $_POST['id_photo_front'];
             $userinfo->id_photo_rear = $_POST['id_photo_rear'];
+            $userinfo->alipay_account = $_POST['alipay_account'];
             if($userinfo->save())
             {
                 $data['uid'] = Yii::app()->user->getId();
@@ -1820,7 +1822,8 @@ class UserController extends Controller
                     $userAddModel->create_time = date('Y/m/d H:i:s');
                     $userAddModel->save();
                 }else{
-                    Useraddress::model()->updateByPk($userAddressInfo->id, $data);
+                    //收货地址前台不能更新
+                    //Useraddress::model()->updateByPk($userAddressInfo->id, $data);
                 }
                 //查询是否绑定了买号
                 $otherAddr = Useraddress::model()->find('occupy_uid='.Yii::app()->user->getId());

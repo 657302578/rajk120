@@ -9,10 +9,12 @@
         public function actionMemberlist()
         {
             parent::acl();
-            if(isset($_POST['keyword']))//关键词搜索
+            if(isset($_POST['keyword']) || isset($_GET['id_is_check']))//关键词搜索
             {
                 $criteria = new CDbCriteria;
-                $criteria->condition='Username="'.$_POST['keyword'].'" or Phon="'.$_POST['keyword'].'"';
+                $criteria->condition = '1 ';
+                if(isset($_POST['keyword']) && !empty($_POST['keyword'])) $criteria->condition=' AND (Username="'.$_POST['keyword'].'" or Phon="'.$_POST['keyword'].'")';
+                if(isset($_POST['id_is_check']) && $_POST['id_is_check'] > 0 ) $criteria->condition.=' AND id_is_check='.(intval($_POST['id_is_check'])-1);
                 //分页开始
                 $total = User::model()->count($criteria);
                 $pages = new CPagination($total);
@@ -42,6 +44,35 @@
                 'proInfo' => $proreg,
                 'pages' => $pages
             ));
+        }
+        
+        /**
+         * 收货地址管理
+         */
+        public function actionBuyerAddress()
+        {
+            parent::acl();
+            $criteria = new CDbCriteria;
+            $criteria->order ="id desc";
+            //分页开始
+            $total = Useraddress::model()->count($criteria);
+            $pages = new CPagination($total);
+            $pages->pageSize=12;//分页大小
+            $pages->applyLimit($criteria);
+            $proreg = Useraddress::model()->findAll($criteria);
+            //分页结束
+            $this->renderPartial('buyerAddress',array(
+                'proInfo' => $proreg,
+                'pages' => $pages
+            ));
+        }
+        
+        /**
+         * 保存收货地址
+         */
+        public function actionSaveBuyerAddress()
+        {
+            
         }
         
         
@@ -111,10 +142,12 @@
         {
             //读取系统中的买号
             parent::acl();
-            if(isset($_POST['keyword']))//关键词搜索
+            if(isset($_POST['keyword']) || isset($_POST['is_check']))//关键词搜索
             {
                 $criteria = new CDbCriteria;
-                $criteria->condition='wangwang="'.$_POST['keyword'].'" AND catalog=1';
+                $criteria->condition = '1 ';
+                if(isset($_POST['keyword']) && !empty($_POST['keyword'])) $criteria->condition.=' AND (wangwang="'.$_POST['keyword'].'" AND catalog=1)';
+                if(isset($_POST['is_check']) && $_POST['is_check'] > 0) $criteria->condition.=' AND is_check='.(intval($_POST['is_check'])-1);
                 //分页开始
                 $total = Blindwangwang::model()->count($criteria);
                 $pages = new CPagination($total);
@@ -167,10 +200,12 @@
         {
             //读取系统中的买号
             parent::acl();
-            if(isset($_POST['keyword']))//关键词搜索
+            if(isset($_POST['keyword']) || isset($_POST['is_check']))//关键词搜索
             {
                 $criteria = new CDbCriteria;
-                $criteria->condition='wangwang="'.$_POST['keyword'].'" AND catalog=2';
+                $criteria->condition = '1 ';
+                if(isset($_POST['keyword']) && !empty($_POST['keyword'])) $criteria->condition.=' AND (wangwang="'.$_POST['keyword'].'" AND catalog=1)';
+                if(isset($_POST['is_check']) && $_POST['is_check'] > 0) $criteria->condition.=' AND is_check='.(intval($_POST['is_check'])-1);
                 //分页开始
                 $total = Blindwangwang::model()->count($criteria);
                 $pages = new CPagination($total);

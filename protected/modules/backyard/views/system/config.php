@@ -36,34 +36,6 @@
 			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 	    <![endif]-->
-			<script>
-		function checkUser(buyerId, state)
-		{
-			$.ajax({
-				type:"POST",
-				url:"<?php echo $this->createUrl('membercenter/changeBuyerState');?>",
-				data:"buyerId="+buyerId+"&state="+state,
-				success:function(msg){
-					if(msg == "BUYER_NO"){
-						layer.confirm('该买手不存在！', {
-                                	btn: ['知道了'] //按钮
-                                });
-					}else if(msg == "SUCCESS"){
-						layer.confirm('审核成功！', {
-                                	btn: ['知道了'] //按钮
-                                },function(){
-								location.reload();	
-							});
-					}else{
-						layer.confirm('审核失败！', {
-                                	btn: ['知道了'] //按钮
-                                });
-					}
-				}
-			});
-		}
-	</script>
-
 	</head>
 </head>
 
@@ -84,119 +56,51 @@
 		<div class="main">
             <div class="row">
             	<div class="col-lg-12">
-            		<h3 class="page-header"><i class="fa fa-laptop"></i> 所有会员</h3>
+            		<h3 class="page-header"><i class="fa fa-laptop"></i>平台参数设置</h3>
             		<ol class="breadcrumb">
             			<li><i class="fa fa-home"></i><a href="<?php  echo $this->createUrl('default/index');?>">首页</a></li>
-            			<li><i class="fa fa-laptop"></i>掌柜审核中心</li>						  	
+            			<li><i class="fa fa-laptop"></i>平台配置管理</li>						  	
             		</ol>
             	</div>
             </div>
-            <form method="post" action="<?php echo $this->createUrl("membercenter/zhangguilist")?>">
-                <input type="text" name="keyword" placeholder="请输入旺旺名称" style="text-indent: 5px; color: #666; font-size:14px; width:260px;" /><select name="is_check"><option value="">审核状态</option><option value="1">未审核</option><option value="2">审核通过</option><option value="3">审核未通过</option></select><button type="submit" class="btn btn-sm btn-success" border="0" id="reg_submit"><i class="fa fa-dot-circle-o"></i>&nbsp;搜索</button>
-            </form>
-            <br />
-            <div class="panel panel-default"><!--theBody start-->
+            <div class="mainRightCon"><!--mainRightCon start-->
+                <div class="panel panel-default"><!--theBody start-->
                 <div class="panel-heading">
                     <i class="fa fa-indent red"></i>
-                    <span>掌柜号列表</span>
+                    <span>系统参数设置</span>
                     <div class="panel-actions">
     					<button class="btn btn-default"><span class="fa fa-refresh"></span></button>
     				</div>
                 </div>
+                <style>
+                    .answer{ position: relative; top:2px; left:10px;}
+                </style>
                 <div class="panel-body">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>买号ID</th>
-                                <th><div align="center">旺旺名称</div></th>
-                                <th><div align="center">是否实名</div></th>
-                                <th><div align="center">买家信誉</div></th>
-                                <th><div align="center">支付宝账号</div></th>
-                                <th><div align="center">真实姓名</div></th>
-                                <th><div align="center">身份证号</div></th>
-                                <th><div align="center">认证银行</div></th>
-                                <th><div align="center">银行卡号码</div></th>
-                                <th><div align="center">认证链接</div></th>
-                                <th><div align="center">是否启用</div></th>
-                                <th><div align="center">审核状态</div></th>
-                                <th><div align="center">添加时间</div></th>
-                                <th><div align="center">操作</div></th>
-                            </tr>
-                        </thead>
-                    <tbody>
-                        <?php
-                            foreach($proInfo as $item){
-                        ?>
-                        <tr style="color:#666;">
-                            <td><?php echo $item->id;?></td>
-                            <td><div align="center"><?php echo $item->wangwang;?></div></td>
-                            <td><div align="center">
-								<?php if($item->taotaorz){?>是<?php }else{?>否<?php }?>
-							</div></td>
-                            <td><div align="center"><?php echo $item->wangwanginfo;?></div></td>
-                            <td><div align="center" style="color: #FF5454; font-weight:bold; font-size:14px;"><?php echo $item->alipay_account;?></div></td>
-                            <td><div align="center" style="color: #FF5454; font-weight:bold; font-size:14px;"><?php echo $item->real_name;?></div></td>
-                            <td style="text-align: center;">
-                                <?php
-                                  echo $item->id_card;
-                                ?>
-                                </td>
-                            <td><div align="center">
-                                <?php echo $item->bank_name;?>
-                            </div></td>
-                            <td><div align="center">
-                                <?php
-                                   echo $item->bank_no;
-                                ?>
-                            </div></td>
-                            <td><div align="center">
-                               <?php if($item->auth_url){?><a href="<?php echo $item->auth_url?>" title="查看认证链接" target="_blank">查看</a><?php }else{?>未填写<?php }?>
-							   <br/>
-							   认证金额:<?php echo $item->auth_price;?>
-                            </div></td>
-                            <td><div align="center">
-                                <?php
-                                    echo $item->statue==1?"<span style='color:red; font-weight:bold;'>是</span>":"<span style='color:green; font-weight:bold;'>否</span>";
-                                ?>
-                            </div></td>
-                            <td><div align="center" style="color:#FF0000">
-                                <?php
-                                    if($item->is_check == 1){ echo '审核通过';}elseif($item->is_check == 2){echo '审核未通过';}else{echo '未审核';}
-                                ?>
-                            </div></td>
-                            <td><div align="center">
-                                <?php
-                                    echo date("Y/m/d H:i",$item->blindtime);
-                                ?>
-                            </div></td>
-                            <td><div align="center">
-							<a href="javascript:;" onClick="checkUser('<?php echo $item->id;?>', '1')" class="check_ok">审核通过</a>&nbsp;<a onClick="checkUser('<?php echo $item->id;?>', '2')"   href="javascript:;">审核不通过</a>
-							</div></td>
-                        </tr>
-                        <?php
-                            }
-                        ?>
-                    </tbody>
-                </table>
-                <?php
-                    if(isset($pages)){
-                ?>
-                <div class="breakpage"><!--分页开始-->
-                    <?php
-                        $this->widget('CLinkPager', array(
-                            'selectedPageCssClass'=>'active',
-                            'pages' => $pages,
-                            'lastPageLabel' => '最后一页',
-                            'firstPageLabel' => '第一页',
-                            'header' => false,
-                            'nextPageLabel' => ">>",
-                            'prevPageLabel' => "<<",
-                        ));
-                    ?>
-                </div><!--分页结束-->
-                <?php }?>
-          </div><!--theBody end-->
-            <div class="clear"></div>
+                    <div class="form-group">
+                        <form method="post" action="<?php echo $this->createUrl('system/config');?>" class="form-horizontal">
+                            <div class="examItem">
+                                <label class="col-sm-3 control-label" for="input-small" style="width: auto;">发任务扣款金额：</label>
+                                <div class="col-sm-3">
+    		                        <input type="text" name="task_price" id="input-small"  class="form-control input-sm" value="<?php if(isset($config)) echo $config->task_price;?>" placeholder="发任务扣多少金额"/>
+    		                    </div>
+                            </div><br /><br />
+                            <div class="examItem">
+                                <label class="col-sm-3 control-label" for="input-small" style="width: auto;">1积分等于多少元：</label>
+                                <div class="col-sm-3">
+    		                        <input type="text" name="jifen_rate" id="input-small"  class="form-control input-sm" placeholder="1积分等于多少元" value="<?php if(isset($config)) echo $config->jifen_rate;?>"/>
+    		                    </div>
+                            </div>
+                            <div class="examItem">
+                                <div class="col-sm-10">
+                                    <button type="submit" class="btn btn-sm btn-success" border="0" id="reg_submit" style=" margin-left:87px; margin-top: 10px;"><i class="fa fa-dot-circle-o"></i>&nbsp;保存配置</button>
+                                    <span style="padding-left: 30px; color:green; position: relative; top:6px;"><?php echo @$addWarning;?></span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                 </div>
+              </div><!--theBody end-->
+              <div class="clear"></div>
 		</div>
 		<!-- end: Content -->
 		<br><br><br>
@@ -288,10 +192,7 @@
 	<script src="<?php echo ASSET_URL;?>plugins/jvectormap/js/gdp-data.js"></script>	
 	<script src="<?php echo ASSET_URL;?>plugins/gauge/gauge.min.js"></script>
 	
-	    <script src="<?php echo ASSET_URL;?>layer/jquery.min.js"></script>
-    <script src="<?php echo ASSET_URL;?>layer/layer.js"></script>
-    <script src="<?php echo ASSET_URL;?>layer/laycode.min.js"></script>
-    <link href="<?php echo ASSET_URL;?>layer/layer.css" rel="stylesheet" type="text/css" />
+	
 	<!-- theme scripts -->
 	<script src="<?php echo ASSET_URL;?>js/SmoothScroll.js"></script>
 	<script src="<?php echo ASSET_URL;?>js/jquery.mmenu.min.js"></script>
@@ -302,6 +203,6 @@
 	<script src="<?php echo ASSET_URL;?>js/pages/index.js"></script>	
 	
 	<!-- end: JavaScript-->
-	
+    <script src="<?php echo VERSION2;?>js/jquery.js"></script>
 </body>
 </html>

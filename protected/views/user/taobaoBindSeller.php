@@ -1,10 +1,6 @@
     <?php
         echo $this->renderPartial('/user/taobaoTaskNav');//载入淘宝大厅导航
     ?>
-    <div class="bdmhIntr">
-        <p style="display:none;">1、您目前是新手会员用户，可以绑定2个掌柜 <a href="<?php echo $this->createUrl('user/userBuyPoint');?>" target="_blank">申请VIP</a>最高可绑定30个掌柜！<a href="<?php echo $this->createUrl('site/userLeveldoc');?>" target="_blank">查看VIP限权</a></p>
-        <p>1、如果您的帐号还没有发布过任务，可以自己免费删除掌柜一次；发布过任务的帐号删除掌柜需要付费5元！</p>
-    </div>
     <div class="bdmh">
         <form action="<?php $this->createUrl('user/taobaoBindSeller');?>" method="post">
             <div class="bd_zh clearfix">

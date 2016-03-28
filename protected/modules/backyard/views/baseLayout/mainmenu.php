@@ -32,6 +32,7 @@
                                     <li <?php echo in_array($this->getAction()->getId(),array("memberlist","membeDetailInfos"))?"class='active opened'":"";?>><a href="<?php echo $this->createUrl('membercenter/memberlist');?>"><i class="fa fa-random"></i><span class="text"> 会员管理</span></a></li>
 									<li <?php echo in_array($this->getAction()->getId(),array("buyerlist"))?"class='active opened'":"";?>><a href="<?php echo $this->createUrl('membercenter/buyerlist');?>"><i class="fa fa-random"></i><span class="text"> 买号审核</span></a></li>
 									<li <?php echo in_array($this->getAction()->getId(),array("zhangguilist"))?"class='active opened'":"";?>><a href="<?php echo $this->createUrl('membercenter/zhangguilist');?>"><i class="fa fa-random"></i><span class="text"> 掌柜审核</span></a></li>
+									<li <?php echo in_array($this->getAction()->getId(),array("buyerAddress"))?"class='active opened'":"";?>><a href="<?php echo $this->createUrl('membercenter/buyerAddress');?>"><i class="fa fa-random"></i><span class="text">收货地址管理</span></a></li>
 								</ul>
 							</li>
                             <li>
@@ -49,6 +50,7 @@
                             <li>
 								<a href="javascript:;"><i class="fa fa-bolt"></i><span class="text"> 平台配置管理</span> <span class="fa fa-angle-down pull-right"></span></a>
 								<ul class="nav sub" <?php echo Yii::app()->controller->id=="system"?"style='display:block;'":"";?>>
+								<li <?php echo $this->getAction()->getId()=="config"?"class='active opened'":"";?>><a href="<?php echo $this->createUrl('system/config');?>"><i class="fa fa-meh-o"></i><span class="text">参数设置</span></a></li>
                                     <li <?php echo $this->getAction()->getId()=="exam"?"class='active opened'":"";?>><a href="<?php echo $this->createUrl('system/exam');?>"><i class="fa fa-meh-o"></i><span class="text"> 新手考试管理</span></a></li>
 									<li <?php echo $this->getAction()->getId()=="blackaccount"?"class='active opened'":"";?>><a href="<?php echo $this->createUrl('system/blackaccount');?>"><i class="fa fa-meh-o"></i><span class="text"> 黑名单管理</span></a></li>
 								</ul>

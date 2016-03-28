@@ -50,32 +50,6 @@
             ?>
             <li class="taskItem">
                 <div class="rebh">
-                    <img class="payWay" width="30" src="<?php 
-                        switch($item->payWay)
-                        {
-                            case 1://接手垫付
-                                echo VERSION2."/img/ykdf.jpg";
-                                break;
-                            default://平台代付
-                                echo VERSION2."/img/df.jpg";
-                                break;
-                        }
-                    ?>" lang='<?php echo $item->payWay;?>' />
-                    <img class="platform" width="30" src="<?php 
-                        switch($item->platform)
-                        {
-                            case 1:
-                                echo VERSION2."/img/tm.jpg";
-                                break;
-                            case 2:
-                                echo VERSION2."/img/jd.jpg";
-                                break;
-                            default:
-                                echo VERSION2."/img/1688.jpg";
-                                break;
-                        }
-                    ?>" lang='<?php echo $item->platform;?>' />
-                    
                     <font>任务编号</font>：<span><?php echo $item->time.'*'.$item->id;?></span>
                     <img title="<?php 
                         switch($item->BuyerJifen)
@@ -111,7 +85,7 @@
                                 $dj="五钻";
                                 break;
                         }
-                        echo "卖家要求威客买号等级在".$dj."以上";
+                        echo "卖家要求接手买号等级在".$dj."以上";
                     ;?>"  class="BuyerJifen" lang="<?php echo $item->BuyerJifen;?>" src="<?php echo VERSION2;?>img/level/<?php echo $item->BuyerJifen;?>.gif" style="vertical-align: text-top;cursor:pointer;" />
                 </div>
                 <div class="allRw_pro">
@@ -227,33 +201,33 @@
                         }
                         if($item->status==2){
                     ?>
-                         <a href="javascript:;" class="qcrw waiterBuyerPayWarning" style="width: auto; padding:0 8px; cursor: pointer;" title="点击查看提醒">等待威客付款</a>
+                         <a href="javascript:;" class="qcrw waiterBuyerPayWarning" style="width: auto; padding:0 8px; cursor: pointer;" title="点击查看提醒">等待接手付款</a>
                          <div class="clear"></div>
                          <span style="width: auto; position: relative; top:-30px; left:805px;" class="settime" action="waiterBuyerPay" lang="<?php echo $item->taskerid;?>" alt="<?php echo $item->id;?>" endTime="<?php echo date("Y-m-d H:i:s",$item->tasksecondTime+1800);?>"></span>
                     <?php
                         }
                         if($item->status==3){
                     ?>
-                        <a href="javascript:;" class="qcrw sellerCertainSendGood" lang="<?php echo $item->id;?>" style="width: auto; padding:0 8px; cursor: pointer;">威客已付款，等待您发货</a>
+                        <a href="javascript:;" class="qcrw sellerCertainSendGood" lang="<?php echo $item->id;?>" style="width: auto; padding:0 8px; cursor: pointer;">接手已完成，等待您返款</a>
                         <div class="clear"></div>
-                        <span style="width: auto; position: relative; top:-30px; left:805px;" class="settime" action="waiteSellerSendGood" lang="<?php echo $item->taskerid;?>" alt="<?php echo $item->id;?>" endTime="<?php echo date("Y-m-d H:i:s",$item->taskthirdTime+10800);?>"></span>
+                        <span style="width: auto; position: relative; top:-30px; left:805px;" class="settime" action="waiteSellerSendGood" lang="<?php echo $item->taskerid;?>" alt="<?php echo $item->id;?>" endTime="<?php echo date("Y-m-d H:i:s",$item->taskthirdTime+86400);?>"></span>
                     <?php
                         }
                         if($item->status==4){
                     ?>
-                        <a href="javascript:;" class="qcrw" lang="<?php echo $item->id;?>" style="width: auto; padding:0 8px; cursor: pointer;">等待威客收货好评</a>
+                        <a href="javascript:;" class="qcrw" lang="<?php echo $item->id;?>" style="width: auto; padding:0 8px; cursor: pointer;">等待接手收货好评</a>
                     <?php
                         }
                         if($item->status==5 && $item->taskCompleteStatus==0 && $item->complian_status==0){
                     ?>
-                        <a href="javascript:;" class="qcrw sellerLastCertain" lang="<?php echo $item->id;?>" style="width: auto; padding:0 8px; cursor: pointer; margin-top:-9px;">威客已收货好评，等待审核</a><br />
-                        <a href="javascript:;" class="qcrw complain" lang="<?php echo $item->id;?>" style="width:auto; margin-top: 10px; padding:0 8px;">我要投诉威客</a>
+                        <a href="javascript:;" class="qcrw sellerLastCertain" lang="<?php echo $item->id;?>" style="width: auto; padding:0 8px; cursor: pointer; margin-top:-9px;">接手已收货好评，等待审核</a><br />
+                        <a href="javascript:;" class="qcrw complain" lang="<?php echo $item->id;?>" style="width:auto; margin-top: 10px; padding:0 8px;">我要投诉接手</a>
                     <?php
                         }
                         if($item->complian_status==1)
                         {
                     ?>
-                        <a href="javascript:;" class="qcrw complianDuring" lang="<?php echo $item->id;?>" style="width: auto; padding:0 8px; cursor: pointer; margin-top:-9px;">接手任务的威客已被您投诉</a>
+                        <a href="javascript:;" class="qcrw complianDuring" lang="<?php echo $item->id;?>" style="width: auto; padding:0 8px; cursor: pointer; margin-top:-9px;">接手任务的接手已被您投诉</a>
                     <?php
                         }
                         if($item->complian_status==2)
@@ -290,7 +264,30 @@
                         $usermsg=User::model()->findByPk($item->taskerid);
                 ?>
                 <div class="takerInfo"><!--taskFunMan start-->
-                    <span>威客(接手方)：</span><?php echo $usermsg->Username;?>　<img src="<?php echo VERSION2?>img/wang.jpg" width="20" style="position: relative; top:5px;" />&nbsp;采用买号：<?php echo $item->taskerWangwang;?>&nbsp;<img src="<?php echo VERSION2;?>img/level/<?php echo $buyerinfo->wangwanginfo;?>.gif" style="position:relative; top:3px;"/>　　　　　联系对方：&nbsp;<a title="点击添加对方为好友" target=blank href=http://wpa.qq.com/msgrd?V=3&uin=<?php echo $usermsg->QQToken;?>&Site=点击添加好友&Menu=yes><img border="0" SRC=http://wpa.qq.com/pa?p=1:<?php echo $usermsg->QQToken;?>:4 alt="点击这里给我发消息" style="position: relative; top:2px; left:-3px" /></a>　<img title="右侧为接手电话，如有需要可联系" src="<?php echo VERSION2;?>img/mobile.jpg" style="position:relative; top:4px;"/>&nbsp;<a style="color:#e99f4b;"><?php echo $usermsg->Phon;?></a>
+                    <span>接手账号：</span><?php echo $usermsg->Username;?>&nbsp;<img src="<?php echo VERSION2?>img/newlevel/<?php echo User::getuserlevelnum($usermsg->id); ?>.gif" style="position: relative; top:5px;" />&nbsp;&nbsp;<?php if($usermsg->VipLv > 0 && $usermsg->VipStopTime > time()){?><img src="<?php echo VERSION2?>img/newlevel/VIP.png" style="position: relative; top:5px;" /><?php }?>&nbsp;&nbsp;&nbsp;<img src="<?php echo VERSION2?>img/wang.jpg" width="20" style="position: relative; top:5px;" />&nbsp;&nbsp;&nbsp;&nbsp;接手买号：<?php echo $item->taskerWangwang;?>&nbsp;<img src="<?php echo VERSION2;?>img/level/<?php echo $buyerinfo->wangwanginfo;?>.gif" style="position:relative; top:3px;"/> &nbsp;&nbsp;&nbsp;&nbsp;联系对方：&nbsp;<a title="点击添加对方为好友" target=blank href=http://wpa.qq.com/msgrd?V=3&uin=<?php echo $usermsg->QQToken;?>&Site=点击添加好友&Menu=yes><img border="0" SRC=http://wpa.qq.com/pa?p=1:<?php echo $usermsg->QQToken;?>:4 alt="点击这里给我发消息" style="position: relative; top:2px; left:-3px" /></a><?php echo $usermsg->QQToken;?>&nbsp;&nbsp;&nbsp;&nbsp;<img title="右侧为接手电话，如有需要可联系" src="<?php echo VERSION2;?>img/mobile.jpg" style="position:relative; top:4px;"/>&nbsp;<a style="color:#e99f4b;"><?php echo $usermsg->Phon;?></a>
+                    <br/>
+                    <span>返款支付宝账号：</span><?php echo $usermsg->alipay_account; ?>（<?php echo $usermsg->TrueName;?>）&nbsp;&nbsp;&nbsp;&nbsp;财付通账号：<?php echo $usermsg->QQToken ?>（<?php echo $usermsg->TrueName;?>）
+                    <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;下单地址：
+                    <?php
+                        $userAddressInfo = Useraddress::model()->findByAttributes( array('occupy_uid' => $usermsg->id));
+                        if($userAddressInfo){
+                            $addressStr = '';
+                            $addressStr.= $userAddressInfo->user_name.'&nbsp';
+                            $addressStr.= $userAddressInfo->mobile.'&nbsp';
+                            $area1 = Area::model()->findByPk($userAddressInfo->sheng_id);
+                            $addressStr.= $area1->name.'&nbsp';
+                            $area1 = Area::model()->findByPk($userAddressInfo->shi_id);
+                            $addressStr.= $area1->name.'&nbsp';
+                            $area1 = Area::model()->findByPk($userAddressInfo->qu_id);
+                            $addressStr.= $area1->name.'&nbsp';
+                            $addressStr .= $userAddressInfo->address;
+                            echo $addressStr;
+                        }else{
+                            echo '未分配地址，请联系买家进行修改收货地址';
+                        }
+                    ?>
+                    <br/>
+                    <span style="color: red;">免责声明：请认真核对接手下单的收货地址，返款时请认真核对收款支付宝或财付通，若任何一项不一致，您可以拒绝返款或投诉接手，因此问题造成纠纷平台概不负责。</span>
                 </div><!--taskFunMan end-->
                 <?php
                     }
@@ -303,7 +300,7 @@
 						if($count > 0)
 						{ 
 					?>
-                    <span style="cursor: pointer; color:#FF0000;" class="showAcceptUserList" title="审核刷手" onclick="shAcceptUser(<?php echo $item->id;?>);">审核</span>
+                    <span style="cursor: pointer; color:#FF0000;" class="showAcceptUserList" title="审核接手" onclick="shAcceptUser(<?php echo $item->id;?>);">审核</span>
 					<?php
 						}
 					?>
@@ -421,7 +418,7 @@
                         actionName="您付款";
                     }else if($(this).attr("action")=="waiteSellerSendGood")
                     {
-                        actionName="自动发货";
+                        actionName="返款";
                     }
                     else
                     {
@@ -456,7 +453,7 @@
                 			{
                                 if(msg=="SUCCESS")
                                 {
-               			            layer.confirm('发货成功', {
+               			            layer.confirm('返款成功', {
                                 		btn: ['知道了'] //按钮
                                 	},function(){
                                 	   location.reload();//重新刷新当前页面
@@ -464,7 +461,7 @@
                                 }
                                 else
                                 {
-                                    layer.confirm('发货失败，请联系我们的客服人员', {
+                                    layer.confirm('返款失败，请联系我们的客服人员', {
                                 		btn: ['知道了'] //按钮
                                 	},function(){
                                 	   location.reload();//重新刷新当前页面
@@ -845,7 +842,7 @@
             //商家确认发货
             $(".sellerCertainSendGood").click(function(){
                 var taskid=$(this).attr("lang");//任务id
-                layer.confirm('您确认发货吗？', {
+                layer.confirm('您确认已返款吗？', {
             		btn: ['确认','取消'] //按钮
             	},function(){
             	   $.ajax({
@@ -856,7 +853,7 @@
             			{
                             if(msg=="SUCCESS")
                             {
-           			            layer.confirm('发货成功', {
+           			            layer.confirm('返款成功', {
                             		btn: ['知道了'] //按钮
                             	},function(){
                             	   location.reload();//重新刷新当前页面
@@ -878,14 +875,14 @@
             //商家最后确认
             $(".sellerLastCertain").click(function(){
                 var taskid=$(this).attr("lang");
-                layer.confirm('<span style="font-size:12px;"><p style="font-size:14px; font-weight:bold; text-align:center; color:red;">请注意！您即将要确认付款给对方了</p>请确认您已经在淘宝收到接手的货款与好评，并且完成了您的任务，确定后，任务担保金和麦粒将到达对方平台帐户！<p style="color:red; font-weight:bold; font-size:14px; text-align:center;">如果对方未付款，请勿确认，请直接发布申诉。</p></span>', {
+                layer.confirm('<span style="font-size:12px;"><p style="font-size:14px; font-weight:bold; text-align:center; color:red;">请确定接手完满完成了任务，审核通过后此条任务将结束，同时投诉入口关闭。</span>', {
             		btn: ['确认','取消'] //按钮
             	},function(){
-                    layer.confirm('<span style="color:red; padding-bottom:10px;">请针对此次任务给予威客评价</span><br/><input type="radio" name="pjstatus" class="pjstatus" value="2" checked="checked" />&nbsp;好评&nbsp;&nbsp;&nbsp;<input type="radio" name="pjstatus" class="pjstatus" value="1" />&nbsp;中评&nbsp;&nbsp;&nbsp;<input type="radio" name="pjstatus" class="pjstatus" value="0" />&nbsp;差评', {
+                    layer.confirm('<span style="color:red; padding-bottom:10px;">请针对此次任务给予接手评价</span><br/><input type="radio" name="pjstatus" class="pjstatus" value="2" checked="checked" />&nbsp;好评&nbsp;&nbsp;&nbsp;<input type="radio" name="pjstatus" class="pjstatus" value="1" />&nbsp;中评&nbsp;&nbsp;&nbsp;<input type="radio" name="pjstatus" class="pjstatus" value="0" />&nbsp;差评', {
                     	btn: ['确定'] //按钮
                     },function(){
                         var pjstatus=$("input[name='pjstatus']:checked").val();
-                        //提交对威客的评价
+                        //提交对接手的评价
                         $.ajax({
                             type:"POST",
                             url:"<?php echo $this->createUrl('user/taskAppraise');?>",
@@ -903,11 +900,7 @@
                                         {
                                             if(msg=="SUCCESS")
                                             {
-                                                layer.confirm('审核成功，任务完成', {
-                                            		btn: ['知道了'] //按钮
-                                            	},function(){
-                                            	   location.reload();//重新刷新当前页面
-                                            	});
+                                                location.reload();//重新刷新当前页面
                                             }
                                             else
                                             {
@@ -1034,7 +1027,7 @@
                         dj="五钻";
                         break;
                 }
-                layer.confirm('此任务对威客帐号等级要求为：<a href="javascript:;" style="color:red;">'+dj+'以上</a>', {
+                layer.confirm('此任务对接手帐号等级要求为：<a href="javascript:;" style="color:red;">'+dj+'以上</a>', {
                 	btn: ['知道了'] //按钮
                 });
             });
@@ -1042,14 +1035,14 @@
             //商家发起投诉
             $(".complain").click(function(){
                 var taskid=$(this).attr('lang');
-                layer.confirm('<div style="color:#000; margin-bottom:10px; text-align:center; font-size:20px; font-weight:bold;">《投诉威客须知》</div><span style="color:red;">&nbsp;&nbsp;&nbsp;&nbsp;您确定要对接此任务的威客发起投诉吗？如果投诉 失败将会对您的信用产生影响，同时如果发现此次投诉为恶意投诉，您的帐号将受到处罚，情节严重的将会被永久封号！</span>', {
+                layer.confirm('<div style="color:#000; margin-bottom:10px; text-align:center; font-size:20px; font-weight:bold;">《投诉接手须知》</div><span style="color:red;">&nbsp;&nbsp;&nbsp;&nbsp;您确定要对接此任务的接手发起投诉吗？如果投诉 失败将会对您的信用产生影响，同时如果发现此次投诉为恶意投诉，您的帐号将受到处罚，情节严重的将会被永久封号！</span>', {
                 	btn: ['提交投诉资料','取消投诉'] //按钮
                 },function()
                 {
                     //提交投诉资料
                     layer.open({
                         type: 2,
-                        title:'投诉威客-提交资料',
+                        title:'投诉接手-提交资料',
                         area: ['526px','100%'],
                         skin: 'layui-layer-rim', //加上边框
                         content: ['/user/userTaskComplian.html?taskid='+taskid+'&userStyle=0', 'no']//userStyle发起投诉的人的类型，0为商家发起的投诉，1为接手发起的投诉
@@ -1059,7 +1052,7 @@
             
             //查看投诉情况
             $(".complianDuring").click(function(){
-                layer.confirm('<span style="color:red;">您已经对接手该任务的威客发起了投诉申请，您可以通过查您的申请中心或者联系客服人员进一步跟踪投诉进展</span>', {
+                layer.confirm('<span style="color:red;">您已经对接手该任务的接手发起了投诉申请，您可以通过查您的申请中心或者联系客服人员进一步跟踪投诉进展</span>', {
                 	btn: ['查看投诉情况'] //按钮
                 },function()
                 {

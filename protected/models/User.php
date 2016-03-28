@@ -64,6 +64,40 @@ class User extends CActiveRecord
 			array('UserId, Username, PassWord, NickName, Email, QQToken, VipLv, Phon, PhonClock, Question, Anser, TrueName, IdNumber, RegIp, RegTime, LoginIp, LoginTime, IsDefult, Opend', 'safe', 'on'=>'search'),
 		);
 	}
+	
+	/**
+	 * 获取会员的接单数量
+	 * @param int $num
+	 * @param string $unit 单位
+	 */
+	static public function gettasknumbytime($userId,$num,$unit)
+	{
+	   //进行统计
+	   return Companytasklist::model()->count('taskerid='.$userId.' AND taskfristTime >'.strtotime('-'.$num.' '.$unit));
+	}
+	
+	static public function getuserlevelnum($userid)
+	{
+	    //获取会员的等级数字
+	    $userInfo = self::model()->findByPk($userid);
+	    $score = isset($userInfo) ? $userInfo->Score : 1;
+	    //判断等级
+	    if($score >= 1 AND $score < 11) return 1;
+	    if($score >= 11 AND $score < 21) return 2;
+	    if($score >= 21 AND $score < 31) return 3;
+	    if($score >= 31 AND $score < 51) return 4;
+	    if($score >= 51 AND $score < 101) return 5;
+	    if($score >= 101 AND $score < 201) return 6;
+	    if($score >= 201 AND $score < 301) return 7;
+	    if($score >= 301 AND $score < 501) return 8;
+	    if($score >= 501 AND $score < 1001) return 9;
+	    if($score >= 1002 AND $score < 2001) return 10;
+	    if($score >= 2001 AND $score < 3001) return 11;
+	    if($score >= 3001 AND $score < 5001) return 12;
+	    if($score >= 5001 AND $score < 10001) return 13;
+	    if($score >= 10001) return 14;
+	    
+	}
 
 	/**
 	 * @return array relational rules.

@@ -31,31 +31,36 @@
           <ul>
             <li class="input1">QQ号码：
               <input type="text" name="qq" class="text1 myqq" value="<?php echo $userinfo->QQToken;?>" <?php echo $userinfo->QQToken!=""?'readonly="readonly" style="background:#e9e8e8"':''?>/>
-              <span style="color: red; padding-left:10px;">请填写您的真实QQ，接任务时需要使用!!</span></li>
+              <span style="color: red; padding-left:10px;">接任务时财付通使用此QQ号，收款人必须与真实姓名一致，一经设置，无法自行修改。</span></li>
             <li class="input2">真实姓名：
               <input type="text" name="truename" value="<?php echo $userinfo->TrueName;?>" class="text2 myname" <?php echo $userinfo->TrueName!=""?'readonly="readonly" style="background:#e9e8e8"':''?> />
               <span>真实姓名和身份证号码一经设置，无法更改，请谨慎填写，这将关系到您后期的提现等操作！！</span></li>
             <li class="input2">身份证号：
               <input type="text"  <?php echo ($userinfo->id_card != "" && $userinfo->id_is_check == 1 ) ? 'readonly="readonly" style="background:#e9e8e8"':''?> name="id_card" value="<?php echo $userinfo->id_card;?>" class="text2 myname"  />
-			  <span style="color:#FF0000; font-weight:bold;"><?php if($userinfo->id_is_check) {?>审核通过<?php }elseif($userinfo->id_is_check == 2){?>审核未通过，请修改<?php }else{?>未审核(审核通过后才能接单)<?php }?></span>
+			  <span style="color:#FF0000; font-weight:bold;"><?php if($userinfo->id_is_check) {?>审核通过<?php }elseif($userinfo->id_is_check == 2){?>审核未通过，请修改<?php }else{?>待审核(审核通过后才能接单)<?php }?></span>
             </li>
             <li class="input2">身份证正面：
               <input type="text" name="id_photo_front" <?php echo ($userinfo->id_photo_front != "" && $userinfo->id_is_check == 1 )?'readonly="readonly" style="background:#e9e8e8"':''?> id="id_photo_front_show" value="<?php echo $userinfo->id_photo_front;?>" class="text2 myname"  />
 			  <?php if($userinfo->id_is_check != 1){?>
-			  <a id="id_photo_front" href="javascript:;">点击上传照片</a>
+			  <a id="id_photo_front" href="javascript:;">点击上传照片</a><span>请上传高清大图原图，上传后请联系客服QQ及时审核。</span>
 			  <?php if(!empty($userinfo->id_photo_front)){?> <a href="<?php echo $userinfo->id_photo_front;?>" target="_blank" title="查看">查看</a> <?php }?>
 			  <?php }else{?>
 			  	<a href="<?php echo $userinfo->id_photo_front;?>" target="_blank" title="查看">查看</a>
 			  <?php }?>
+			  
             </li>
             <li class="input2">身份证反面：
               <input type="text" <?php echo ($userinfo->id_photo_rear && $userinfo->id_is_check == 1) != ""?'readonly="readonly" style="background:#e9e8e8"':''?> name="id_photo_rear" id="id_photo_rear_show" value="<?php echo $userinfo->id_photo_rear;?>" class="text2 myname"  />
 			  <?php if($userinfo->id_is_check != 1){?>
-			 <a id="id_photo_rear" href="javascript:;">点击上传照片</a>
+			 <a id="id_photo_rear" href="javascript:;">点击上传照片</a><span>请上传高清大图原图，上传后请联系客服QQ及时审核。</span>
 			     <?php if(!empty($userinfo->id_photo_rear)){?> <a href="<?php echo $userinfo->id_photo_rear;?>" target="_blank" title="查看">查看</a> <?php }?>
 			 <?php }else{?>
 			  	<a href="<?php echo $userinfo->id_photo_rear;?>" target="_blank" title="查看">查看</a>
 			  <?php }?>
+			  
+            </li>
+			<li class="input2">支付宝账号：
+              <input type="text"  <?php if(!empty($userinfo->alipay_account)){ ?> readonly="readonly" style="background:#e9e8e8" <?php }?> name="alipay_account" id="alipay_account" value="<?php echo $userinfo->alipay_account;?>" class="text2 myname"  /><span>请填写与真实姓名一致的收款支付宝帐号，仅发任务可不填，一经设置，无法自行修改。</span>
             </li>
             <li class="input3">Email :<span><?php echo substr_replace($userinfo->Email,'***',3,3);?></span	></li>
           </ul>
@@ -113,10 +118,10 @@
               </label>
               <br/>
               <label>
-                收货人姓名：<input type="text" name="addr[user_name]" value="<?php if($address) echo  $address->user_name;?>" />
+                收货人姓名：<input type="text" name="addr[user_name]" value="<?php if($address) echo  $address->user_name;?>" <?php if(isset($address) && !empty($address->user_name)){?> readonly="readonly" style="background:#e9e8e8" <?php } ?> />
                 </label><br/>
-                <label>收货人手机号：<input type="text" name="addr[mobile]" value="<?php if($address) echo  $address->mobile;?>" /></label><br/>
-                <label>收货人地址：<input type="text" name="addr[address]" value="<?php if($address) echo  $address->address;?>" />
+                <label>收货人手机号：<input <?php if(isset($address) && !empty($address->mobile)){?> readonly="readonly" style="background:#e9e8e8" <?php } ?> type="text" name="addr[mobile]" value="<?php if($address) echo  $address->mobile;?>" /></label><br/>
+                <label>收货人地址：<input <?php if(isset($address) && !empty($address->address)){?> readonly="readonly" style="background:#e9e8e8" <?php } ?> type="text" name="addr[address]" value="<?php if($address) echo  $address->address;?>" />
               </label>
               <br/>
               <span>仅发任务可不填写，接任务必须填写！</span>

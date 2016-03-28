@@ -64,7 +64,7 @@
             	</div>
             </div>
             <form method="post" action="<?php echo $this->createUrl("membercenter/memberlist")?>">
-                <input type="text" name="keyword" placeholder="请输入用户名或手机号" style="text-indent: 5px; color: #666; font-size:14px; width:260px;" />　<button type="submit" class="btn btn-sm btn-success" border="0" id="reg_submit"><i class="fa fa-dot-circle-o"></i>&nbsp;搜索</button>
+                <input type="text" name="keyword" placeholder="请输入用户名或手机号" style="text-indent: 5px; color: #666; font-size:14px; width:260px;" /> <select name="id_is_check"><option value="">请选择身份审核状态</option><option value="1">未审核</option><option value="2">审核通过</option><option value="3">审核未通过</option></select>　<button type="submit" class="btn btn-sm btn-success" border="0" id="reg_submit"><i class="fa fa-dot-circle-o"></i>&nbsp;搜索</button>
             </form>
             <br />
             <div class="panel panel-default"><!--theBody start-->
@@ -88,6 +88,7 @@
                                 <th><div align="center">会员等级</div></th>
                                 <th><div align="center">商保状态</div></th>
                                 <th><div align="center">手机激活</div></th>
+                                <th><div align="center">身份激活</div></th>
                                 <th><div align="center">安全码设置</div></th>
                                 <th><div align="center">考试状态</div></th>
                                 <th><div align="center">异地登录</div></th>
@@ -122,6 +123,11 @@
                             <td><div align="center">
                                 <?php
                                     echo $item->PhonActive==0?"<span style='color:red; font-weight:bold;'>否</span>":"<span style='color:green; font-weight:bold;'>是</span>";
+                                ?>
+                            </div></td>
+                             <td><div align="center">
+                                <?php
+                                    echo $item->id_is_check !=  1?"<span style='color:red; font-weight:bold;'>否</span>":"<span style='color:green; font-weight:bold;'>是</span>";
                                 ?>
                             </div></td>
                             <td><div align="center">

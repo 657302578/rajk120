@@ -3,8 +3,7 @@
     ?>
     <div class="bdmhIntr">
         <p>1、该页面用来绑定和维护用来接任务、购买任务商品的淘宝买号</p>
-        <p>2、一个买号一天只可以接手6个任务，接手高于6个任务，系统将挂起买号，第二天才进行继续接手任务</p>
-        <p>3、您目前是新手会员用户,<a href="<?php echo $this->createUrl('user/userBuyPoint');?>" target="_blank">申请VIP</a>最高可绑定100个买号！ <a href="<?php echo $this->createUrl('site/userLeveldoc');?>" target="_blank">查看VIP限权</a></p>
+        <p>2、一个会员号一天只可以接手N个任务，接手高于N个任务，系统将挂起买号，第二天才进行继续接手任务</p>
     </div>
     <div class="bdmh">
         <form action="<?php $this->createUrl('user/taobaoBindBuyer');?>" method="post">

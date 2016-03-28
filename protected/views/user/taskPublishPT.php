@@ -26,7 +26,6 @@
             <li lang="product_main"><a href="javascript:void(0)" class="on">商品信息</a></li>
             <li lang="server"><a href="javascript:void(0)" class="">增值服务</a></li>
             <li lang="screen"><a href="javascript:void(0)" class="">筛选接手</a></li>
-            <li lang="express"><a href="javascript:void(0)" class="">快递空包</a></li>
           </ul>
         </div>
         <div class="xf_fban">
@@ -97,7 +96,7 @@
                     </li>
 					</ul>
 					<ul class="dowebok">
-                    <li class="s35" title="要求接手使用什么方式搜索进店">搜索进店方式：</li>
+                    <li class="s35" title="要求接手使用什么方式搜索进店">进店方式：</li>
                     <li class="s39 searchway" title="要求接手搜索商品进店">
                       <input type="radio" name="visitWay" checked="checked" value="1">
                       搜商品 </li>
@@ -109,19 +108,19 @@
                       直通车</li>
                     <li class="s40 s41 searchway" title="要求接手通过信用评价地址进店">
                       <input type="radio" name="visitWay" value="4">
-                      信用评价</li>
+                      其他</li>
                    <!-- <li class="h32"><span>支付 <font class="pdfo">1.0</font> 个麦粒</span></li>-->
                   </ul>
-				  <ul class="dowebok">
+				  <!--<ul class="dowebok">
 				  	<li class="s35" ><img src="<?php echo VERSION2;?>taskcss/c12.jpg" alt="">搜索关键字：</li>
                     <li class="s34">
                       <input type="text" id="txtDes" name="divKey" class="pc11 inputp s36_ts" placeholder="搜索此关键词进店" datatype="*" nullmsg="请填写搜索关键字" errormsg="请填写搜索关键字" />
                     </li>
-				  </ul>
+				  </ul>-->
 				  <ul class="dowebok">
-				  	<li class="s35" ><img src="<?php echo VERSION2;?>taskcss/c12.jpg" alt="">搜索提示：</li>
+				  	<li class="s35" >提示：</li>
                     <li class="s34">
-                      <input type="text" name="txtSearchDes" id="txtSearchDes" class="pc11 inputp s36_ts" placeholder="如：搜索结果在第一页第五排" datatype="*" nullmsg="请填写搜索提示" errormsg="请填写搜索提示" />
+                      <input style="width:400px;" type="text" name="txtSearchDes" id="txtSearchDes" class="pc11 inputp s36_ts" placeholder="如：天猫搜索关键字“女装”搜索结果在第三页第五排" datatype="*" nullmsg="请填写搜索提示" errormsg="请填写搜索提示" />
                     </li>
 				  </ul>
                 <div class="product_content2">

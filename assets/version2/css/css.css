@@ -890,7 +890,7 @@ li.on a{
 	color: #313131;
     font-size: 14px;
     padding-left: 30px;
-    width: 75px !important;
+    width: 105px !important;
 }
 .dtSortLis_proBeore{
 	float: left;
@@ -3803,7 +3803,7 @@ ul.yiiPager a:link, ul.yiiPager a:visited{ padding: 0; border: none;}
 .taskFunMan font a{ color:#fff;}
 .introduce{ width: 900px; margin-left: 20px; line-height:25px; padding-top:10px;}
 
-.takerInfo{ width: 990px; height:30px; line-height: 40px; border-top:1px dashed #99c1f5; margin-top:10px;}
+.takerInfo{ width: 990px;line-height: 30px; border-top:1px dashed #99c1f5; margin-top:10px;}
 .takerInfo span{ padding-left:20px;}
 
 .platform{ cursor: pointer; margin-left:5px;}

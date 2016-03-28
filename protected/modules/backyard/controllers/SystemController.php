@@ -3,6 +3,32 @@
         
         public $layout='//layouts/backyard';//定义布局以便加载kindeditor文本编辑器的css与js
         
+        /**
+         * 平台常用参数设置
+         */
+        public function actionConfig()
+        {
+            if($_POST)
+            {   
+                $config = Config::model()->findByPk(1);
+                $data['task_price'] = $_POST['task_price'];
+                $data['jifen_rate'] = $_POST['jifen_rate'];
+                $data['last_update_time'] = date('Y/m/d H:i:s');
+                if(!$config)
+                {
+                    $config = new Config();
+                    $config->insert($data);
+                }else{
+                    $config->updateByPk(1, $data);
+                }
+            }
+            $config = Config::model()->findByPk(1);
+            $this->renderPartial('config',array(
+                'config' => $config,
+            ));
+           
+        }
+        
         /*
             新手考试管理
         */

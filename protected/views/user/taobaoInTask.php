@@ -198,16 +198,16 @@
                         }
                         if($item->status==2){
                     ?>
-                         <a href="javascript:;" class="qcrw certainGoToPay" alt="<?php echo $item->id;?>" style="width: auto; padding:0 8px; cursor: pointer;">等待您对商品付款</a>
+                         <a href="javascript:;" class="qcrw certainGoToPay" alt="<?php echo $item->id;?>" style="width: auto; padding:0 8px; cursor: pointer;">等待您完成操作</a>
                          <div class="clear"></div>
                          <span style="width: auto; position: relative; top:-30px; left:805px;" class="settime" action="waiterBuyerPay" lang="<?php echo $item->taskerid;?>" alt="<?php echo $item->id;?>" endTime="<?php echo date("Y-m-d H:i:s",$item->tasksecondTime+1800);?>"></span>
                     <?php
                         }
                         if($item->status==3){
                     ?>
-                        <a href="javascript:;" class="qcrw sellerSendGood" alt="<?php echo $item->id;?>" style="width: auto; padding:0 8px; cursor: pointer;">您已付款，等待商家发货</a>
+                        <a href="javascript:;" class="qcrw sellerSendGood" alt="<?php echo $item->id;?>" style="width: auto; padding:0 8px; cursor: pointer;">您已完成，等待商家返款</a>
                         <div class="clear"></div>
-                        <span style="width: auto; position: relative; top:-30px; left:805px;" class="settime" action="waiteSellerSendGood" lang="<?php echo $item->taskerid;?>" alt="<?php echo $item->id;?>" endTime="<?php echo date("Y-m-d H:i:s",$item->taskthirdTime+10800);?>"></span>
+                        <span style="width: auto; position: relative; top:-30px; left:805px;" class="settime" action="waiteSellerSendGood" lang="<?php echo $item->taskerid;?>" alt="<?php echo $item->id;?>" endTime="<?php echo date("Y-m-d H:i:s",$item->taskthirdTime+86400);?>"></span>
                     <?php
                         }
                         if($item->status==4){
@@ -255,7 +255,7 @@
                         $usermsg=User::model()->findByPk($item->publishid);
                 ?>
                 <div class="takerInfo"><!--taskFunMan start-->
-                    <span>商家信息：</span><?php echo $usermsg->Username;?>　<img src="<?php echo VERSION2?>img/wang.jpg" width="20" style="position: relative; top:5px;" />&nbsp;采用买号：<?php echo $item->ddlZGAccount;?>　　　　　联系对方：&nbsp;<a title="点击添加对方为好友" target=blank href=http://wpa.qq.com/msgrd?V=3&uin=<?php echo $usermsg->QQToken;?>&Site=点击添加好友&Menu=yes><img border="0" SRC=http://wpa.qq.com/pa?p=1:<?php echo $usermsg->QQToken;?>:4 alt="点击这里给我发消息" style="position: relative; top:2px; left:-3px" /></a>　<img title="右侧为接手电话，如有需要可联系" src="<?php echo VERSION2;?>img/mobile.jpg" style="position:relative; top:4px;"/>&nbsp;<a style="color:#e99f4b;"><?php echo $usermsg->Phon;?></a>　　
+                    <span>商家信息：</span><?php echo $usermsg->Username;?>　<img src="<?php echo VERSION2?>img/wang.jpg" width="20" style="position: relative; top:5px;" />&nbsp;采用买号：<?php echo $item->ddlZGAccount;?>　　　　　联系对方：&nbsp;<a title="点击添加对方为好友" target=blank href=http://wpa.qq.com/msgrd?V=3&uin=<?php echo $usermsg->QQToken;?>&Site=点击添加好友&Menu=yes><img border="0" SRC=http://wpa.qq.com/pa?p=1:<?php echo $usermsg->QQToken;?>:4 alt="点击这里给我发消息" style="position: relative; top:2px; left:-3px" /></a><?php echo $usermsg->QQToken;?>&nbsp;&nbsp;&nbsp;<img title="右侧为接手电话，如有需要可联系" src="<?php echo VERSION2;?>img/mobile.jpg" style="position:relative; top:4px;"/>&nbsp;<a style="color:#e99f4b;"><?php echo $usermsg->Phon;?></a>　　
                     <?php
                         if($item->status==1){
                     ?>
@@ -347,10 +347,10 @@
                     var day = Math.floor((lag / 3600) / 24);
                     if($(this).attr("action")=="waiterBuyerPay")//倒计时提示方案根据任务状态进行调整
                     {
-                        actionName="您付款";
+                        actionName="您操作";
                     }else if($(this).attr("action")=="waiteSellerSendGood")
                     {
-                        actionName="自动发货";
+                        actionName="返款";
                     }
                     else
                     {
@@ -486,28 +486,57 @@
             
             //接手执行付款操作
             $(".certainGoToPay").click(function(){
-                layer.open({
-                    type: 2,
-                    title:'聚宝盆任务提示',
-                    shadeClose: true,
-                    shade: false,
-                    move:false,
-                    maxmin: true, //开启最大化最小化按钮
-                    area: ['526px','100%'],
-                    skin: 'layui-layer-rim', //加上边框
-                    content: ['/site/buyerToPay.html?taskid='+$(this).attr('alt')+'', 'no']
-                });
+				
+                $.ajax({
+					type:"POST",
+					url:"<?php echo $this->createUrl('site/buyerToPayCertain');?>",
+					data:{"taskid":$(this).attr('alt')},
+					success:function(data)
+					{
+						if(data=="SUCCESS")
+						{
+							layer.confirm('操作完成', {
+								btn: ['确定'] //按钮
+							}, function(){
+								location.reload();//刷新父级页面
+							});
+						}else
+						{
+							layer.confirm('付款失败，请联系客服人员', {
+								btn: ['确定'] //按钮
+							}, function(){
+								location.reload();//刷新父级页面
+							}); 
+						}
+					}
+				});
             });
             
             //接手执行收货好评操作
             $(".waitBuyerHP").click(function(){
-                layer.open({
-                    type: 2,
-                    title:'收货好评',
-                    area: ['526px','360px'],
-                    skin: 'layui-layer-rim', //加上边框
-                    content: ['/site/waitBuyerHP.html?taskid='+$(this).attr('alt')+'', 'no']
-                });
+				$.ajax({
+					type:"POST",
+					url:"<?php echo $this->createUrl('site/waitBuyerHPDone');?>",  
+					data:{"taskid":$(this).attr('alt')},
+					success:function(data)
+					{
+						if(data=="SUCCESS")
+						{
+							layer.confirm('收货好评成功', {
+								btn: ['确定'] //按钮
+							}, function(){
+								location.reload();//刷新父级页面
+							});
+						}else
+						{
+							layer.confirm('收货好评失败，请联系客服人员', {
+								btn: ['确定'] //按钮
+							}, function(){
+								location.reload();//刷新父级页面
+							}); 
+						}
+					}
+				});
             });
             
             //商家查看接手上传截图

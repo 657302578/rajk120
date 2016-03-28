@@ -95,6 +95,18 @@ class SiteController extends Controller
     */
     public function actionTaobaoTask()
     {
+        if($userId = Yii::app()->user->getId())
+        {
+            $userInfo = User::model()->findByPk($userId);
+            //判断是否是VIP
+            if($userInfo->VipLv > 0 && $userInfo->VipStopTime > time())
+            {
+                $isVip = true;
+            }
+            $isVip =  ($userInfo->VipLv > 0 && $userInfo->VipStopTime > time()) ? true : false;
+        }else{
+            $isVip = false;
+        }
         //关键词搜索
         if(isset($_POST['keywords']) && $_POST['keywords']!="")
         {
@@ -115,12 +127,13 @@ class SiteController extends Controller
             
             $this->render('taobaoTask',array(
                 'proInfo' => $proreg,
-                'pages' => $pages
+                'pages' => $pages,
+                'is_vip' => $isVip
             ));
             Yii::app()->end();
         }
         //多条件搜索
-        if(count($_GET)<>0)//判断是否有get传值
+        if(count($_GET)<>0 && $isVip)//判断是否有get传值
         {
             //var_dump($_GET['platform']);
             //exit;
@@ -190,7 +203,8 @@ class SiteController extends Controller
             
             $this->render('taobaoTask',array(
                 'proInfo' => $proreg,
-                'pages' => $pages
+                'pages' => $pages,
+                'is_vip' => $isVip
             ));
             Yii::app()->end();
         }
@@ -208,7 +222,8 @@ class SiteController extends Controller
         //分页结束
         $this->render('taobaoTask',array(
             'proInfo' => $proreg,
-            'pages' => $pages
+            'pages' => $pages,
+            'is_vip' => $isVip
         ));
     }
     
@@ -414,20 +429,11 @@ class SiteController extends Controller
     //接手接任务-等接手付款-第二步全部完成确认并提交
     public function actionBuyerToPayCertain()
     {
-        if(isset($_POST['url3']) && isset($_POST['url4']) && isset($_POST['url55']) && isset($_POST['url5']) && isset($_POST['url6']) && isset($_POST['url7']) && isset($_POST['url8']) && isset($_POST['taskid']))
+        if(isset($_POST['taskid']))
         {
              $taskInfo=Companytasklist::model()->findByPk($_POST['taskid']);
              $taskInfo->taskthirdTime=time();//接手完成付款的时间
              $taskInfo->status=3;//接手付款成功
-             
-             $taskInfo->taskerHBoneImg=$_POST['url3'];//货比3家1截图
-             $taskInfo->taskerHBsecondImg=$_POST['url4'];//货比3家2截图
-             $taskInfo->taskerHBthirdImg=$_POST['url55'];//货比3家3截图
-             $taskInfo->taskerBottomImg=$_POST['url5'];//浏览底部截图
-             $taskInfo->taskerSCImg=$_POST['url6'];//收藏截图
-             $taskInfo->taskerOtheroneImg=$_POST['url7'];//店内其他商品1截图
-             $taskInfo->taskerOthersecondImg=$_POST['url8'];//店内其他商品2截图
-             
              if($taskInfo->save())
              {
                 echo "SUCCESS";
@@ -481,12 +487,12 @@ class SiteController extends Controller
     public function actionWaitBuyerHPDone()
     {
         //保存好评截图数据
-        if(isset($_POST['url3']) && $_POST['url3']!="" && isset($_POST['taskid']) && Yii::app()->user->getId())
+        if(isset($_POST['taskid']) && Yii::app()->user->getId())
         {
             $taskInfo=Companytasklist::model()->findByPk($_POST['taskid']);
             $taskInfo->taskfifthTime=time();//接手确认收货好评时间
             $taskInfo->status=5;//收货好评完成，等待商家确认完成任务
-            $taskInfo->taskerHPingImg=$_POST['url3'];//收货好评截图
+            //$taskInfo->taskerHPingImg=$_POST['url3'];//收货好评截图
             if($taskInfo->save())
                 echo "SUCCESS";
             else
@@ -540,6 +546,8 @@ class SiteController extends Controller
                 //4.改变发布方经验值
                 $publishinfo=User::model()->findByPk($taskInfo->publishid);//获取发布方信息
                 $publishinfo->Experience=$publishinfo->Experience+1;//商家每有一个任务被完成，经验值增加一个
+                //增加一个麦粒，如果是真实签收，该会员绑定的地址对应的占用者，获得一个麦粒
+                //todo....
                 if($userinfo->save() && $publishinfo->save())
                     echo "SUCCESS";
                 else

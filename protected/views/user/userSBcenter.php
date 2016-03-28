@@ -1,13 +1,6 @@
     <!--加入商保-->
   	<div class="d_shangb">
-        <div class="d_sbtopwidth">
-            <ul class="d_sbtop clearfix">
-                <li><span>加入商保的好处</span>：缴纳保证金后即成为麦粒网商保会员，能接手更多任务，赚取更高佣金。</li>
-                <li><span>商保金扣除规则</span>：当接手人触犯平台规定行为时，发布方有权提起申诉，如接手方行为过失，则需赔偿发布方损失。</li>
-                <li><span>商保退出规则</span>：无任何未完成任务15天后可提现。申请退出时请联系客服登记处理。</li>
-                <li><span>商保索赔流程</span>：发起商保索赔-双方协商-客服介入处理-五日内给出处理结果。</li>
-            </ul>
-        </div>
+        
         <?php
             $myinfo=User::model()->findByPk(Yii::app()->user->getId());
             $exitProtectPlanRecord=Exitprotectplanrecord::model()->findByAttributes(array(
@@ -63,17 +56,7 @@
                     if($myinfo->JoinProtectPlan==0){
                 ?>
             	<a href="javascript:;" class="joinProtectPlan">我要加入</a>
-                <?php }?>
-                
-                <?php
-                    if($myinfo->JoinProtectPlan==1 && !$exitProtectPlanRecord){
-                ?>
-                <a href="javascript:;" class="exitProtectPlan">申请退出</a>
-                <?php
-                    }else{
-                ?>
-                <a href="javascript:;" class="DelexitProtectPlan">取消申请</a>
-                <?php }?>
+                <?php }?>  
             </div>
         </div>
     </div>

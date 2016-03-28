@@ -92,7 +92,7 @@
             	</div>
             </div>
             <form method="post" action="<?php echo $this->createUrl("membercenter/buyerlist")?>">
-                <input type="text" name="keyword" placeholder="请输入旺旺名称" style="text-indent: 5px; color: #666; font-size:14px; width:260px;" />　<button type="submit" class="btn btn-sm btn-success" border="0" id="reg_submit"><i class="fa fa-dot-circle-o"></i>&nbsp;搜索</button>
+                <input type="text" name="keyword" placeholder="请输入旺旺名称" style="text-indent: 5px; color: #666; font-size:14px; width:260px;" /><select name="is_check"><option value="">审核状态</option><option value="1">未审核</option><option value="2">审核通过</option><option value="3">审核未通过</option></select>　<button type="submit" class="btn btn-sm btn-success" border="0" id="reg_submit"><i class="fa fa-dot-circle-o"></i>&nbsp;搜索</button>
             </form>
             <br />
             <div class="panel panel-default"><!--theBody start-->
