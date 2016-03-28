@@ -14,6 +14,7 @@
                 $data['task_price'] = $_POST['task_price'];
                 $data['jifen_rate'] = $_POST['jifen_rate'];
                 $data['last_update_time'] = date('Y/m/d H:i:s');
+                $data['buyertaskmaxnum'] = intval($_POST['buyertaskmaxnum']);
                 if(!$config)
                 {
                     $config = new Config();

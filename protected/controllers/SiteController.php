@@ -342,26 +342,46 @@ class SiteController extends Controller
         //检查是否登录以及返回符合条件的买号
         if($_POST['checkBase']=="DOIT" && Yii::app()->user->getId())
         {
+            $loginUserInfo = User::model()->findByPk(Yii::app()->user->getId());
+            //查询此会员是否上传支付宝账号
+            if(empty($loginUserInfo->alipay_account)) exit('NO_ALIPAY_ACCOUNT');
+            //判断此会员是否填写收货地址
+            $addressInfo = Useraddress::model()->findByAttributes( array('uid' => $loginUserInfo->id));
+            if(!isset($addressInfo)) exit('NO_USER_ADDRESS');
+            $ptConfig = Config::model()->findByPk(1);
             //查询符合条件的买号 
             $buyerInfo=Blindwangwang::model()->findAll(array(
                 'condition'=>'userid='.Yii::app()->user->getId().' and statue=1 and catalog=1 AND is_check=1',
                 'order'=>'id desc'
             ));
+            if($buyerInfo)
+            {
+                foreach ($buyerInfo as $bk => $bv)
+                {
+                    //查询此买号今日已接任务数量
+                    $count = Companytasklist::model()->count('taskerWangwang=\''.$bv['wangwang'].'\' AND status > 1 AND tasksecondTime >'.strtotime(date('Y/m/d')).' AND tasksecondTime < '.strtotime(date('Y/m/d 23:59:59')));
+                    if($count >= $ptConfig->buyertaskmaxnum) unset($buyerInfo[$bk]);
+                }
+            }
+            
             if($buyerInfo)//返回符合条件的买号
             {
+                
                 $divStart="<div class='choseBuyer'><div style='font-size:14px; line-height:35px;'>选择接此任务的买号：</div>";
                 $divEnd="</div>";
                 $radioItemStr="";
                 $buyerNum=count($buyerInfo);
                 foreach($buyerInfo as $k=>$v)
                 {
+                    //查询此买号的接单任务量
+                    $taskNum = Blindwangwang::getWwTaskNum($v['wangwang'], 1, 'day').'/'.Blindwangwang::getWwTaskNum($v['wangwang'], 7, 'day').'/'.Blindwangwang::getWwTaskNum($v['wangwang'], 1, 'month');
                     if($k==0)
                     {
-                        $radioItemStr=$radioItemStr."<li><input type='radio' name='buyerSelected' checked='checked' value='".$v['wangwang']."' />&nbsp;".$v['wangwang']."　<img src='".VERSION2."img/level/".$v['wangwanginfo'].".gif' /></li>";
+                        $radioItemStr=$radioItemStr."<li><input type='radio' name='buyerSelected' checked='checked' value='".$v['wangwang']."' />&nbsp;".$v['wangwang']."　<img src='".VERSION2."img/level/".$v['wangwanginfo'].".gif' />($taskNum)</li>";
                     }
                     else
                     {
-                        $radioItemStr=$radioItemStr."<li><input type='radio' name='buyerSelected' value='".$v['wangwang']."' />&nbsp;".$v['wangwang']."　<img src='".VERSION2."img/level/".$v['wangwanginfo'].".gif' /></li>";
+                        $radioItemStr=$radioItemStr."<li><input type='radio' name='buyerSelected' value='".$v['wangwang']."' />&nbsp;".$v['wangwang']."　<img src='".VERSION2."img/level/".$v['wangwanginfo'].".gif' />($taskNum)</li>";
                     }
                 }
                 echo $divStart.$radioItemStr.$divEnd;

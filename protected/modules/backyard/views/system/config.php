@@ -90,6 +90,13 @@
     		                        <input type="text" name="jifen_rate" id="input-small"  class="form-control input-sm" placeholder="1积分等于多少元" value="<?php if(isset($config)) echo $config->jifen_rate;?>"/>
     		                    </div>
                             </div>
+                            <br /><br />
+                            <div class="examItem">
+                                <label class="col-sm-3 control-label" for="input-small" style="width: auto;">买号每日最大可接任务数：</label>
+                                <div class="col-sm-3">
+    		                        <input type="text" name="buyertaskmaxnum" id="input-small"  class="form-control input-sm" placeholder="1积分等于多少元" value="<?php if(isset($config)) echo $config->buyertaskmaxnum;?>"/>
+    		                    </div>
+                            </div>
                             <div class="examItem">
                                 <div class="col-sm-10">
                                     <button type="submit" class="btn btn-sm btn-success" border="0" id="reg_submit" style=" margin-left:87px; margin-top: 10px;"><i class="fa fa-dot-circle-o"></i>&nbsp;保存配置</button>

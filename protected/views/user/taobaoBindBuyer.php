@@ -1,9 +1,10 @@
     <?php
         echo $this->renderPartial('/user/taobaoTaskNav');//载入淘宝大厅导航
+        $ptConfig = Config::model()->findByPk(1);
     ?>
     <div class="bdmhIntr">
         <p>1、该页面用来绑定和维护用来接任务、购买任务商品的淘宝买号</p>
-        <p>2、一个会员号一天只可以接手N个任务，接手高于N个任务，系统将挂起买号，第二天才进行继续接手任务</p>
+        <p>2、一个会员号一天只可以接手<?php echo $ptConfig->buyertaskmaxnum; ?>个任务，接手高于<?php echo $ptConfig->buyertaskmaxnum; ?>个任务，系统将挂起买号，第二天才进行继续接手任务</p>
     </div>
     <div class="bdmh">
         <form action="<?php $this->createUrl('user/taobaoBindBuyer');?>" method="post">
@@ -33,7 +34,25 @@
 				<div class="bd_zht">实名认证的身份证号码：</div><input type="text" name="id_card" class="zhsr">
 				<br/><br/>
 				<div class="bd_zht">绑定的支付宝账户：</div><input type="text" name="alipay_account" class="zhsr">
-				<div class="bd_zht">实名认证时的银行名称：</div><input type="text" name="bank_name" class="zhsr">
+				<div class="bd_zht">实名认证时的银行名称：</div>
+				<select name="bank_name" class="zhSort">
+				    <option value="中国工商银行">中国工商银行</option>
+				    <option value="中国农业而银行">中国农业而银行</option>
+				    <option value="中国建设银行">中国建设银行</option>
+				    <option value="招商银行">招商银行</option>
+				    <option value="中国银行">中国银行</option>
+				    <option value="中国邮政储蓄银行">中国邮政储蓄银行</option>
+				    <option value="交通银行">交通银行</option>
+				    <option value="中信银行">中信银行</option>
+				    <option value="中国民生银行">中国民生银行</option>
+				    <option value="广发银行">广发银行</option>
+				    <option value="浦发银行">浦发银行</option>
+				    <option value="兴业银行">兴业银行</option>
+				    <option value="北京银行">北京银行</option>
+				    <option value="北京农商银行">北京农商银行</option>
+				    <option value="平安银行">平安银行</option>
+				    
+				</select>
 				<br/><br/>
 				<div class="bd_zht">实名认证的银行卡号：</div><input type="text" name="bank_no" class="zhsr">
                 <button class="bdtbmh">绑定淘宝买号</button><br />
@@ -105,7 +124,7 @@
                                  </p>
                              </td>
                              <td align="center" valign="middle" class="t42">
-                                1 / 1 / 1
+                                <?php echo Blindwangwang::getWwTaskNum($item->wangwang, 1, 'day');?> / <?php echo Blindwangwang::getWwTaskNum($item->wangwang, 7, 'day');?> / <?php echo Blindwangwang::getWwTaskNum($item->wangwang, 1, 'month');?>
                              </td>
 							 <td align="center">
 							 <span style="color:#FF0000; font-weight:bold;"><?php if($item->is_check){?>审核通过<?php }elseif($item->is_check == 2){?>审核未通过<?php }else{ ?>未审核<?php } ?></span>

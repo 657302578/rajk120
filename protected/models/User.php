@@ -73,7 +73,7 @@ class User extends CActiveRecord
 	static public function gettasknumbytime($userId,$num,$unit)
 	{
 	   //进行统计
-	   return Companytasklist::model()->count('taskerid='.$userId.' AND taskfristTime >'.strtotime('-'.$num.' '.$unit));
+	   return Companytasklist::model()->count('taskerid='.$userId.' AND status > 0 AND taskfristTime >'.strtotime('-'.$num.' '.$unit));
 	}
 	
 	static public function getuserlevelnum($userid)

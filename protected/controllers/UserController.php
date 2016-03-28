@@ -1206,6 +1206,7 @@ class UserController extends Controller
             {
                 $blindInfo->wangwanginfo=$_POST['value'];
             }
+            $blindInfo->is_check = 0;
             if($blindInfo->save())
                 echo 1;
             else
@@ -2043,7 +2044,7 @@ class UserController extends Controller
     {
         //查询用户充值记录
         $criteria = new CDbCriteria;
-        $criteria->condition='userid='.Yii::app()->user->getId().' and catalog=1 or catalog=7';
+        $criteria->condition='userid='.Yii::app()->user->getId().' and (catalog=1 or catalog=7)';
         $criteria->order ="id desc";
     
         //分页开始
@@ -2069,7 +2070,7 @@ class UserController extends Controller
     {
         //查询用户充值记录
         $criteria = new CDbCriteria;
-        $criteria->condition='userid='.Yii::app()->user->getId().' and catalog=2 or catalog=9';
+        $criteria->condition='userid='.Yii::app()->user->getId().' and (catalog=2 or catalog=9)';
         $criteria->order ="id desc";
     
         //分页开始
@@ -2094,7 +2095,7 @@ class UserController extends Controller
     {
         //查询用户充值记录
         $criteria = new CDbCriteria;
-        $criteria->condition='userid='.Yii::app()->user->getId().' and catalog=3 or catalog=4 or catalog=5 or catalog=6';
+        $criteria->condition='userid='.Yii::app()->user->getId().' and (catalog=3 or catalog=4 or catalog=5 or catalog=6)';
         $criteria->order ="id desc";
     
         //分页开始

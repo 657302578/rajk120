@@ -103,4 +103,16 @@ class Blindwangwang extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+	
+	/**
+	 * 获取旺旺号的刷单数量
+	 * @param string $wangwangName 旺旺名称
+	 * @param int $num 时间长度，比如1
+	 * @param string $unit 单位 day mouth
+	 */
+	static public function getWwTaskNum($wangwangName,$num,$unit='day')
+	{
+	    $count = Companytasklist::model()->count('taskerWangwang=\''.$wangwangName.'\' AND  status > 0 AND taskfristTime >'.strtotime('-'.$num.' '.$unit));
+	    return intval($count);
+	}
 }
