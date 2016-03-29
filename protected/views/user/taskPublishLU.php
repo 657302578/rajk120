@@ -13,6 +13,11 @@
 ?>
 <form class="registerform" method="post" action="<?php echo $this->createUrl('user/taskPublistHandle');?>">
 <input type="hidden" name="taskCatalog" value="1" /><!--任务类型来路搜索任务-->
+<input type="hidden" name="txtMessage" value="" />
+<input type="hidden" name="cbxName" value="" />
+<input type="hidden" name="cbxcode" value="" />
+<input type="hidden" name="cbxAddress" value="" />
+<input type="hidden" name="cbxMobile" value="" />
 <div id="content">
   <div class="cle"></div>
   <div class="cle"></div>
@@ -24,9 +29,8 @@
         <div class="left_xf_nav">
           <ul>
             <li lang="product_main"><a href="javascript:void(0)" class="on">商品信息</a></li>
-            <li lang="server"><a href="javascript:void(0)" class="">增值服务</a></li>
+            <li lang="server"><a href="javascript:void(0)" class="">任务要求</a></li>
             <li lang="screen"><a href="javascript:void(0)" class="">筛选接手</a></li>
-            <li lang="express"><a href="javascript:void(0)" class="">快递空包</a></li>
           </ul>
         </div>
         <div class="xf_fban">
@@ -37,6 +41,7 @@
           </div>
         </div>
       </div>
+	  <span id="task_main">
       <div id="product" class="div">
         <?php
             $this->renderPartial('/user/taskPublishNav');//加载发布任务公共导航
@@ -65,9 +70,19 @@
 					<ul class="dowebok">
 					<li class="s35" title="使用您保存的模板快速读取相关数据">使用任务模板：</li>
                     <li class="s36">
-                      <select id="ddlTemplate" name="ddlTemplate" class="ui-select zhsr">
+                      <select id="ddlTemplate" onchange="changeTpl(this.value, 1);" name="ddlTemplate" class="ui-select zhsr">
                         <option value="0">请选择模板</option>
-                        <option value="0">模板1</option>
+                         <?php
+                            if(isset($tplList))
+                            {
+                                foreach ($tplList as $k => $v)
+                                {
+                            ?>
+                        <option value="<?php echo $v->id;?>"><?php echo $v->tplTo;?></option>
+                        <?php
+                                }
+                            }
+                        ?>
                       </select>
                     </li>
 					</ul>
@@ -134,33 +149,15 @@
                     </li>
                   </ul>
                 </div>
-				<ul class="dowebok">
-                    <li class="s38" style="width:176px;" title="请选择所属平台">
-                        <img src="<?php echo VERSION2;?>taskcss/c12.jpg" alt="">要求确认时间：
-                    </li>
-                    <li>
-					<li class="s39 searchway" ><input type="radio" name="ddlOKDay"  value="0"  />立即确认</li>
-					<li class="s39 searchway" ><input type="radio" name="ddlOKDay"  value="1"  />24小时后</li>
-					<li class="s39 searchway" ><input type="radio" name="ddlOKDay"  value="2"  />48小时后</li>
-					<li class="s39 searchway" ><input type="radio" name="ddlOKDay"  value="3"  />72小时后</li>
-					<!--<li class="s39 searchway" ><input type="radio" name="ddlOKDay"  value="4"  />96小时</li>
-					<li class="s39 searchway" ><input type="radio" name="ddlOKDay"  value="5"  />120小时</li>
-					<li class="s39 searchway" ><input type="radio" name="ddlOKDay"  value="6"  />144小时</li>
-					<li class="s39 searchway" ><input type="radio" name="ddlOKDay"  value="7"  />168小时</li>-->
-					<li class="s39 searchway" ><input type="radio" name="ddlOKDay"  value="8"  />根据物流</li>
-					</ul>
+				<input type="hidden" name="ddlOKDay" value="0" />
+				
 					<ul class="dowebok">
 				  	<li class="s35" ><img src="<?php echo VERSION2;?>taskcss/c12.jpg" alt="">商品链接地址：</li>
                     <li class="s34">
                       <input type="text" name="txtGoodsUrl" id="txtGoodsUrl" class="pc11 inputp s36_ts" placeholder="http://" datatype="*" nullmsg="请填写商品链接" errormsg="请填写商品链接" />
                     </li>
 				  </ul>
-				  <ul class="dowebok">
-				  	<li class="s35" ><img src="<?php echo VERSION2;?>taskcss/c12.jpg" alt="">商品金额：</li>
-                    <li class="s34">
-                      <input  style="margin-left:25px;" type="text" name="txtPrice" id="txtPrice" class="pc11 inputp s36_ts" placeholder="" datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/" nullmsg="请填写商品价格" errormsg="请填写商品价格" />
-                    </li>
-				  </ul>
+				  <input type="hidden" name="txtPrice" value="0" />
 				  <ul class="dowebok">
 				  	<li class="s35" ><img src="<?php echo VERSION2;?>taskcss/c12.jpg" alt="">佣金金额：</li>
                     <li class="s34"><input type="text" name="yongjin_money" id="yongjin_money" style="width:63px;" class="pc11 inputp s36_ts" placeholder="" datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/" nullmsg="请填写佣金金额" errormsg="请填写佣金金额" />
@@ -186,67 +183,15 @@
               <div id="a2" lang="2" alt="0" class="nulldiv" title="收藏商家发布的商品"></div>
               <input type="hidden" name="shopcoller" id="aa2">
             </li>
-            <!--<li class="pdli"><span>支付<font class="pdfo">0.5</font>个麦粒</span></li>-->
-            <li>
-              <div id="a3" lang="3" alt="0" class="nulldiv" title="要求接手使用手机付款" style="background-position: 0px -68px;"></div>
-              <input type="hidden" name="isMobile" id="aa3" value="0">
-            </li>
-            <!--<li class="pdli"><span>支付<font class="pdfo">2.0</font>个麦粒</span></li>-->
-          </ul>
-          <ul class="pdul">
-            <li>
-              <div id="a4" lang="4" alt="0" class="nulldiv" title="接手确认收货前在旺旺与您聊天确认。如：已收到货，下次还会再来"></div>
-              <input type="hidden" name="cbxIsLHS" id="aa4">
-            </li>
-            <!--<li class="pdli"><span>支付<font class="pdfo">0.5</font>个麦粒</span></li>-->
-            <li>
-              <div id="a5" lang="5" alt="0" class="nulldiv" title="从头到尾浏览宝贝，并提供底图截图"></div>
-              <input type="hidden" name="isViewEnd" id="aa5">
-            </li>
-            <!--<li class="pdli"><span>支付<font class="pdfo">0.5</font>个麦粒</span></li>-->
-          </ul>
-          <ul class="pdul">
-            <li>
-              <div id="a9" lang="8" alt="0" class="nulldiv" title="接手确认收货好评时需要上传的好评图片"></div>
-              <input type="hidden" name="pinimage" id="aa9">
-            </li>
-            <!--<li class="pdli"><span>每张支付<font class="pdfo">0.5</font>个麦粒</span></li>-->
-            <li class="pdli">
-              <div class="haoPingWrap" style="float:left;margin-left:-68px;"> <span class="uploadImg" style="float:left;height:39px;margin-left:0px;width:131px;">
-                <input type="file" name="file" class="file" id="upfile-haoping" size="25">
-                <input type="button" class="button" style="width:120px;padding:8px 0px;border-radius:2px;font-size: 16px;background: #f60;border:#f60" value="上传图片">
-                </span> <span id="info-upfile-haoping" class="upload-info green"></span> </div>
-            </li>
-            <li class="pdli">
-              <div class="value long">
-                <input id="haoping-upfile-1" hidden="" type="text" title="没有图片请保留空" readonly="" style="width:206px;height:20px" maxlength="150" name="photoUrls">
-              </div>
-            </li>
-          </ul>
-          <ul class="pdul">
-            <li>
+			<li>
               <div id="a10" lang="10" alt="0" class="nulldiv" title="在商品页面停留相应时间，卖家可使用量子查看接手是否达标"></div>
               <input type="hidden" name="stopDsTime" id="aa10">
             </li>
-            <li class="pdli11">
-              <input type="radio" name="stopTime" value="1" checked="checked">
-              停1分钟<!--<span class="f12"> （<font class="pdfo">0.1</font>个麦粒）</span>--></li>
-            <li class="pdli11">
-              <input type="radio" name="stopTime" value="2">
-              停2分钟<!--<span class="f12"> （<font class="pdfo">0.3</font>个麦粒）</span>--></li>
-            <li class="pdli11">
-              <input type="radio" name="stopTime" value="3">
-              停3分钟<!--<span class="f12"> （<font class="pdfo">0.5</font>个麦粒）</span>--></li>
           </ul>
-          <ul class="pdul">
-            <li>
-              <div id="a11" lang="12" alt="0" class="nulldiv" title="规定好评内容。如：衣服质量很好，穿着舒适"></div>
-              <input type="hidden" name="cbxIsMsg" id="aa11">
-            </li>
-            <li class="pdlli12">
-              <input id="hpnr" type="text" class="inputp" name="txtMessage" placeholder="如果需要接手方带字好评请勾选，并填写规定好评内容。不勾选则默认不带字好评">
-              <!--支付<font class="pdfo">0.5</font>个麦粒--></li>
-          </ul>
+          
+          <input type="hidden" name="pinimage" id="aa9" value="0" />
+		  <input type="hidden" name="isSign" id="aa21" value="0">
+     <input type="hidden" name="cbxIsMsg" id="aa11" value="0">
           <ul class="pdul">
             <li>
               <div id="a12" lang="13" alt="0" class="nulldiv" title="留言提醒接手需要注意的地方，或写暗语。但切勿以此增加要求并要挟接手，否则将予以惩罚"></div>
@@ -256,27 +201,7 @@
               <input type="text" id="lytx" class="inputp" name="txtRemind" placeholder="在此给接手留言提醒注意事项。也可写暗语让您不用登陆平台都知道是刷手">
             </li>
           </ul>
-		  
-		  <ul class="pc1">
-            <li>
-              <div id="a23" lang="23" alt="0" class="nulldiv" title="规定接手拍下商品时使用的地址"></div>
-              <input type="hidden" name="cbxIsAddress" id="aa23">
-            </li>
-            <li class="h97">姓名：
-              <input type="text" name="cbxName" id="cbxName" class="shdz pc11 inputp">
-            </li>
-            <li class="h97">手机：
-              <input type="text" name="cbxMobile" id="cbxMobile" class="pc11 inputp shdz" onkeyup="this.value=this.value.replace(/[^0-9-]+/,&#39;&#39;);" maxlength="11">
-            </li>
-            <li class="h97">邮编：
-              <input type="text" name="cbxcode" id="cbxcode" class="pc11 inputp shdz">
-            </li>
-            <!--<li class="s33"><span>支付<font class="pdfo">0.5</font>个麦粒</span></li>-->
-          </ul>
-          <div class="address1">
-            <div class="add1"> 地址： </div>
-            <textarea name="cbxAddress" cols="45" id="cbxAddress" rows="6" class="texta shdz" placeholder="此处填写您要求接收人的修改的收货地址，包含具体省、市、区及详细地址，请不要填写“请带字好评”等引导的文字。"></textarea>
-          </div>
+		  <input type="hidden" name="cbxIsAddress" id="aa23" value="0" />
         </div>
       </div>
       <div style="height:230px;" id="screen" data-step="4" data-intro="筛选出您想要的接手（接手人）">
@@ -291,59 +216,29 @@
               <div id="a17" lang="17" alt="0" class="nulldiv" title="限制接手一定时限内接手任务数"></div>
               <input type="hidden" name="cbxIsFMaxMCount" id="aa17">
             </li>
-            <li class="pdli11">
-              <input type="radio" name="fmaxmc" value="1" checked="checked">
-              1天接1个<!--<span class="f12"> （<font class="pdfo">0.5</font>个麦粒）</span>--></li>
-            <li class="pdli11">
-              <input type="radio" name="fmaxmc" value="2">
-              1天接2个<!--<span class="f12"> （<font class="pdfo">0.2</font>个麦粒）</span>--></li>
-            <li class="pdli11">
-              <input type="radio" name="fmaxmc" value="3">
-              1周接1个<!--<span class="f12"> （<font class="pdfo">1.0</font>个麦粒）</span>--></li>
+           <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日不超<input id="task_num_day" onchange="checkTaskNum(this.value,'task_num_day')"  type="text"  class="pc11 inputp s36_ts"   style="width:50px;"  name="fmaxmc_d" value="" />(>=2)单&nbsp;&nbsp;&nbsp;</li>
+            <li>周不超<input onchange="checkTaskNum(this.value,'task_num_w')" id="task_num_w"  type="text"  class="pc11 inputp s36_ts"   style="width:50px;"  name="fmaxmc_w" value="" />(>=5)单 </li>
+            <li>&nbsp;&nbsp;&nbsp;月不超<input onchange="checkTaskNum(this.value,'task_num_month')" id="task_num_month" type="text"  class="pc11 inputp s36_ts"   style="width:50px;"  name="fmaxmc_m" value="" />(>=10)单 </li>
           </ul>
           <ul class="pdul">
             <li>
               <div id="a18" lang="18" alt="0" class="nulldiv" title="指定地区的接手方可接手任务"></div>
               <input type="hidden" name="isLimitCity" id="aa18">
             </li>
-            <li class="h34">
-              <select id="Province" name="Province" class="ui-select zhsr">
-                <option value="北京市">北京市</option>
-                <option value="上海市">上海市</option>
-                <option value="天津市">天津市</option>
-                <option value="重庆市">重庆市</option>
-                <option value="河北省">河北省</option>
-                <option value="山西省">山西省</option>
-                <option value="辽宁省">辽宁省</option>
-                <option value="吉林省">吉林省</option>
-                <option value="黑龙江">黑龙江</option>
-                <option value="江苏省">江苏省</option>
-                <option value="浙江省">浙江省</option>
-                <option value="安徽省">安徽省</option>
-                <option value="福建省">福建省</option>
-                <option value="江西省">江西省</option>
-                <option value="山东省">山东省</option>
-                <option value="河南省">河南省</option>
-                <option value="湖北省">湖北省</option>
-                <option value="湖南省">湖南省</option>
-                <option value="广东省">广东省</option>
-                <option value="甘肃省">甘肃省</option>
-                <option value="陕西省">陕西省</option>
-                <option value="湖南省">湖南省</option>
-                <option value="内蒙古">内蒙古</option>
-                <option value="广西">广西</option>
-                <option value="四川省">四川省</option>
-                <option value="贵州省">贵州省</option>
-                <option value="云南省">云南省</option>
-                <option value="西藏">西藏</option>
-                <option value="新疆">新疆</option>
-                <option value="香港">香港</option>
-                <option value="奥门">奥门</option>
-                <option value="台湾">台湾</option>
+            <li class="h97">
+              <input type="radio" name="is_xzqx_type" value="1" />指定 <input type="radio" name="is_xzqx_type" value="2" />排除 <input type="radio" name="is_xzqx_type" value="3" />不限制
+            </li>
+            <li class="h97">
+              <select style="float:left;" id="Province" name="Province" class="ui-select zhsr">
+                <?php 
+					foreach($area as $k => $v){
+				?>
+					<option value="<?php echo $v['id']; ?>"><?php echo $v['name']; ?></option>
+				<?php
+					}
+				?>
               </select>
             </li>
-            <li class="scli1" title="按住Shifl键加单击选项，可多选！">
-              <!--(支付<font class="pdfo">2.0</font>个麦粒)--></span></li>
           </ul>
           <ul class="pdul">
             <li>
@@ -368,8 +263,9 @@
           </ul>
         </div>
       </div>
+	   </span>
       <div style="height:70px;" id="express" class="div">
-        <div class="exmain">
+        <div class="scmain">
           <ul class="pdul moban_t" style="margin-top:20px;">
 		  <li><img class="h41" src="<?php echo VERSION2;?>taskcss/blue.png" alt=""></li>
             <li>
@@ -401,6 +297,19 @@
 <script src="<?php echo ASSET_URL;?>kindeditor/kindeditor.js"></script>
 <script src="<?php echo ASSET_URL;?>kindeditor/lang/zh_CN.js"></script>
 <script>
+function changeTpl(taskId,tplType)
+{
+	$.ajax({
+    			type:"POST",
+    			url:"<?php echo $this->createUrl('user/getTaskDetail');?>",
+    			data:"taskId="+taskId+"&tplType="+tplType,
+                async:false,
+    			success:function(msg)
+    			{
+                    $("#task_main").html(msg);
+    			}
+    		});
+}
 	KindEditor.ready(function(K) {
 		var editor = K.editor({
 			allowFileManager : true

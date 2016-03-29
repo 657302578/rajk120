@@ -181,9 +181,6 @@ class SiteController extends Controller
                 
                 if($k=='ddlOKDay' && $v!='noVal' && $v!='')//收货时长
                 {
-                    if($v==5)
-                        $condition=$condition.' and '.$k.'>'.($v-2);
-                    else
                         $condition=$condition.' and '.$k.'='.($v-1);
                 }
             }
@@ -342,12 +339,26 @@ class SiteController extends Controller
         //检查是否登录以及返回符合条件的买号
         if($_POST['checkBase']=="DOIT" && Yii::app()->user->getId())
         {
+            $taskId = intval($_POST['taskId']);
+            $taskInfo = Companytasklist::model()->findByPk($taskId);
             $loginUserInfo = User::model()->findByPk(Yii::app()->user->getId());
             //查询此会员是否上传支付宝账号
             if(empty($loginUserInfo->alipay_account)) exit('NO_ALIPAY_ACCOUNT');
             //判断此会员是否填写收货地址
             $addressInfo = Useraddress::model()->findByAttributes( array('uid' => $loginUserInfo->id));
             if(!isset($addressInfo)) exit('NO_USER_ADDRESS');
+            if($taskInfo->isLimitCity)
+            {
+                //如果限定了地区，则判断当前会员是否符合要求
+                if($taskInfo->is_xzqx_type == 1 && ($addressInfo->sheng_id != $taskInfo->Province) )
+                {
+                    //is_xzqx_type 是 1 只有指定的省份才能接单
+                    exit('ADDRESS_NO_PIPEI');
+                }elseif ($taskInfo->is_xzqx_type == 2 && ($addressInfo->sheng_id == $taskInfo->Province)){
+                    //is_xzqx_type 是 2 排除指定的省份
+                    exit('ADDRESS_NO_PIPEI');
+                }
+            }
             $ptConfig = Config::model()->findByPk(1);
             //查询符合条件的买号 
             $buyerInfo=Blindwangwang::model()->findAll(array(
@@ -360,13 +371,30 @@ class SiteController extends Controller
                 {
                     //查询此买号今日已接任务数量
                     $count = Companytasklist::model()->count('taskerWangwang=\''.$bv['wangwang'].'\' AND status > 1 AND tasksecondTime >'.strtotime(date('Y/m/d')).' AND tasksecondTime < '.strtotime(date('Y/m/d 23:59:59')));
-                    if($count >= $ptConfig->buyertaskmaxnum) unset($buyerInfo[$bk]);
+                    if($count >= $ptConfig->buyertaskmaxnum)
+                    { 
+                        unset($buyerInfo[$bk]);
+                        continue;
+                    }
+                    //是否限制接手的接单数量
+                    if($taskInfo->cbxIsFMaxMCount)
+                    {
+                        $fmaxmc = explode('@', $taskInfo->fmaxmc);
+                        if(!$fmaxmc) continue;
+                        //获取当前旺旺号的任务记录
+                        $dayNum = Blindwangwang::getWwTaskNum($bv['wangwang'], 1);
+                        $wNum = Blindwangwang::getWwTaskNum($bv['wangwang'], 7);
+                        $monthNum = Blindwangwang::getWwTaskNum($bv['wangwang'], 1, 'month');
+                        if($dayNum >= $fmaxmc[0] || $wNum >= $fmaxmc[1] || $monthNum >= $fmaxmc[2])
+                        {
+                            unset($buyerInfo[$bk]);
+                            continue;
+                        }
+                    }
                 }
             }
-            
             if($buyerInfo)//返回符合条件的买号
             {
-                
                 $divStart="<div class='choseBuyer'><div style='font-size:14px; line-height:35px;'>选择接此任务的买号：</div>";
                 $divEnd="</div>";
                 $radioItemStr="";
@@ -533,7 +561,7 @@ class SiteController extends Controller
             $taskInfo=Companytasklist::model()->findByPk($_POST['taskid']);
             $taskInfo->taskcompleteTime=time();//商家审核即任务完成时间
             $taskInfo->taskCompleteStatus=1;//任务完成，改变状态
-            if(true)//$taskInfo->save())
+            if($taskInfo->save())
             {
                 //任务完成，将金额与米粒加到接手帐户
                 //添加流水
@@ -634,7 +662,27 @@ class SiteController extends Controller
                 
                 $publishinfo->Experience=$publishinfo->Experience+1;//商家每有一个任务被完成，经验值增加一个
                 //增加一个麦粒，如果是真实签收，该会员绑定的地址对应的占用者，获得一个麦粒
-                //todo....
+                $taskInfo = Companytasklist::model()->findByPk($_POST['taskid']);
+                if($taskInfo->isSign)
+                {
+                    $userAddressInfo = Useraddress::model()->findByPk(Yii::app()->user->getId());
+                    if(isset($userAddressInfo) && $userAddressInfo->occupy_uid > 0 )
+                    {
+                        $occupyUidInfo = User::model()->findByPk($userAddressInfo->occupy_uid);
+                        if($occupyUidInfo)
+                        {
+                            $recordMinLi=new Recordlist();
+                            $recordMinLi->userid=$userAddressInfo->occupy_uid;//接手id
+                            $recordMinLi->catalog=9;//发布任务使用米粒
+                            $recordMinLi->number=1;//操作数量
+                            $recordMinLi->time=time();//操作时间
+                            $recordMinLi->taskid=$taskInfo->id;//任务id
+                            $recordMinLi->save();//保存米粒流水
+                            $occupyUidInfo->MinLi = ($occupyUidInfo->MinLi+1);
+                            $occupyUidInfo->save();
+                        }
+                    }
+                }
                 if($userinfo->save() && $publishinfo->save())
                     echo "SUCCESS";
                 else

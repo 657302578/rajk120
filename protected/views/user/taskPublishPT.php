@@ -36,6 +36,7 @@
           </div>
         </div>
       </div>
+	  <span id="task_main">
       <div id="product" class="div">
         <?php
             $this->renderPartial('/user/taskPublishNav');//加载发布任务公共导航
@@ -64,9 +65,19 @@
 					<ul class="dowebok">
 					<li class="s35" title="使用您保存的模板快速读取相关数据">使用任务模板：</li>
                     <li class="s36">
-                      <select id="ddlTemplate" name="ddlTemplate" class="ui-select zhsr">
+                      <select id="ddlTemplate" onchange="changeTpl(this.value, 0);" name="ddlTemplate" class="ui-select zhsr">
                         <option value="0">请选择模板</option>
-                        <option value="0">模板1</option>
+                        <?php
+                            if(isset($tplList))
+                            {
+                                foreach ($tplList as $k => $v)
+                                {
+                            ?>
+                        <option value="<?php echo $v->id;?>"><?php echo $v->tplTo;?></option>
+                        <?php
+                                }
+                            }
+                        ?>
                       </select>
                     </li>
 					</ul>
@@ -254,9 +265,9 @@
               <div id="a17" lang="17" alt="0" class="nulldiv" title="限制接手一定时限内接手任务数"></div>
               <input type="hidden" name="cbxIsFMaxMCount" id="aa17">
             </li>
-            <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日不超<input type="text"  class="pc11 inputp s36_ts"   style="width:50px;"  name="fmaxmc_d" value="" />单&nbsp;&nbsp;&nbsp;</li>
-            <li>周不超<input type="text"  class="pc11 inputp s36_ts"   style="width:50px;"  name="fmaxmc_w" value="" />单 </li>
-            <li>&nbsp;&nbsp;&nbsp;月不超<input type="text"  class="pc11 inputp s36_ts"   style="width:50px;"  name="fmaxmc_m" value="" />单 </li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日不超<input id="task_num_day" onchange="checkTaskNum(this.value,'task_num_day')"  type="text"  class="pc11 inputp s36_ts"   style="width:50px;"  name="fmaxmc_d" value="" />(>=2)单&nbsp;&nbsp;&nbsp;</li>
+            <li>周不超<input onchange="checkTaskNum(this.value,'task_num_w')" id="task_num_w"  type="text"  class="pc11 inputp s36_ts"   style="width:50px;"  name="fmaxmc_w" value="" />(>=5)单 </li>
+            <li>&nbsp;&nbsp;&nbsp;月不超<input onchange="checkTaskNum(this.value,'task_num_month')" id="task_num_month" type="text"  class="pc11 inputp s36_ts"   style="width:50px;"  name="fmaxmc_m" value="" />(>=10)单 </li>
           </ul>
           <ul class="pdul">
             <li>
@@ -264,7 +275,7 @@
               <input type="hidden" name="isLimitCity" id="aa18">
             </li>
 			<li class="h97">
-              <input type="radio" name="is_xzqx_type" value="1" />指定 <input type="radio" name="is_xzqx_type" value="2" />排除 <input type="radio" name="is_xzqx_type" value="1" />不限制
+              <input type="radio" name="is_xzqx_type" value="1" />指定 <input type="radio" name="is_xzqx_type" value="2" />排除 <input type="radio" name="is_xzqx_type" value="3" />不限制
             </li>
             <li class="h97">
               <select style="float:left;" id="Province" name="Province" class="ui-select zhsr">
@@ -297,12 +308,12 @@
                 <option value="10">五钻及以上  <!--（支付 9.0 麦粒）--></option>
               </select>
             </li>
-            <li class="scli2">此等级以上可接任务<span><!--（支付<font class="pdfo">0.5 - 9.0</font>个麦粒）--></span></li>
           </ul>
         </div>
       </div>
+	  </span>
       <div style="height:70px;" id="express" class="div">
-        <div class="exmain">
+        <div class="scmain">
           <ul class="pdul moban_t" style="margin-top:20px;">
 		  <li><img class="h41" src="<?php echo VERSION2;?>taskcss/blue.png" alt=""></li>
             <li>
@@ -334,6 +345,22 @@
 <script src="<?php echo ASSET_URL;?>kindeditor/kindeditor.js"></script>
 <script src="<?php echo ASSET_URL;?>kindeditor/lang/zh_CN.js"></script>
 <script>
+	function checkTaskNum(num,pos)
+	{
+		if(pos == 'task_num_day' && num < 2 )
+		{
+			$("#"+pos).val(2);
+		}
+		if(pos == 'task_num_w' && num < 5 )
+		{
+			$("#"+pos).val(5);
+		}
+		if(pos == 'task_num_month' && num < 10 )
+		{
+			$("#"+pos).val(10);
+		}
+	}
+
 	KindEditor.ready(function(K) {
 		var editor = K.editor({
 			allowFileManager : true
@@ -352,6 +379,20 @@
 			});
 		});
 	});
+	
+function changeTpl(taskId,tplType)
+{
+	$.ajax({
+    			type:"POST",
+    			url:"<?php echo $this->createUrl('user/getTaskDetail');?>",
+    			data:"taskId="+taskId+"&tplType="+tplType,
+                async:false,
+    			success:function(msg)
+    			{
+                    $("#task_main").html(msg);
+    			}
+    		});
+}
 </script>
 <script>
     $(function(){
@@ -516,7 +557,7 @@ $(function(){
             }  
             
             //检查保存模板选择了之后是否有填写好评内容
-            if($("#aa24").val()==1 && $("#lytx").val()=="")
+            if($("#aa24").val()==1 && $("#pz11").val()=="")
             {
                 layer.confirm('请填写模板名称', {
             		btn: ['确定'] //按钮

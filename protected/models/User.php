@@ -80,9 +80,9 @@ class User extends CActiveRecord
 	{
 	    //获取会员的等级数字
 	    $userInfo = self::model()->findByPk($userid);
-	    $score = isset($userInfo) ? $userInfo->Score : 1;
+	    $score = isset($userInfo) ? $userInfo->Experience : 1;
 	    //判断等级
-	    if($score >= 1 AND $score < 11) return 1;
+	    if($score >= 0 AND $score < 11) return 1;
 	    if($score >= 11 AND $score < 21) return 2;
 	    if($score >= 21 AND $score < 31) return 3;
 	    if($score >= 31 AND $score < 51) return 4;

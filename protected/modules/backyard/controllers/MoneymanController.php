@@ -30,6 +30,59 @@
             ));
         }
         
+        /**
+         * 编辑充值
+         */
+        public function actionEdit()
+        {
+            if($_POST)
+            {
+                $data = $_POST['data'];
+                $id = $data['id'];
+                $Kcborder = new Kcborder;
+                if( $id )
+                {
+                    unset($data['id']);
+                    if( $data['status'] ) $data['completetime'] = time();
+                    $result = $Kcborder::model()->updateByPk($id, $data);
+                }
+                else
+                {
+                    $Kcborder->tno = $data['tno'];
+                    $Kcborder->payno = $data['payno'];
+                    $Kcborder->money = $data['money'];
+                    $Kcborder->status = $data['status'];
+                    $Kcborder->addtime = time();
+                    $Kcborder->completetime=0;
+                    $result = $Kcborder->save();
+                }
+                if($result) $this->redirect(array('Moneyman/moneylist'));
+            }
+            else
+            {
+                $data = array();
+                if( isset( $_GET['id'] ) )
+                {
+                    $id = $_GET['id'];
+                    $data = Kcborder::model()->findByPk($id);
+                }
+                $this->render('edit',array('data'=>$data));
+            }
+        }
+        
+        /**
+         * 删除充值记录
+         */
+        public function actiondel()
+        {
+            if(isset($_GET['id']))
+            {
+                Kcborder::model()->deleteByPk($_GET['id']);
+                //Yii::app()->end();
+                $this->redirect(array('Moneyman/moneylist'));
+            }
+        }
+        
         /*
             ***提现审核列表
         */

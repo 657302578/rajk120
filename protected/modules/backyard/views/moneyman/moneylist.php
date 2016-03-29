@@ -67,6 +67,7 @@
                 <div class="panel-heading">
                     <i class="fa fa-indent red"></i>
                     <span>用户充值中心</span>
+                    <button style="position: absolute;right:40px;" class="btn btn-default"><span class="fa fa-edit" data-url="<?php echo $this->createUrl('moneyman/edit'); ?>"></span></button>
                     <div class="panel-actions">
     					<button class="btn btn-default"><span class="fa fa-refresh"></span></button>
     				</div>
@@ -76,14 +77,15 @@
                         <thead>
                             <tr>
                                 <th><div>ID号</div></th>
-                                <th><div><div align="center">用户id</div></th>
-                                <th><div><div align="center">登录帐号</div></th>
+                                <th><div align="center">用户id</div></th>
+                                <th><div align="center">登录帐号</div></th>
                                 <th><div align="center">交易号</div></th>
                                 <th><div align="center">交易金额(单位：元)</div></th>
                                 <th><div align="center">编号备注 一般是用户名</div></th>
                                 <th><div align="center">支付状态</div></th>
                                 <th><div align="center">支付时间</div></th>
                                 <th><div align="center">完成帐户充值时间</div></th>
+                                <th><div align="center">操作</div></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -103,10 +105,18 @@
                                         echo $item->status!=0?"<font style='font-weight:bold; color:green;'>已完成</font>":"<font style='font-weight:bold; color:red;'>未完成</font>";
                                     ?>
                                 </div></td>
-                                <td><div align="center"><?php echo date('Y年m月d日 H:i:s',$item->addtime);?></div></td>
+                                <td><div align="center"><?php echo date('Y-m-d H:i:s',$item->addtime);?></div></td>
                                 <td><div align="center">
-                                    <?php echo $item->addtime!=""?date('Y年m月d日 H:i:s',$item->addtime):"暂无";?>
+                                    <?php echo $item->addtime!=""?date('Y-m-d H:i:s',$item->addtime):"暂无";?>
                                 </div></td>
+                                <td>
+                                	<button class="btn btn-default">
+                                		<span class="fa fa-edit" data-url="<?php echo $this->createUrl('moneyman/edit',array('id'=>$item->id)); ?>"></span>
+                                	</button>
+                                	<button class="btn btn-default">
+                                		<span class="fa fa-times" onclick="window.location.href='<?php echo $this->createUrl('moneyman/del',array('id'=>$item->id)); ?>'"></span>
+                                	</button>
+                                </td>
                             </tr>
                             <?php
                                 }
@@ -230,6 +240,10 @@
 	<script src="<?php echo ASSET_URL;?>js/pages/index.js"></script>	
 	
 	<!-- end: JavaScript-->
-	
+	<script>
+		$('.fa-edit').click(function(){
+			window.location.href = $(this).attr('data-url');
+		});
+	</script>
 </body>
 </html>

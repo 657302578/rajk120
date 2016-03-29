@@ -1498,21 +1498,6 @@ class UserController extends Controller
                 $_POST['pinimage']==1?$MinLi=$MinLi+0.5:$MinLi=$MinLi+0;//选中好评截图米粒基数加0.5
                 
             $task->stopDsTime=$_POST['stopDsTime'];//是否选中停留时间，1选中，0未选中
-                if($_POST['stopDsTime']==1)//根据停留时间增加对应的米粒
-                {
-                    switch($_POST['stopTime'])
-                    {
-                        case 1://停留1分钟增加0.1米粒
-                            $MinLi=$MinLi+0.1;
-                            break;
-                        case 2://停留2分钟增加0.3米粒
-                            $MinLi=$MinLi+0.3; 
-                            break;
-                        case 3://停留3分钟增加0.5米粒
-                            $MinLi=$MinLi+0.5;
-                            break;
-                    }
-                }
             //$task->stopTime=$_POST['stopTime'];//停留时间长度
               
             $task->cbxIsMsg=$_POST['cbxIsMsg'];//是否选中好评内容，1选中，0未选中
@@ -1537,8 +1522,9 @@ class UserController extends Controller
                 if($_POST['cbxIsFMaxMCount']==1)//根据限制接手要求增加对应的米粒
                 {
                     $fmaxmc = $_POST['fmaxmc_d'].'@'.$_POST['fmaxmc_w'].'@'.$_POST['fmaxmc_m'];
+                    $task->fmaxmc=$fmaxmc;//限制的具体要求
                 }
-            $task->fmaxmc=$fmaxmc;//限制的具体要求
+            
                 
             $task->isLimitCity=$_POST['isLimitCity'];//是否选中指定区域，1选中，0未选中
                 $_POST['isLimitCity']==1?$MinLi=$MinLi+2:$MinLi=$MinLi+0;//选中指定区域米粒基数加2
@@ -1606,7 +1592,6 @@ class UserController extends Controller
             
             $task->isTpl=$_POST['isTpl'];////是否选中收货地址，1选中，0未选中
             $task->tplTo=$_POST['isTpl']==1?"".$_POST['tplTo']."":"0*#";//模板名称如果为0*#则为不保存模板
-            
             $task->MinLi=0;//消耗总米粒-不消耗米粒了
             $MinLi=0;//重置米粒数量
             $taskPublistStatus=0;
@@ -1725,10 +1710,41 @@ class UserController extends Controller
             'select'=>'id,wangwang',
             'order'=>'id desc'
         ));
+        //获取模板信息
+        $tplList = Companytasklist::model()->findAllByAttributes( array('isTpl'=> 1, 'taskCatalog' => 0, 'publishid'=>Yii::app()->user->getId()) );
         $this->render('taskPublishPT',array(
             'sellerInfo'=>$sellerInfo,
             'area' => $areaList,
+            'tplList' => $tplList
         ));
+    }
+    
+    public function actionGetTaskDetail()
+    {
+        $taskId = intval($_POST['taskId']);
+        $tplType = intval($_POST['tplType']);
+        $tplName = array('userPtTask','userLlTask');
+        $taskInfo = Companytasklist::model()->findByPk($taskId);
+        if($taskInfo)
+        {
+            if($taskInfo->cbxIsFMaxMCount && !empty($taskInfo->fmaxmc))
+            {
+                $fmaxmc = explode('@', $taskInfo->fmaxmc);
+            }else{
+                $fmaxmc = false;
+            }
+            $zdAddress = explode('|', $taskInfo->cbxIsAddressContent);
+        }
+        //获取模板信息
+        $tplList = Companytasklist::model()->findAllByAttributes( array('isTpl'=> 1, 'taskCatalog' => 0, 'publishid'=>Yii::app()->user->getId()) );
+        //获取掌柜号
+        $sellerInfo=Blindwangwang::model()->findAll(array(
+            'condition'=>'userid='.Yii::app()->user->getId().' and statue=1 and catalog=2 AND is_check=1',
+            'select'=>'id,wangwang',
+            'order'=>'id desc'
+        ));
+        $areaList = Area::model()->findAll( array('condition'=>'parentid=0'));
+        echo $this->renderPartial($tplName[$tplType], array('taskInfo' =>$taskInfo,'tplList' => $tplList,'area' => $areaList,'sellerInfo'=>$sellerInfo, 'fmaxmc' => $fmaxmc, 'zdAddress' => $zdAddress), true);
     }
     
     /*
@@ -1742,9 +1758,14 @@ class UserController extends Controller
             'select'=>'id,wangwang',
             'order'=>'id desc'
         ));
+        //获取模板信息
+        $tplList = Companytasklist::model()->findAllByAttributes( array('isTpl'=> 1, 'taskCatalog' => 0, 'publishid'=>Yii::app()->user->getId()) );
+        //获取模板信息
+        $tplList = Companytasklist::model()->findAllByAttributes( array('isTpl'=> 1,'taskCatalog' => 1, 'publishid'=>Yii::app()->user->getId()) );
         $this->render('taskPublishLU',array(
             'sellerInfo'=>$sellerInfo,
             'area' => $areaList,
+            'tplList' => $tplList
         ));
     }
     
