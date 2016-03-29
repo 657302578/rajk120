@@ -5,7 +5,6 @@
     </style>
     <div class="help-nav">
     <div class="nav-content">
-    <span class="help-search"><form action="" method=""><input class="text-search" type="text" name="keyword" placeholder="请输入您的问题按回车键确认" /><input class="help_submit" type="submit" /></form></span>
     <div class="help-search-right">
     <?php 
     $helpNav = Articlecatlog::model()->findAll(array('select'=>'id,name','order'=>'sort asc'));
