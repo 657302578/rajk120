@@ -185,58 +185,22 @@
               <div id="a2" lang="2" alt="0" class="nulldiv" title="收藏商家发布的商品"></div>
               <input type="hidden" name="shopcoller" id="aa2">
             </li>
-            <!--<li class="pdli"><span>支付<font class="pdfo">0.5</font>个麦粒</span></li>-->
-            <li>
-              <div id="a3" lang="3" alt="0" class="nulldiv" title="要求接手使用手机付款" style="background-position: 0px -68px;"></div>
-              <input type="hidden" name="isMobile" id="aa3" value="0">
-            </li>
-            <!--<li class="pdli"><span>支付<font class="pdfo">2.0</font>个麦粒</span></li>-->
-          </ul>
-          <ul class="pdul">
-            <li>
-              <div id="a4" lang="4" alt="0" class="nulldiv" title="接手确认收货前在旺旺与您聊天确认。如：已收到货，下次还会再来"></div>
-              <input type="hidden" name="cbxIsLHS" id="aa4">
-            </li>
-            <!--<li class="pdli"><span>支付<font class="pdfo">0.5</font>个麦粒</span></li>-->
-            <li>
-              <div id="a5" lang="5" alt="0" class="nulldiv" title="从头到尾浏览宝贝，并提供底图截图"></div>
-              <input type="hidden" name="isViewEnd" id="aa5">
-            </li>
-            <!--<li class="pdli"><span>支付<font class="pdfo">0.5</font>个麦粒</span></li>-->
-          </ul>
-          <ul class="pdul">
-            <li>
-              <div id="a9" lang="8" alt="0" class="nulldiv" title="接手确认收货好评时需要上传的好评图片"></div>
-              <input type="hidden" name="pinimage" id="aa9">
-            </li>
-            <!--<li class="pdli"><span>每张支付<font class="pdfo">0.5</font>个麦粒</span></li>-->
-            <li class="pdli">
-              <div class="haoPingWrap" style="float:left;margin-left:-68px;"> <span class="uploadImg" style="float:left;height:39px;margin-left:0px;width:131px;">
-                <input type="file" name="file" class="file" id="upfile-haoping" size="25">
-                <input type="button" class="button" style="width:120px;padding:8px 0px;border-radius:2px;font-size: 16px;background: #f60;border:#f60" value="上传图片">
-                </span> <span id="info-upfile-haoping" class="upload-info green"></span> </div>
-            </li>
-            <li class="pdli">
-              <div class="value long">
-                <input id="haoping-upfile-1" hidden="" type="text" title="没有图片请保留空" readonly="" style="width:206px;height:20px" maxlength="150" name="photoUrls">
-              </div>
-            </li>
-          </ul>
-          <ul class="pdul">
-            <li>
+			<li>
               <div id="a10" lang="10" alt="0" class="nulldiv" title="在商品页面停留相应时间，卖家可使用量子查看接手是否达标"></div>
               <input type="hidden" name="stopDsTime" id="aa10">
             </li>
-            <li class="pdli11">
-              <input type="radio" name="stopTime" value="1" checked="checked">
-              停1分钟<!--<span class="f12"> （<font class="pdfo">0.1</font>个麦粒）</span>--></li>
-            <li class="pdli11">
-              <input type="radio" name="stopTime" value="2">
-              停2分钟<!--<span class="f12"> （<font class="pdfo">0.3</font>个麦粒）</span>--></li>
-            <li class="pdli11">
-              <input type="radio" name="stopTime" value="3">
-              停3分钟<!--<span class="f12"> （<font class="pdfo">0.5</font>个麦粒）</span>--></li>
+			<li>
+              <div id="a9" lang="8" alt="0" class="nulldiv" title="接手确认收货好评时需要上传的好评图片"></div>
+              <input type="hidden" name="pinimage" id="aa9">
+            </li>
+			<li>
+              <div id="a21" lang="21" alt="0" class="nulldiv" title="真实签收"></div>
+              <input type="hidden" name="isSign" id="aa21">
+            </li>
           </ul>
+          
+          
+     
           <ul class="pdul">
             <li>
               <div id="a11" lang="12" alt="0" class="nulldiv" title="规定好评内容。如：衣服质量很好，穿着舒适"></div>
@@ -290,59 +254,29 @@
               <div id="a17" lang="17" alt="0" class="nulldiv" title="限制接手一定时限内接手任务数"></div>
               <input type="hidden" name="cbxIsFMaxMCount" id="aa17">
             </li>
-            <li class="pdli11">
-              <input type="radio" name="fmaxmc" value="1" checked="checked">
-              1天接1个<!--<span class="f12"> （<font class="pdfo">0.5</font>个麦粒）</span>--></li>
-            <li class="pdli11">
-              <input type="radio" name="fmaxmc" value="2">
-              1天接2个<!--<span class="f12"> （<font class="pdfo">0.2</font>个麦粒）</span>--></li>
-            <li class="pdli11">
-              <input type="radio" name="fmaxmc" value="3">
-              1周接1个<!--<span class="f12"> （<font class="pdfo">1.0</font>个麦粒）</span>--></li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日不超<input type="text"  class="pc11 inputp s36_ts"   style="width:50px;"  name="fmaxmc_d" value="" />单&nbsp;&nbsp;&nbsp;</li>
+            <li>周不超<input type="text"  class="pc11 inputp s36_ts"   style="width:50px;"  name="fmaxmc_w" value="" />单 </li>
+            <li>&nbsp;&nbsp;&nbsp;月不超<input type="text"  class="pc11 inputp s36_ts"   style="width:50px;"  name="fmaxmc_m" value="" />单 </li>
           </ul>
           <ul class="pdul">
             <li>
               <div id="a18" lang="18" alt="0" class="nulldiv" title="指定地区的接手方可接手任务"></div>
               <input type="hidden" name="isLimitCity" id="aa18">
             </li>
-            <li class="h34">
-              <select id="Province" name="Province" class="ui-select zhsr">
-                <option value="北京市">北京市</option>
-                <option value="上海市">上海市</option>
-                <option value="天津市">天津市</option>
-                <option value="重庆市">重庆市</option>
-                <option value="河北省">河北省</option>
-                <option value="山西省">山西省</option>
-                <option value="辽宁省">辽宁省</option>
-                <option value="吉林省">吉林省</option>
-                <option value="黑龙江">黑龙江</option>
-                <option value="江苏省">江苏省</option>
-                <option value="浙江省">浙江省</option>
-                <option value="安徽省">安徽省</option>
-                <option value="福建省">福建省</option>
-                <option value="江西省">江西省</option>
-                <option value="山东省">山东省</option>
-                <option value="河南省">河南省</option>
-                <option value="湖北省">湖北省</option>
-                <option value="湖南省">湖南省</option>
-                <option value="广东省">广东省</option>
-                <option value="甘肃省">甘肃省</option>
-                <option value="陕西省">陕西省</option>
-                <option value="湖南省">湖南省</option>
-                <option value="内蒙古">内蒙古</option>
-                <option value="广西">广西</option>
-                <option value="四川省">四川省</option>
-                <option value="贵州省">贵州省</option>
-                <option value="云南省">云南省</option>
-                <option value="西藏">西藏</option>
-                <option value="新疆">新疆</option>
-                <option value="香港">香港</option>
-                <option value="奥门">奥门</option>
-                <option value="台湾">台湾</option>
+			<li class="h97">
+              <input type="radio" name="is_xzqx_type" value="1" />指定 <input type="radio" name="is_xzqx_type" value="2" />排除 <input type="radio" name="is_xzqx_type" value="1" />不限制
+            </li>
+            <li class="h97">
+              <select style="float:left;" id="Province" name="Province" class="ui-select zhsr">
+                <?php 
+					foreach($area as $k => $v){
+				?>
+					<option value="<?php echo $v['id']; ?>"><?php echo $v['name']; ?></option>
+				<?php
+					}
+				?>
               </select>
             </li>
-            <li class="scli1" title="按住Shifl键加单击选项，可多选！">
-              <!--(支付<font class="pdfo">2.0</font>个麦粒)--></span></li>
           </ul>
           <ul class="pdul">
             <li>
@@ -611,24 +545,10 @@ $(function(){
                         needMinLi=msg;
         			}
         		});
-                
-                if(needMinLi*parseFloat($("#txtFCount").val())>myMinLi)//麦粒不足
-                {
-                    layer.confirm('<span style="color:red;">您的麦粒不足</span>，此任务需要<span style="color:red;">'+needMinLi*parseFloat($("#txtFCount").val())+'</span>个麦粒，您帐户剩余<span style="color:red;">'+myMinLi+'</span>个麦粒，请先购买麦粒', {
-            		  btn: ['知道了'] //按钮
-                    }); 
-                    return false;
-                }
+              
             }
             
-            //检查余额是否充足
-            if(parseFloat($("#txtPrice").val())*parseFloat($("#txtFCount").val())>parseFloat($(".MoneyOwn").html()))
-            {
-                layer.confirm('<span style="color:red;">您的余额不足</span>，此任务需要<span style="color:red;">￥'+parseFloat($("#txtPrice").val())*parseFloat($("#txtFCount").val())+'</span>，您帐户余额为<span style="color:red;">￥'+parseFloat($(".MoneyOwn").html())+'</span>，请先对帐户进行充值', {
-        		  btn: ['知道了'] //按钮
-                }); 
-                return false;
-            }                    
+              
     	},
 	});
 })

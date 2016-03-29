@@ -56,6 +56,7 @@ tr{ line-height: 58px;}
                 <tr style="text-align: center;">
                   <td colspan="2">
                     <div align="cneter">
+                        <input type="hidden" name="referrer" value="<?php if(isset($_GET['userid'])) echo $_GET['userid']; ?>" />
                         <input type="submit" class="d_anniu" border="0"  value="同意协议并注册" style="border: none; margin-left: 40px;"/>
                         <a class="d_zhanghao" onclick="window.location.href='<?php echo $this->createUrl('passport/login');?>'">已有账号，登录 >></a>
                     </div>

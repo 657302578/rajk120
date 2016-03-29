@@ -533,7 +533,7 @@ class SiteController extends Controller
             $taskInfo=Companytasklist::model()->findByPk($_POST['taskid']);
             $taskInfo->taskcompleteTime=time();//商家审核即任务完成时间
             $taskInfo->taskCompleteStatus=1;//任务完成，改变状态
-            if($taskInfo->save())
+            if(true)//$taskInfo->save())
             {
                 //任务完成，将金额与米粒加到接手帐户
                 //添加流水
@@ -557,6 +557,73 @@ class SiteController extends Controller
                 
                 //3.改变接手帐户中的金额与米粒
                 $userinfo=User::model()->findByPk($taskInfo->taskerid);//获取接手信息
+                $publishinfo=User::model()->findByPk($taskInfo->publishid);//获取发布方信息
+                if(!empty($userinfo->IdNumber))
+                {
+                    
+                   //处理推荐返利,获取返利配置
+                   $ptConfig = Config::model()->findByPk(1);
+                   $referrerInfo = User::model()->findByPk($userinfo->IdNumber);
+                   //判断返利1
+                   if(isset($referrerInfo) && $referrerInfo->tj_award_result < 1)
+                   {
+                       //如果完成任务的这个人存在上级推荐会员，且上级会员的奖励1还没有给他，则进行判断是否符合条件，如果符号条件，就给他发放奖励
+                       if($ptConfig->tj_is_sb > 0 && $ptConfig->tj_award_num > 0)
+                       {
+                           //如果开启了商保，则进行返利
+                           if($ptConfig->tj_task_num > 0)
+                           {
+                               //如果指定了要完成的任务数量，就判断是否符合这个条件
+                               //统计这个刷手已完成任务数量
+                               $count = Companytasklist::model()->count('taskerid='.$userinfo->id.' AND taskCompleteStatus=1');
+                               if($count >= $ptConfig->tj_task_num && $ptConfig->tj_award_num > 0)
+                               {
+                                   //符合条件，则进行返利
+                                   $record=new Recordlist();
+                                   $record->userid=$referrerInfo->id;//当前任务接手的上级会员ID
+                                   $record->catalog=12;//返利获得金额
+                                   $record->number=$ptConfig->tj_award_num;//操作金额
+                                   $record->time=time();//操作时间
+                                   $record->taskid=0;//任务id
+                                   $record->save();//保存金额流水
+                                   $referrerInfo->tj_award_result = 1;
+                                   $referrerInfo->Money = ($referrerInfo->Money+$ptConfig->tj_award_num);
+                                   $referrerInfo->save();
+                               }
+                           }else{
+                               //没有任务数量限制，直接就进行返利
+                               //符合条件，则进行返利
+                               $record=new Recordlist();
+                               $record->userid=$referrerInfo->id;//当前任务接手的上级会员ID
+                               $record->catalog=12;//返利获得金额
+                               $record->number=$ptConfig->tj_award_num;//操作金额
+                               $record->time=time();//操作时间
+                               $record->taskid=0;//任务id
+                               $record->save();//保存金额流水
+                               $referrerInfo->tj_award_result = 1;
+                               $referrerInfo->Money = ($referrerInfo->Money+$ptConfig->tj_award_num);
+                               $referrerInfo->save();
+                           }                                   
+                       }
+                   }
+                   $referrerInfo = User::model()->findByPk($userinfo->IdNumber);
+                   //判断返利2
+                   //返利2规则：当前会员从身份证审核通过之后，在后台配置的时效性内，完成任务给上级推荐人返利多少
+                   //如果该接手身份证已经通过审核，并且通过审核的时间在有效期内，则进行返利
+                   if( isset($referrerInfo) && $userinfo->id_is_check == 1 && strtotime('+'.$ptConfig->tj_timeliness.' day', strtotime($userinfo->id_check_time)) > time() )
+                   {
+                       $record=new Recordlist();
+                       $record->userid=$referrerInfo->id;//当前任务接手的上级会员ID
+                       $record->catalog=12;//返利获得金额
+                       $record->number=$ptConfig->tj_time_awardnum;//操作金额
+                       $record->time=time();//操作时间
+                       $record->taskid=0;//任务id
+                       $record->save();//保存金额流水
+                       $referrerInfo->Money = ($referrerInfo->Money+$ptConfig->tj_time_awardnum);
+                       $record->save(); 
+                       $referrerInfo->save();
+                   }
+                }
 //                 if($taskInfo->payWay==1)//如果任务为垫付则增加商品金额，否则只增加米粒
 //                 {
 //                     $userinfo->Money=$userinfo->Money+$taskInfo->txtPrice;//在原有金额基础上增加任务金额
@@ -564,7 +631,7 @@ class SiteController extends Controller
 //                 $userinfo->MinLi=$userinfo->MinLi+$taskInfo->MinLi;//在原有金额基础上增加任务金额
                 $userinfo->Experience=$userinfo->Experience+1;//接手每完成一个任务，经验值增加一个
                 //4.改变发布方经验值
-                $publishinfo=User::model()->findByPk($taskInfo->publishid);//获取发布方信息
+                
                 $publishinfo->Experience=$publishinfo->Experience+1;//商家每有一个任务被完成，经验值增加一个
                 //增加一个麦粒，如果是真实签收，该会员绑定的地址对应的占用者，获得一个麦粒
                 //todo....

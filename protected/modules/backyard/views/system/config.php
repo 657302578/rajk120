@@ -97,6 +97,32 @@
     		                        <input type="text" name="buyertaskmaxnum" id="input-small"  class="form-control input-sm" placeholder="1积分等于多少元" value="<?php if(isset($config)) echo $config->buyertaskmaxnum;?>"/>
     		                    </div>
                             </div>
+                            <br /><br />
+                            <div class="examItem">
+                                <label class="col-sm-3 control-label" for="input-small" style="width: auto;">推荐奖励设置：</label>
+                                <div class="col-sm-3">
+                                <table border="1" cellpadding="10" cellspacing="0" bordercolor="#CCCCCC" style="border-collapse:collapse;" >
+                                    <tr>
+                                        <td>奖励1设置</td>
+										<td>
+											是否加入商保：<input type="radio" <?php if(isset($config) && $config->tj_is_sb){ ?> checked="checked" <?php } ?> name="tj_is_sb" value="1">是
+											<input type="radio" <?php if(isset($config) && !$config->tj_is_sb){ ?> checked="checked" <?php } ?> name="tj_is_sb" value="0">否<br/>
+											完成任务数量：<input type="text" name="tj_task_num" value="<?php if(isset($config)) echo $config->tj_task_num;?>" /><br/>
+											奖励金额：<input type="text" name="tj_award_num" value="<?php if(isset($config)) echo $config->tj_award_num;?>" /><br/>
+										</td>
+                                    </tr>
+									<tr>
+                                        <td>奖励2设置</td>
+										<td>
+											奖励时效性：<input type="text" name="tj_timeliness" value="<?php if(isset($config)) echo $config->tj_timeliness;?>" />天内<br/>
+											奖励金额：<input type="text" name="tj_time_awardnum" value="<?php if(isset($config)) echo $config->tj_time_awardnum;?>" />
+										</td>
+                                    </tr>
+                                </table>
+                                
+    		                        
+    		                    </div>
+                            </div>
                             <div class="examItem">
                                 <div class="col-sm-10">
                                     <button type="submit" class="btn btn-sm btn-success" border="0" id="reg_submit" style=" margin-left:87px; margin-top: 10px;"><i class="fa fa-dot-circle-o"></i>&nbsp;保存配置</button>

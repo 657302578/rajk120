@@ -96,21 +96,12 @@ class PassportController extends Controller
             /*
                 ***判断是否为推广链接
             */
-            if(isset($_GET['promotionid']) && isset($_GET['sign']))
+            if(isset($_POST['referrer']))
             {
-               @$userinfo=User::model()->findByPk($_GET['promotionid']);
+               @$userinfo=User::model()->findByPk($_POST['referrer']);
                if(count($userinfo)==1)
                {
-                    $sign=substr(md5($_GET['promotionid']+"YUUMAAGONGYAN2014"),3,16);
-                    if($_GET['sign']==$sign)
-                    {
-                        $userRegModel->IdNumber=$_GET['promotionid'];
-                    }
-                    else
-                    {
-                        $this->redirect('site/index');
-                        Yii::app()->end();
-                    }
+                  $userRegModel->IdNumber=$_POST['referrer'];
                }
             }
             

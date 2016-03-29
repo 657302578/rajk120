@@ -234,7 +234,55 @@ class UserController extends Controller
                     $record->number=50;//操作数量
                     $record->time=$userinfo->JoinProtectPlanTime;//操作时间
                     $record->save();//保存金额流水
-                    
+                    //进行返利判断
+                    if(!empty($userinfo->IdNumber))
+                    {
+                        //处理推荐返利,获取返利配置
+                        $ptConfig = Config::model()->findByPk(1);
+                        $referrerInfo = User::model()->findByPk($userinfo->IdNumber);
+                        //判断返利1
+                        if(isset($referrerInfo) && $referrerInfo->tj_award_result < 1)
+                        {
+                            //如果完成任务的这个人存在上级推荐会员，且上级会员的奖励1还没有给他，则进行判断是否符合条件，如果符号条件，就给他发放奖励
+                            if($ptConfig->tj_is_sb > 0 && $ptConfig->tj_award_num > 0)
+                            {
+                                //如果开启了商保，则进行返利
+                                if($ptConfig->tj_task_num > 0)
+                                {
+                                    //如果指定了要完成的任务数量，就判断是否符合这个条件
+                                    //统计这个刷手已完成任务数量
+                                    $count = Companytasklist::model()->count('taskerid='.$userinfo->id.' AND taskCompleteStatus=1');
+                                    if($count >= $ptConfig->tj_task_num && $ptConfig->tj_award_num > 0)
+                                    {
+                                        //符合条件，则进行返利
+                                        $record=new Recordlist();
+                                        $record->userid=$referrerInfo->id;//当前任务接手的上级会员ID
+                                        $record->catalog=12;//返利获得金额
+                                        $record->number=$ptConfig->tj_award_num;//操作金额
+                                        $record->time=time();//操作时间
+                                        $record->taskid=0;//任务id
+                                        $record->save();//保存金额流水
+                                        $referrerInfo->tj_award_result = 1;
+                                        $referrerInfo->Money = ($referrerInfo->Money+$ptConfig->tj_award_num);
+                                        $referrerInfo->save();
+                                    }
+                                }else{
+                                    //没有任务数量限制，直接就进行返利
+                                    //符合条件，则进行返利
+                                    $record=new Recordlist();
+                                    $record->userid=$referrerInfo->id;//当前任务接手的上级会员ID
+                                    $record->catalog=12;//返利获得金额
+                                    $record->number=$ptConfig->tj_award_num;//操作金额
+                                    $record->time=time();//操作时间
+                                    $record->taskid=0;//任务id
+                                    $record->save();//保存金额流水
+                                    $referrerInfo->tj_award_result = 1;
+                                    $referrerInfo->Money = ($referrerInfo->Money+$ptConfig->tj_award_num);
+                                    $referrerInfo->save();
+                                }
+                            }
+                        }
+                    }
                     echo "SUCCESS";
                 }
                 else
@@ -315,7 +363,9 @@ class UserController extends Controller
     */
     public function actionUserSpread()
     {
-        $this->render('userSpread');
+        //查询此会员推荐的会员
+        $userList = User::model()->findAll('IdNumber='.Yii::app()->user->getId());
+        $this->render('userSpread', array('userList'=>$userList));
     }
     
     /*
@@ -1336,7 +1386,7 @@ class UserController extends Controller
             $MinLi=0;
             
             //第一步：商品信息
-            $MinLi=$MinLi+$_POST['txtMinMPrice'];//增加基本米粒
+            $MinLi=0;//$MinLi+$_POST['txtMinMPrice'];//增加基本米粒
             
             $_POST['ddlOKDay']!=0?$MinLi=$MinLi+($txtMinMPrice*1.5+($_POST['ddlOKDay']-1)):$MinLi=$MinLi+0;//根据确认时间增加对应米粒
             
@@ -1345,11 +1395,11 @@ class UserController extends Controller
             
             $_POST['shopcoller']==1?$MinLi=$MinLi+0.5:$MinLi=$MinLi+0;//选中购物收藏米粒基数加0.5
             
-            $_POST['isMobile']==1?$MinLi=$MinLi+2.0:$MinLi=$MinLi+0;//选中手机订单米粒基数加2.0
+            //$_POST['isMobile']==1?$MinLi=$MinLi+2.0:$MinLi=$MinLi+0;//选中手机订单米粒基数加2.0
             
-            $_POST['cbxIsLHS']==1?$MinLi=$MinLi+0.5:$MinLi=$MinLi+0;//选中旺旺收货米粒基数加0.5
+            //$_POST['cbxIsLHS']==1?$MinLi=$MinLi+0.5:$MinLi=$MinLi+0;//选中旺旺收货米粒基数加0.5
             
-            $_POST['isViewEnd']==1?$MinLi=$MinLi+0.5:$MinLi=$MinLi+0;//选中浏览到底米粒基数加0.5
+            //$_POST['isViewEnd']==1?$MinLi=$MinLi+0.5:$MinLi=$MinLi+0;//选中浏览到底米粒基数加0.5
             
             $_POST['pinimage']==1?$MinLi=$MinLi+0.5:$MinLi=$MinLi+0;//选中好评截图米粒基数加0.5
             
@@ -1377,58 +1427,8 @@ class UserController extends Controller
             $_POST['isReal']==1?$MinLi=$MinLi+0.5:$MinLi=$MinLi+0;//选中实名认证米粒基数加0.5
             
             $_POST['cbxIsSB']==1?$MinLi=$MinLi+0.5:$MinLi=$MinLi+0;//选中商保用户米粒基数加0.5
-            if($_POST['cbxIsFMaxMCount']==1)//根据限制接手要求增加对应的米粒
-            {
-                switch($_POST['fmaxmc'])
-                {
-                    case 1://1天接1个增加0.5米粒
-                        $MinLi=$MinLi+0.5;
-                        break;
-                    case 2://1天接2个增加0.2米粒
-                        $MinLi=$MinLi+0.2; 
-                        break;
-                    case 3://1周接1个增加1米粒
-                        $MinLi=$MinLi+1;
-                        break;
-                }
-            }
-            $_POST['isLimitCity']==1?$MinLi=$MinLi+2:$MinLi=$MinLi+0;//选中指定区域米粒基数加2
-            if($_POST['isBuyerFen']==1)//根据限制接手要求增加对应的米粒
-            {
-                switch($_POST['BuyerJifen'])
-                {
-                    case 1://一心及以上增加0.5米粒
-                        $MinLi=$MinLi+0.5;
-                        break;
-                    case 2://二心及以上 增加1.0米粒
-                        $MinLi=$MinLi+1; 
-                        break;
-                    case 3://三心及以上增加2.0米粒
-                        $MinLi=$MinLi+2;
-                        break;
-                    case 4://四心及以上增加3.0米粒
-                        $MinLi=$MinLi+3; 
-                        break;
-                    case 5://五心及以上增加4.0米粒
-                        $MinLi=$MinLi+4;
-                        break;
-                    case 6://一钻及以上增加5.0米粒
-                        $MinLi=$MinLi+5; 
-                        break;
-                    case 7://二钻及以上增加6.0米粒
-                        $MinLi=$MinLi+6;
-                        break;
-                    case 8://三钻及以上增加7.0米粒
-                        $MinLi=$MinLi+7; 
-                        break;
-                    case 9://四钻及以上增加8.0米粒
-                        $MinLi=$MinLi+8;
-                        break;
-                    case 10://五钻及以上增加支付9.0米粒
-                        $MinLi=$MinLi+9; 
-                        break;
-                }
-            }
+            
+           
             
             $_POST['filtertasker']==1?$MinLi=$MinLi+0.5:$MinLi=$MinLi+0;//选中过滤接手米粒基数加0.5
             
@@ -1437,7 +1437,7 @@ class UserController extends Controller
             
             $_POST['cbxIsAddress']==1?$MinLi=$MinLi+0.5:$MinLi=$MinLi+0;//选中收货地址米粒基数加0.5
 
-            echo $MinLi;
+            //echo $MinLi;
         }
     }
     
@@ -1459,9 +1459,8 @@ class UserController extends Controller
             //判断是否为来路搜索任务
             if(isset($_POST['taskCatalog']))
             {
-                echo 'ddd';
                 $task->visitWay=$_POST['visitWay'];//搜索方式(1-搜商品,2-搜店铺,3- 直通车,4信用评价)
-                $task->divKey=$_POST['divKey'];//搜商品关键字
+                //$task->divKey=$_POST['divKey'];//搜商品关键字
                 $task->txtSearchDes=$_POST['txtSearchDes'];//商品搜索提示
                 $task->goodsImgPosition=$_POST['goodsImgPosition'];//商品位置截图
             }
@@ -1486,14 +1485,14 @@ class UserController extends Controller
             $task->shopcoller=$_POST['shopcoller'];//是否选中购物收藏，1选中，0未选中
                 $_POST['shopcoller']==1?$MinLi=$MinLi+0.5:$MinLi=$MinLi+0;//选中购物收藏米粒基数加0.5
                 
-            $task->isMobile=$_POST['isMobile'];//是否选中手机订单，1选中，0未选中
-                $_POST['isMobile']==1?$MinLi=$MinLi+2.0:$MinLi=$MinLi+0;//选中手机订单米粒基数加2.0
+            //$task->isMobile=$_POST['isMobile'];//是否选中手机订单，1选中，0未选中
+                //$_POST['isMobile']==1?$MinLi=$MinLi+2.0:$MinLi=$MinLi+0;//选中手机订单米粒基数加2.0
                 
-            $task->cbxIsLHS=$_POST['cbxIsLHS'];//是否选中旺旺收货，1选中，0未选中
-                $_POST['cbxIsLHS']==1?$MinLi=$MinLi+0.5:$MinLi=$MinLi+0;//选中旺旺收货米粒基数加0.5
+            //$task->cbxIsLHS=$_POST['cbxIsLHS'];//是否选中旺旺收货，1选中，0未选中
+               // $_POST['cbxIsLHS']==1?$MinLi=$MinLi+0.5:$MinLi=$MinLi+0;//选中旺旺收货米粒基数加0.5
                 
-            $task->isViewEnd=$_POST['isViewEnd'];//是否选中浏览到底，1选中，0未选中
-                $_POST['isViewEnd']==1?$MinLi=$MinLi+0.5:$MinLi=$MinLi+0;//选中浏览到底米粒基数加0.5
+            ///$task->isViewEnd=$_POST['isViewEnd'];//是否选中浏览到底，1选中，0未选中
+               // $_POST['isViewEnd']==1?$MinLi=$MinLi+0.5:$MinLi=$MinLi+0;//选中浏览到底米粒基数加0.5
                 
             $task->pinimage=$_POST['pinimage'];//是否选中好评截图，1选中，0未选中
                 $_POST['pinimage']==1?$MinLi=$MinLi+0.5:$MinLi=$MinLi+0;//选中好评截图米粒基数加0.5
@@ -1514,7 +1513,7 @@ class UserController extends Controller
                             break;
                     }
                 }
-            $task->stopTime=$_POST['stopTime'];//停留时间长度
+            //$task->stopTime=$_POST['stopTime'];//停留时间长度
               
             $task->cbxIsMsg=$_POST['cbxIsMsg'];//是否选中好评内容，1选中，0未选中
             $task->txtMessage=$_POST['txtMessage'];//好评内容
@@ -1537,25 +1536,16 @@ class UserController extends Controller
             $task->cbxIsFMaxMCount=$_POST['cbxIsFMaxMCount'];//是否选中限制接手，1选中，0未选中
                 if($_POST['cbxIsFMaxMCount']==1)//根据限制接手要求增加对应的米粒
                 {
-                    switch($_POST['fmaxmc'])
-                    {
-                        case 1://1天接1个增加0.5米粒
-                            $MinLi=$MinLi+0.5;
-                            break;
-                        case 2://1天接2个增加0.2米粒
-                            $MinLi=$MinLi+0.2; 
-                            break;
-                        case 3://1周接1个增加1米粒
-                            $MinLi=$MinLi+1;
-                            break;
-                    }
+                    $fmaxmc = $_POST['fmaxmc_d'].'@'.$_POST['fmaxmc_w'].'@'.$_POST['fmaxmc_m'];
                 }
-            $task->fmaxmc=$_POST['fmaxmc'];//限制的具体要求
+            $task->fmaxmc=$fmaxmc;//限制的具体要求
                 
             $task->isLimitCity=$_POST['isLimitCity'];//是否选中指定区域，1选中，0未选中
                 $_POST['isLimitCity']==1?$MinLi=$MinLi+2:$MinLi=$MinLi+0;//选中指定区域米粒基数加2
-            $task->Province=$_POST['Province'];//限制接手所属区域
                 
+            $task->Province=$_POST['Province'];//限制接手所属区域
+            $task->is_xzqx_type = $_POST['is_xzqx_type'];
+            
             $task->isBuyerFen=$_POST['isBuyerFen'];//是否选中限制等级，1选中，0未选中
                 if($_POST['isBuyerFen']==1)//根据限制接手要求增加对应的米粒
                 {
@@ -1728,6 +1718,7 @@ class UserController extends Controller
     */
     public function actionTaskPublishPT()
     {
+        $areaList = Area::model()->findAll( array('condition'=>'parentid=0'));
         //获取掌柜号
         $sellerInfo=Blindwangwang::model()->findAll(array(
             'condition'=>'userid='.Yii::app()->user->getId().' and statue=1 and catalog=2 AND is_check=1',
@@ -1735,7 +1726,8 @@ class UserController extends Controller
             'order'=>'id desc'
         ));
         $this->render('taskPublishPT',array(
-            'sellerInfo'=>$sellerInfo
+            'sellerInfo'=>$sellerInfo,
+            'area' => $areaList,
         ));
     }
     
@@ -1744,13 +1736,15 @@ class UserController extends Controller
     */
     public function actionTaskPublishLU()
     {
+        $areaList = Area::model()->findAll(array('condition'=>'parentid=0'));
         $sellerInfo=Blindwangwang::model()->findAll(array(
             'condition'=>'userid='.Yii::app()->user->getId().' and statue=1 and catalog=2',
             'select'=>'id,wangwang',
             'order'=>'id desc'
         ));
         $this->render('taskPublishLU',array(
-            'sellerInfo'=>$sellerInfo
+            'sellerInfo'=>$sellerInfo,
+            'area' => $areaList,
         ));
     }
     

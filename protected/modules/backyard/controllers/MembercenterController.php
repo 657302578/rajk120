@@ -128,6 +128,10 @@
             $userInfo = User::model()->findByPk($_POST['uid']);
             if(!$userInfo) exit('NO_USER');
             unset($_POST['uid'], $_POST['submit']);
+            if($userInfo->id_is_check <= 0 && $_POST['id_is_check'] > 0 )
+            {
+                $userInfo->id_check_time = date('Y/m/d H:i:s',time());
+            }
             foreach ($_POST as $k => $v)
             {
                 $userInfo->$k = $v;

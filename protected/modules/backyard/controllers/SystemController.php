@@ -15,6 +15,11 @@
                 $data['jifen_rate'] = $_POST['jifen_rate'];
                 $data['last_update_time'] = date('Y/m/d H:i:s');
                 $data['buyertaskmaxnum'] = intval($_POST['buyertaskmaxnum']);
+                $data['tj_is_sb'] = intval($_POST['tj_is_sb']);
+                $data['tj_task_num'] = intval($_POST['tj_task_num']);
+                $data['tj_award_num'] = intval($_POST['tj_award_num']);
+                $data['tj_timeliness'] = intval($_POST['tj_timeliness']);
+                $data['tj_time_awardnum'] = intval($_POST['tj_time_awardnum']);
                 if(!$config)
                 {
                     $config = new Config();

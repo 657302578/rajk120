@@ -75,9 +75,20 @@
                     <li class="d_tgul2">注册时间</li>
                     <li class="d_tgul3">接任务数据(已接/完成)</li>
                     <li class="d_tgul4">发任务数据(已发/完成)</li>
-                    <li class="d_tgul5">领取推广佣金</li>
                 </ul>
-                <p>(总推荐人数：0，当月推荐人数：0，当日推荐人数：0 )</p>
+                <?php foreach ($userList as $k => $v){?>
+                <ul class="d_tgul clearfix">
+                	<li class="d_tgul1"><?php echo $v['Username'];?></li>
+                    <li class="d_tgul2"><?php echo date('Y/m/d H:i:s',$v['RegTime']);?></li>
+                    <li class="d_tgul3"><?php echo User::gettasknumbytime($v['id'], 1, 'month');?></li>
+                    <li class="d_tgul4">
+                    <?php
+                        echo Companytasklist::model()->count('publishid='.$v['id']);
+                    ?>
+                    </li>
+                   
+                </ul>
+                <?php }?>
             </div>
        </div>
     </div>
