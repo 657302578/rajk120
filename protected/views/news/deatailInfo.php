@@ -11,7 +11,7 @@
     $helpNav = Articlecatlog::model()->findAll(array('select'=>'id,name','order'=>'sort asc'));
     foreach($helpNav as $k=>$item){
     ?>
-    <a <?php if($k==0) echo $active = 'class="nav-content-active"';?> href="<?php echo $this->createUrl('help',array('cid'=>$item->id));?>"><?php echo $item->name; ?></a>
+    <a <?php if(isset($_GET['catlogid']) && $_GET['catlogid']==$item->id ) echo $active = 'class="nav-content-active"';?> href="<?php echo $this->createUrl('site/help',array('cid'=>$item->id));?>"><?php echo $item->name; ?></a>
     <?php }?></div>
     </div>
 </div>

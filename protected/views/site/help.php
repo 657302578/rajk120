@@ -6,7 +6,7 @@
     $helpNav = Articlecatlog::model()->findAll(array('select'=>'id,name','order'=>'sort asc'));
     foreach($helpNav as $k=>$item){
     ?>
-    <a <?php if($k==0) echo $active = 'class="nav-content-active"';?> href="<?php echo $this->createUrl('help',array('cid'=>$item->id));?>"><?php echo $item->name; ?></a>
+    <a <?php if(isset($_GET['cid']) && $_GET['cid']== $item->id ) echo $active = 'class="nav-content-active"';?> href="<?php echo $this->createUrl('help',array('cid'=>$item->id));?>"><?php echo $item->name; ?></a>
     <?php }?></div>
     </div>
 </div>
@@ -26,7 +26,7 @@
         <?php }?>
         <div class="breakpage"><!--分页开始-->
             <?php
-                $this->widget('help', array(
+                $this->widget('CLinkPager', array(
                     'selectedPageCssClass'=>'active',
                     'pages' => $pages,
                     'lastPageLabel' => '最后一页',
