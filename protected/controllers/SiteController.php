@@ -887,7 +887,24 @@ class SiteController extends Controller
     //新手帮助
     public function actionHelp()
     {
-        $this->render('help');
+        if(!isset($_GET['cid'])){
+            $condition = 'is_delete=0';
+        }else{
+            $condition = 'cat_id='.$_GET['cid'].' and is_delete=0';
+        }
+        if( !empty($_GET['keyword']) ) $condition .= " and goods_name like '%".$_GET['keyword']."%'";
+        $criteria = new CDbCriteria;
+        $criteria->condition = $condition;
+        $criteria->order = 'goods_id desc';
+        $total = Article::model()->count($criteria);
+        $pages = new CPagination($total);
+        $pages->pageSize=10;
+        $pages->applyLimit($criteria);
+        $articleInfo=Article::model()->findAll($criteria);
+        $this->render('help',array(
+            'articleInfo' => $articleInfo,
+            'pages' => $pages,
+        ));
     }
     
     /*

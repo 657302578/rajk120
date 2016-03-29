@@ -29,18 +29,16 @@
           <span class="d_p_span1"><?php echo substr_replace($userinfo->Phon,'***',3,4);?></span><span class="d_p_span2 changMyPhone"><a href="javascript:;">修改手机号</a></span> </div>
         <div class="d_input">
           <ul>
-            <li class="input1">QQ号码：
-              <input type="text" name="qq" class="text1 myqq" value="<?php echo $userinfo->QQToken;?>" <?php echo $userinfo->QQToken!=""?'readonly="readonly" style="background:#e9e8e8"':''?>/>
+            <li class="newinput"><font class="newth">QQ号码：</font>
+              <input type="text" name="qq" class="myqq" value="<?php echo $userinfo->QQToken;?>" <?php echo $userinfo->QQToken!=""?'readonly="readonly" style="background:#e9e8e8"':''?>/>
               <span style="color: red; padding-left:10px;">接任务时财付通使用此QQ号，收款人必须与真实姓名一致，一经设置，无法自行修改。</span></li>
-            <li class="input2">真实姓名：
-              <input type="text" name="truename" value="<?php echo $userinfo->TrueName;?>" class="text2 myname" <?php echo $userinfo->TrueName!=""?'readonly="readonly" style="background:#e9e8e8"':''?> />
-              <span>真实姓名和身份证号码一经设置，无法更改，请谨慎填写，这将关系到您后期的提现等操作！！</span></li>
-            <li class="input2">身份证号：
-              <input type="text"  <?php echo ($userinfo->id_card != "" && $userinfo->id_is_check == 1 ) ? 'readonly="readonly" style="background:#e9e8e8"':''?> name="id_card" value="<?php echo $userinfo->id_card;?>" class="text2 myname"  />
+            <li class="newinput"><font class="newth">真实姓名：</font><input type="text" name="truename" value="<?php echo $userinfo->TrueName;?>" class="myname" <?php echo $userinfo->TrueName!=""?'readonly="readonly" style="background:#e9e8e8"':''?> />
+              <span style="color: red;">真实姓名和身份证号码一经设置，无法更改，请谨慎填写，这将关系到您后期的提现等操作！！</span></li>
+            <li class="newinput"><font class="newth">身份证号：</font>
+              <input type="text"  <?php echo ($userinfo->id_card != "" && $userinfo->id_is_check == 1 ) ? 'readonly="readonly" style="background:#e9e8e8"':''?> name="id_card" value="<?php echo $userinfo->id_card;?>" class="myname"  />
 			  <span style="color:#FF0000; font-weight:bold;"><?php if($userinfo->id_is_check) {?>审核通过<?php }elseif($userinfo->id_is_check == 2){?>审核未通过，请修改<?php }else{?>待审核(审核通过后才能接单)<?php }?></span>
             </li>
-            <li class="input2">身份证正面：
-              <input type="text" name="id_photo_front" <?php echo ($userinfo->id_photo_front != "" && $userinfo->id_is_check == 1 )?'readonly="readonly" style="background:#e9e8e8"':''?> id="id_photo_front_show" value="<?php echo $userinfo->id_photo_front;?>" class="text2 myname"  />
+            <li class="newinput"><font class="newth">身份证正面：</font><input type="text" name="id_photo_front" <?php echo ($userinfo->id_photo_front != "" && $userinfo->id_is_check == 1 )?'readonly="readonly" style="background:#e9e8e8"':''?> id="id_photo_front_show" value="<?php echo $userinfo->id_photo_front;?>" class="myname"  />
 			  <?php if($userinfo->id_is_check != 1){?>
 			  <a id="id_photo_front" href="javascript:;">点击上传照片</a><span>请上传高清大图原图，上传后请联系客服QQ及时审核。</span>
 			  <?php if(!empty($userinfo->id_photo_front)){?> <a href="<?php echo $userinfo->id_photo_front;?>" target="_blank" title="查看">查看</a> <?php }?>
@@ -49,8 +47,7 @@
 			  <?php }?>
 			  
             </li>
-            <li class="input2">身份证反面：
-              <input type="text" <?php echo ($userinfo->id_photo_rear && $userinfo->id_is_check == 1) != ""?'readonly="readonly" style="background:#e9e8e8"':''?> name="id_photo_rear" id="id_photo_rear_show" value="<?php echo $userinfo->id_photo_rear;?>" class="text2 myname"  />
+            <li class="newinput"><font class="newth">身份证反面：</font><input type="text" <?php echo ($userinfo->id_photo_rear && $userinfo->id_is_check == 1) != ""?'readonly="readonly" style="background:#e9e8e8"':''?> name="id_photo_rear" id="id_photo_rear_show" value="<?php echo $userinfo->id_photo_rear;?>" class="myname"  />
 			  <?php if($userinfo->id_is_check != 1){?>
 			 <a id="id_photo_rear" href="javascript:;">点击上传照片</a><span>请上传高清大图原图，上传后请联系客服QQ及时审核。</span>
 			     <?php if(!empty($userinfo->id_photo_rear)){?> <a href="<?php echo $userinfo->id_photo_rear;?>" target="_blank" title="查看">查看</a> <?php }?>
@@ -59,24 +56,23 @@
 			  <?php }?>
 			  
             </li>
-			<li class="input2">支付宝账号：
-              <input type="text"  <?php if(!empty($userinfo->alipay_account)){ ?> readonly="readonly" style="background:#e9e8e8" <?php }?> name="alipay_account" id="alipay_account" value="<?php echo $userinfo->alipay_account;?>" class="text2 myname"  /><span>请填写与真实姓名一致的收款支付宝帐号，仅发任务可不填，一经设置，无法自行修改。</span>
+			<li class="newinput"><font class="newth">支付宝账号：</font><input type="text"  <?php if(!empty($userinfo->alipay_account)){ ?> readonly="readonly" style="background:#e9e8e8" <?php }?> name="alipay_account" id="alipay_account" value="<?php echo $userinfo->alipay_account;?>" class="myname"  /><span style="color: red;">请填写与真实姓名一致的收款支付宝帐号，仅发任务可不填，一经设置，无法自行修改。</span>
             </li>
-            <li class="input3">Email :<span><?php echo substr_replace($userinfo->Email,'***',3,3);?></span	></li>
+            <li class="newinput"><font class="newth">Email :</font><span class="emailstyle"><?php echo substr_replace($userinfo->Email,'***',3,3);?></span	></li>
           </ul>
         </div>
         <div class="d_check clearfix">
           <ul>
-            <li class="d_radio">
-              <label>性别 :
+            <li class="newinput"><font class="newth">性别 :</font>
+              <label>
               <input type="radio" name="sex" class="d_radio1 mysex" value="1" <?php echo $userinfo->Sex==1?'checked="checked"':'';?> />
               <span>男</span></label>
               <label>
               <input type="radio" name="sex" value="0" class="d_radio2 mysex" <?php echo $userinfo->Sex==0?'checked="checked"':'';?>/>
               <span>女</span></label>
             </li>
-            <li class="d_radionext">
-              <label>开启异地登录短信验证 :
+            <li class="newinput"><font class="newth">开启异地登录短信验证 :</font>
+              <label>
               <input type="radio" name="PlaceOtherLogin" class="d_radio3 PlaceOtherLogin" <?php echo $userinfo->PlaceOtherLogin==1?'checked="checked"':'';?> value="1"/>
               <span>开启</span></label>
               <label>
@@ -87,9 +83,8 @@
         </div>
         <div class="d_check clearfix">
             <ul>
-            <li class="d_radio">
-              <label>
-                                             收货地址 :
+            <li class="newinput">
+                  <font class="newth">收货地址 :</font>
                   <?php
                   echo CHtml::dropDownList('idProvince', ''.isset($address) ? $address->sheng_id : ''.'', CHtml::listData($area, 'id', 'name'),
                       array(
@@ -115,16 +110,16 @@
                           )));
                   echo CHtml::dropDownList('idDistrict', ''.isset($address) ? $address->qu_id : ''.'',  CHtml::listData($qu, 'id', 'name'), array('prompt' => '选择区域'));
                   ?>
-              </label>
-              <br/>
-              <label>
-                收货人姓名：<input type="text" name="addr[user_name]" value="<?php if($address) echo  $address->user_name;?>" <?php if(isset($address) && !empty($address->user_name)){?> readonly="readonly" style="background:#e9e8e8" <?php } ?> />
-                </label><br/>
-                <label>收货人手机号：<input <?php if(isset($address) && !empty($address->mobile)){?> readonly="readonly" style="background:#e9e8e8" <?php } ?> type="text" name="addr[mobile]" value="<?php if($address) echo  $address->mobile;?>" /></label><br/>
-                <label>收货人地址：<input <?php if(isset($address) && !empty($address->address)){?> readonly="readonly" style="background:#e9e8e8" <?php } ?> type="text" name="addr[address]" value="<?php if($address) echo  $address->address;?>" />
-              </label>
-              <br/>
-              <span>仅发任务可不填写，接任务必须填写！</span>
+              </li>
+              <li class="newinput">
+              <font class="newth">收货人姓名：</font>
+              <input type="text" name="addr[user_name]" value="<?php if($address) echo  $address->user_name;?>" <?php if(isset($address) && !empty($address->user_name)){?> readonly="readonly" style="background:#e9e8e8" <?php } ?> />
+                </li>
+                <li class="newinput"><font class="newth">收货人手机号：</font><input <?php if(isset($address) && !empty($address->mobile)){?> readonly="readonly" style="background:#e9e8e8" <?php } ?> type="text" name="addr[mobile]" value="<?php if($address) echo  $address->mobile;?>" /><br/>
+                </li><li class="newinput"><font class="newth">收货人地址：</font><input <?php if(isset($address) && !empty($address->address)){?> readonly="readonly" style="background:#e9e8e8" <?php } ?> type="text" name="addr[address]" value="<?php if($address) echo  $address->address;?>" />
+              
+              </li><li class="newinput">
+              <span class="shuoming">仅发任务可不填写，接任务必须填写！</span>
             </li>
           </ul>
         </div>

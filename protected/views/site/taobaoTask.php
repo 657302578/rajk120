@@ -449,6 +449,7 @@
                     <?php
                         $lev = User::getuserlevelnum($item->publishid);
                      ?>
+                     <span class="vip_level"><i style="background: url(<?php echo VERSION2; ?>img/newlevel/14.gif) center no-repeat;"></i></span>
 					<?php
 					   //查看此会员是否申请过此任务
 					   if(Yii::app()->user->getId())
@@ -462,7 +463,7 @@
 					?>
 					   <a href="javascript:;" class="qcrw" lang="<?php echo $item->id;?>" alt="<?php echo $item->publishid;?>">等待审核</a>
 					   <?php if($sellerInfo && $aTinfo->state == 0){?>
-					   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img  style="CURSOR: pointer" onclick="javascript:window.open('http://b.qq.com/webc.htm?new=0&sid=<?php echo $sellerInfo->QQToken;?>&o=联系卖家&q=7', '_blank', 'height=502, width=644,toolbar=no,scrollbars=no,menubar=no,status=no');"  border="0" SRC=http://wpa.qq.com/pa?p=1:<?php echo $sellerInfo->QQToken;?>:1 alt="请及时联系商家QQ，并将您的旺旺号等级信息截图给商家，以便更快被审核" title="请及时联系商家QQ，并将您的旺旺号等级信息截图给商家，以便更快被审核"><?php echo $sellerInfo->QQToken;?>
+					   <img class="QQ-Token"  style="CURSOR: pointer" onclick="javascript:window.open('http://b.qq.com/webc.htm?new=0&sid=<?php echo $sellerInfo->QQToken;?>&o=联系卖家&q=7', '_blank', 'height=502, width=644,toolbar=no,scrollbars=no,menubar=no,status=no');"  border="0" SRC=http://wpa.qq.com/pa?p=1:<?php echo $sellerInfo->QQToken;?>:1 alt="请及时联系商家QQ，并将您的旺旺号等级信息截图给商家，以便更快被审核" title="请及时联系商家QQ，并将您的旺旺号等级信息截图给商家，以便更快被审核"><span class="lx-QQ"><?php echo $sellerInfo->QQToken;?></span>
 					   <?php }?>
 					<?php }else{?>
                     <a href="javascript:;" class="qcrw taskTask" lang="<?php echo $item->id;?>" alt="<?php echo $item->publishid;?>">立即申请</a>

@@ -1,121 +1,40 @@
+<div class="help-nav">
+    <div class="nav-content">
+    <span class="help-search"><form action="" method=""><input class="text-search" type="text" name="keyword" placeholder="请输入您的问题按回车键确认" /><input class="help_submit" type="submit" /></form></span>
+    <div class="help-search-right">
+    <?php 
+    $helpNav = Articlecatlog::model()->findAll(array('select'=>'id,name','order'=>'sort asc'));
+    foreach($helpNav as $k=>$item){
+    ?>
+    <a <?php if($k==0) echo $active = 'class="nav-content-active"';?> href="<?php echo $this->createUrl('help',array('cid'=>$item->id));?>"><?php echo $item->name; ?></a>
+    <?php }?></div>
+    </div>
+</div>
     <div class="help"><!--新手帮助-->
-        <div class="helpt clearfix">
-            <a href="#" class="helpt_lf">如何发布任务（视频教程）</a>
-            <a href="#" class="helpt_ri">如何接手任务（视频教程）</a>
+        <?php
+            foreach($articleInfo as $item){
+        ?>
+        <div class="newstt">
+            <div class="newsrtr">
+               <div class="newsby">
+                  <p class="nttl"><a href="<?php echo $this->createUrl('news/deatailInfo',array('id'=>$item->goods_id,'catlogid'=>$item->cat_id));?>" target="_blank"><?php echo $item->goods_name;?></a></p>
+                  <p></p>
+                  <p class="newsfoot"><span><?php echo date('Y-m-d',$item->add_time);?></span> <span>阅读 <?php echo $item->click_count;?></span></p>
+               </div>
+            </div>
         </div>
-        <div class="helpSo">
-            <form action="" method="">
-                <input type="text" class="helpSo_inp" placeholder="请输入您的问题按回车键确认">
-            </form>
-        </div>
-        <div class="helpCen clearfix">
-            <div class="helpInf_lf"><!--左侧列表-->
-                <h1 class="helpCen_t">新手入门</h1>
-                <div class="help_lis pb20 clearfix">
-                    <div class="help_lisLf">
-                        <h1 class="help_lis_t">商家帮助区</h1>
-                        <ul class="help_lists">
-                            <?php
-                                $articleInfo=Article::model()->findAll(array(
-                                    'condition'=>'cat_id=38 and is_delete=0',
-                                    'select'=>'goods_id,goods_name,cat_id',
-                                    'limit'=>'5'
-                                ));
-                                foreach($articleInfo as $item){
-                            ?>
-                            <li><span data-title="置顶的内容">★</span><a title="" href="<?php echo $this->createUrl('news/deatailInfo',array('id'=>$item->goods_id,'catlogid'=>$item->cat_id));?>"><?php
-                                echo $item->goods_name;
-                            ?></a></li>
-                            <?php
-                                }
-                            ?>
-                            <li><a href="<?php echo $this->createUrl('news/list',array('catlogid'=>38));?>" style="color: #57A0FF ;">查看全部>></a></li>
-                        </ul>
-                    </div>
-                    <div class="help_lisR">
-                        <h1 class="help_lis_t">威客帮助区</h1>
-                        <ul class="help_lists">
-                            <?php
-                                $articleInfo=Article::model()->findAll(array(
-                                    'condition'=>'cat_id=39 and is_delete=0',
-                                    'select'=>'goods_id,goods_name,cat_id',
-                                    'limit'=>'5'
-                                ));
-                                foreach($articleInfo as $item){
-                            ?>
-                            <li><span data-title="置顶的内容">★</span><a title="" href="<?php echo $this->createUrl('news/deatailInfo',array('id'=>$item->goods_id,'catlogid'=>$item->cat_id));?>"><?php
-                                echo $item->goods_name;
-                            ?></a></li>
-                            <?php
-                                }
-                            ?>
-                            <li><a href="<?php echo $this->createUrl('news/list',array('catlogid'=>39));?>" style="color: #57A0FF ;">查看全部>></a></li>
-                        </ul>
-                    </div>
-                </div>
-                <h1 class="helpCen_t">官方动态</h1>
-                <div class="help_lis clearfix pb150">
-                    <div class="help_lisLf">
-                        <h1 class="help_lis_t">最新资讯</h1>
-                        <ul class="help_lists">
-                            <?php
-                                $articleInfo=Article::model()->findAll(array(
-                                    'condition'=>'cat_id=40 and is_delete=0',
-                                    'select'=>'goods_id,goods_name,cat_id',
-                                    'limit'=>'5'
-                                ));
-                                foreach($articleInfo as $item){
-                            ?>
-                            <li><span data-title="置顶的内容">★</span><a title="" href="<?php echo $this->createUrl('news/deatailInfo',array('id'=>$item->goods_id,'catlogid'=>$item->cat_id));?>"><?php
-                                echo $item->goods_name;
-                            ?></a></li>
-                            <?php
-                                }
-                            ?>
-                            <li><a href="<?php echo $this->createUrl('news/list',array('catlogid'=>40));?>" style="color: #57A0FF ;">查看全部>></a></li>
-                        </ul>
-                    </div>
-                    <div class="help_lisR">
-                        <h1 class="help_lis_t">官方公告</h1>
-                        <ul class="help_lists">
-                            <?php
-                                $articleInfo=Article::model()->findAll(array(
-                                    'condition'=>'cat_id=41 and is_delete=0',
-                                    'select'=>'goods_id,goods_name,cat_id',
-                                    'limit'=>'5'
-                                ));
-                                foreach($articleInfo as $item){
-                            ?>
-                            <li><span data-title="置顶的内容">★</span><a title="" href="<?php echo $this->createUrl('news/deatailInfo',array('id'=>$item->goods_id,'catlogid'=>$item->cat_id));?>"><?php
-                                echo $item->goods_name;
-                            ?></a></li>
-                            <?php
-                                }
-                            ?>
-                            <li><a href="<?php echo $this->createUrl('news/list',array('catlogid'=>41));?>" style="color: #57A0FF ;">查看全部>></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div><!--左侧列表 end-->
-            <div class="helpInf_r"><!--右侧列表-->
-                <h1 class="helpCen_t">重要通知</h1>
-                <ul class="zdll">
-                    <?php
-                        $articleInfo=Article::model()->findAll(array(
-                            'condition'=>'cat_id=33 and is_delete=0',
-                            'select'=>'goods_id,goods_name,cat_id',
-                            'limit'=>'5'
-                        ));
-                        foreach($articleInfo as $item){
-                    ?>
-                    <li><a title="" href="<?php echo $this->createUrl('news/deatailInfo',array('id'=>$item->goods_id,'catlogid'=>$item->cat_id));?>"><?php
-                        echo $item->goods_name;
-                    ?></a></li>
-                    <?php
-                        }
-                    ?>
-                    <li><a href="<?php echo $this->createUrl('news/list',array('catlogid'=>33));?>" style="color: #57A0FF ;">查看全部>></a></li>
-                </ul>
-            </div><!--右侧列表 end-->
-        </div>
+        <?php }?>
+        <div class="breakpage"><!--分页开始-->
+            <?php
+                $this->widget('help', array(
+                    'selectedPageCssClass'=>'active',
+                    'pages' => $pages,
+                    'lastPageLabel' => '最后一页',
+                    'firstPageLabel' => '第一页',
+                    'header' => false,
+                    'nextPageLabel' => ">>",
+                    'prevPageLabel' => "<<",
+                ));
+            ?>
+        </div><!--分页结束-->
     </div><!--新手帮助 end-->

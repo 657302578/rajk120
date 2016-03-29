@@ -1045,6 +1045,7 @@ li.dtrwLisOn{
 }
 .rebh font{ padding-left:10px;}
 .allRw_pro{
+	position: relative;
 	margin-top: 13px;
 	height:70px;
 }
@@ -1110,7 +1111,7 @@ li.dtrwLisOn{
 .allRw_proLink>a:hover{ color:#57a0ff;}
 .qcrw{
 	position: relative;
-	top:4px;
+	top:30px;
 	display: block;
 	float: left;
 	width:80px;
@@ -3861,3 +3862,132 @@ background: url(../img/hy2.png) no-repeat center top;
 .person-info ul li a.jrhmd,.person-info_yf ul li a.jrhmd {font-size:10px;padding:4px;margin-left:20px}
 .jrhmd{ border:1px solid #57a0ff; border-radius: 3px;}
 a.jrhmd:hover{ background: #57a0ff; color:#fff;}
+
+/* new Add UserCenter */
+.newinput {
+	margin:10px 0;
+	font-weight: normal;
+	font-size: 14px;
+}
+.newinput .newth {width:200px;display:inline-block;text-align: right;}
+.newinput input, .newinput select{
+	border:1px dashed #57a0ff;
+	text-indent: 5px;
+	padding:5px;
+	margin-left:20px;
+}
+.newinput label {
+	width:100px;
+	display:inline-block;
+	text-align:left;
+	border:1px dashed #57a0ff;
+	padding:5px;
+	margin-left:20px;
+}
+.newinput label input {
+	padding:0!important;
+	margin-left:40px!important;
+}
+.newinput .emailstyle{margin-left:20px;border:1px dashed #57a0ff;padding:5px;}
+.newinput .shuoming {margin-left:228px;color: red;}
+/* UsreCenter End */
+
+/* 任务大厅 Add */
+.vip_level i {
+	position: absolute;right:123px;
+	width:88px;height:21px;
+}
+.QQ-Token {position: absolute;right:35px;}
+.lx-QQ {
+	position: absolute;bottom:0;left:896px;
+}
+/* 任务大厅 End */
+
+/* help-nav */
+.help-nav {width:100%;height:60px;line-height:60px;background:#eee;}
+.nav-content {width:1006px;height:60px;margin:0 auto;text-align: right;border-bottom:1px dashed #99c1f5;}
+.nav-content a {
+    display: inline-block;
+    padding: 0px 8px;
+    height: 32px;
+    line-height: 32px;
+    color: #434a54;
+    border-radius: 5px;
+}
+.help-search-right {float:right;}
+.nav-content-active,.nav-content a:hover {background: #1987da;color:#fff!important;}
+.help-search {float:left;
+	width: 276px;
+    height: 42px;
+    border-radius: 2px;
+    overflow: hidden;
+    border: #99C1F5 1px dashed;
+    border-radius: 3px;
+    display: block;
+    margin-top:8px;
+}
+.help-search .text-search {
+	width: 235px;
+    height: 42px;
+    outline: none;
+    float: left;
+    font-size: 16px;
+    color: #959595;
+    text-indent: 12px;
+    border: 0px;
+    line-height: 45px;
+    display: block;
+}
+.help_submit {
+	background: url(../img/new_search.png) no-repeat;
+    display: block;
+    width: 37px;
+    height: 35px;
+    float: right;
+    vertical-align: middle;
+    margin-top: 3px;
+    margin-right: 3px;
+    text-indent: -999px;
+    border:none;
+}
+
+.newstt {
+    width: 1006px;
+    margin: 10px auto;
+    font-size: 18px;
+    background-color: #FFF;
+    margin: 0 auto;
+    overflow: hidden;
+}
+.newsrtr {
+    float: right;
+    width: 1006px;
+    color: #999;
+    font-size: 14px;
+    line-height: 18px;
+}
+.newsby {
+    border-bottom: 1px solid #F0F0F0;
+    padding: 20px 0px !important;
+}
+.nttl {
+    margin-bottom: 10px;
+}
+.nttl a {
+    color: #333;
+    font-size: 20px;
+}
+.newsfoot {
+    float: right;
+    color: #BBB;
+}
+.newsfoot span {
+    margin-left: 20px;
+}
+
+
+
+
+
+
+

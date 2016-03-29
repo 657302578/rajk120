@@ -3,6 +3,18 @@
     .arcTitleInfo{ height:60px; line-height:60px; text-align: center; font-size:20px; font-weight:bold; }
     .arcDetailInfo{ font-size:14px;}
     </style>
+    <div class="help-nav">
+    <div class="nav-content">
+    <span class="help-search"><form action="" method=""><input class="text-search" type="text" name="keyword" placeholder="请输入您的问题按回车键确认" /><input class="help_submit" type="submit" /></form></span>
+    <div class="help-search-right">
+    <?php 
+    $helpNav = Articlecatlog::model()->findAll(array('select'=>'id,name','order'=>'sort asc'));
+    foreach($helpNav as $k=>$item){
+    ?>
+    <a <?php if($k==0) echo $active = 'class="nav-content-active"';?> href="<?php echo $this->createUrl('help',array('cid'=>$item->id));?>"><?php echo $item->name; ?></a>
+    <?php }?></div>
+    </div>
+</div>
     <div class="arcList"><!--arcList start-->
         <div class="arcDetail" style="padding-bottom: 20px;"><!--arcDetail start-->
         	<div class="arcTitleInfo"><?php echo $articleInfo['goods_name'];?></div>
