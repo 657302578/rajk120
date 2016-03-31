@@ -2237,7 +2237,7 @@ body.modal-open,
   list-style: none;
 }
 .inbox .inbox-menu ul li {
-  height: 30px;
+  /*height: 30px;*/
   padding: 5px 15px;
   position: relative;
 }

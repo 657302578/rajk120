@@ -139,7 +139,7 @@
         									身份证反面：<?php if($userinfo->id_photo_rear){?><a style="color:#FF0000;" href="<?php echo $userinfo->id_photo_rear; ?>" target="_blank" title="查看" >查看</a><?php }else{?>未上传<?php }?>
         								</li>
                                         <li>
-        									身份证信息是否通过审核：
+        									身份证信息是否通过审核：<br>
 												<input <?php if($userinfo->id_is_check == 0){?> checked="checked" <?php }?> type="radio" name="id_is_check" value="0" />未通过 <input <?php if($userinfo->id_is_check == 1){?> checked="checked" <?php }?> type="radio" name="id_is_check" value="1" />已通过
         								</li>
         								<li>
