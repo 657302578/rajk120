@@ -37,7 +37,7 @@
                 	<div class="d_con_left_top">
                         <p class="cunkuan1">存款</p>
                         <p class="shuzhi1"><?php echo $userInfo->Money;?></p>
-                        <span>元</span>
+                        <span>金币</span>
                     </div>
                     <div class="d_con_left_bottom">
                     	<ul>

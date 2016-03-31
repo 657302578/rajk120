@@ -31,7 +31,6 @@
             }
             $criteria = new CDbCriteria;
             $criteria->order ="RegTime desc";
-        
             //分页开始
             $total = User::model()->count($criteria);
             $pages = new CPagination($total);

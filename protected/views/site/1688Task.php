@@ -82,7 +82,7 @@
                                         收货时长： <span>48小时</span>五星好评
                                     </li>
                                     <li>
-                                        任务金额： <span>48</span>元
+                                        任务金额： <span>48</span>金币
                                     </li>
                                     <li>
                                     悬赏麦粒： <span>58</span>个
@@ -112,7 +112,7 @@
                                         收货时长： <span>48小时</span>五星好评
                                     </li>
                                     <li>
-                                        任务金额： <span>48</span>元
+                                        任务金额： <span>48</span>金币
                                     </li>
                                     <li>
                                     悬赏麦粒： <span>58</span>个
@@ -142,7 +142,7 @@
                                         收货时长： <span>48小时</span>五星好评
                                     </li>
                                     <li>
-                                        任务金额： <span>48</span>元
+                                        任务金额： <span>48</span>金币
                                     </li>
                                     <li>
                                     悬赏麦粒： <span>58</span>个

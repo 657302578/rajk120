@@ -140,11 +140,9 @@
                                         五星好评
                                     </li>
                                     <li title="平台担保：此任务卖家已缴纳全额担保存款，接手可放心购买，任务完成后，买家平台账号自动获得相应存款">
-                                        任务金额： <span><?php echo $item->txtPrice;?></span>元
+                                        任务金额： <span><?php echo $item->txtPrice;?></span>金币
                                     </li>
-                                    <li title="完成任务后，您能获得的任务奖励，可兑换成RMB">
-                                    悬赏麦粒： <span><?php echo $item->MinLi;?></span>个
-                                    </li>
+                                    
                                 </ul>
                             </div>
                             <div class="allRw_proLink">
@@ -186,6 +184,8 @@
                             </div>
                         </div>
                     </div>
+                    <span class="vip_level"><i style="background: url(<?php echo VERSION2; ?>img/newlevel/<?php echo User::getuserlevelnum($item->publishid);?>.gif) center no-repeat;"></i></span>
+	  <?php if( $myinfo->VipLv > 0 && $myinfo->VipStopTime > time() ){?> <img src="<?php echo VERSION2;?>img/newlevel/VIP.png" /><?php }?>
                     <?php
                         if($item->status==0){
                     ?>

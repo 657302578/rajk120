@@ -5,6 +5,5 @@
             <a style="display: none;" <?php echo Yii::app()->controller->id=="user" && $this->getAction()->getId()=="taskPublishGWC"?"class='on'":"";?> href="<?php echo $this->createUrl('user/taskPublishGWC');?>">购物车任务</a> 
           <!--<a href="#publish/souTask"	>搜索任务</a>		--> 
           <a <?php echo Yii::app()->controller->id=="user" && $this->getAction()->getId()=="taskPublishTemplete"?"class='on'":"";?> href="<?php echo $this->createUrl('user/taskPublishTemplete');?>">任务模板</a>
-          <a href="<?php echo $this->createUrl('user/taobaoOutTask');?>">已发任务</a> 
           <span style="width:133px;height: 52px;border-bottom: 2px dashed #57a0ff;display: block;float: left;"></span>
         </div>

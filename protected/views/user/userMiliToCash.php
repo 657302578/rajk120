@@ -66,7 +66,7 @@
                                     break;
                             }
                         ?>
-                    元</p>
+                    金币</p>
                     <a class="d_huishou" href="<?php echo $this->createUrl('site/userLeveldoc');?>" target="_blank">查看等级回收价格</a>
                 </div>
             </div>

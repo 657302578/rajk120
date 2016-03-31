@@ -24,7 +24,7 @@
         <div class="left_xf_nav">
           <ul>
             <li lang="product_main"><a href="javascript:void(0)" class="on">商品信息</a></li>
-            <li lang="server"><a href="javascript:void(0)" class="">增值服务</a></li>
+            <li lang="server"><a href="javascript:void(0)" class="">任务要求</a></li>
             <li lang="screen"><a href="javascript:void(0)" class="">筛选接手</a></li>
           </ul>
         </div>
@@ -265,9 +265,9 @@
               <div id="a17" lang="17" alt="0" class="nulldiv" title="限制接手一定时限内接手任务数"></div>
               <input type="hidden" name="cbxIsFMaxMCount" id="aa17">
             </li>
-            <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日不超<input id="task_num_day" onchange="checkTaskNum(this.value,'task_num_day')"  type="text"  class="pc11 inputp s36_ts"   style="width:50px;"  name="fmaxmc_d" value="" />(>=2)单&nbsp;&nbsp;&nbsp;</li>
-            <li>周不超<input onchange="checkTaskNum(this.value,'task_num_w')" id="task_num_w"  type="text"  class="pc11 inputp s36_ts"   style="width:50px;"  name="fmaxmc_w" value="" />(>=5)单 </li>
-            <li>&nbsp;&nbsp;&nbsp;月不超<input onchange="checkTaskNum(this.value,'task_num_month')" id="task_num_month" type="text"  class="pc11 inputp s36_ts"   style="width:50px;"  name="fmaxmc_m" value="" />(>=10)单 </li>
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日不超<input id="task_num_day" onchange="checkTaskNum(this.value,'task_num_day')"  type="text"  class="pc11 inputp s36_ts"   style="width:50px;" placeholder=">=2"  name="fmaxmc_d" value="" />单&nbsp;&nbsp;&nbsp;</li>
+            <li>周不超<input onchange="checkTaskNum(this.value,'task_num_w')" id="task_num_w"  type="text"  class="pc11 inputp s36_ts"  placeholder=">=5"  style="width:50px;"  name="fmaxmc_w" value="" />单 </li>
+            <li>&nbsp;&nbsp;&nbsp;月不超<input onchange="checkTaskNum(this.value,'task_num_month')" id="task_num_month" type="text"  class="pc11 inputp s36_ts"   style="width:50px;" placeholder=">=10"  name="fmaxmc_m" value="" />单 </li>
           </ul>
           <ul class="pdul">
             <li>
@@ -275,7 +275,7 @@
               <input type="hidden" name="isLimitCity" id="aa18">
             </li>
 			<li class="h97">
-              <input type="radio" name="is_xzqx_type" value="1" />指定 <input type="radio" name="is_xzqx_type" value="2" />排除 <input type="radio" name="is_xzqx_type" value="3" />不限制
+              <input type="radio" name="is_xzqx_type" value="1" />指定 <input type="radio" name="is_xzqx_type" value="2" />排除
             </li>
             <li class="h97">
               <select style="float:left;" id="Province" name="Province" class="ui-select zhsr">
@@ -470,19 +470,19 @@ function changeTpl(taskId,tplType)
         var MinLi=0;
         if(txtPrice>0)
         {
-            if(txtPrice>0 && txtPrice<81)//价格1-80元
+            if(txtPrice>0 && txtPrice<81)//价格1-80金币
                 MinLi=2
-            if(txtPrice>80 && txtPrice<151)//价格81-150元
+            if(txtPrice>80 && txtPrice<151)//价格81-150金币
                 MinLi=3
-            if(txtPrice>150 && txtPrice<201)//价格151-200元
+            if(txtPrice>150 && txtPrice<201)//价格151-200金币
                 MinLi=4
-            if(txtPrice>200 && txtPrice<351)//价格201-350元
+            if(txtPrice>200 && txtPrice<351)//价格201-350金币
                 MinLi=5
-            if(txtPrice>350 && txtPrice<501)//价格351-500元
+            if(txtPrice>350 && txtPrice<501)//价格351-500金币
                 MinLi=6
-            if(txtPrice>500 && txtPrice<1001)//价格501-1000元
+            if(txtPrice>500 && txtPrice<1001)//价格501-1000金币
                 MinLi=8
-            if(txtPrice>1000)//价格1001元以上
+            if(txtPrice>1000)//价格1001金币以上
                 MinLi=9
             $("#txtMinMPrice").val(MinLi);
         }

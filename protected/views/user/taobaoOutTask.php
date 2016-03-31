@@ -140,11 +140,9 @@
                                         五星好评
                                     </li>
                                     <li title="平台担保：此任务卖家已缴纳全额担保存款，接手可放心购买，任务完成后，买家平台账号自动获得相应存款">
-                                        任务金额： <span><?php echo $item->txtPrice;?></span>元
+                                        任务金额： <span><?php echo $item->txtPrice;?></span>金币
                                     </li>
-                                    <li title="完成任务后，您能获得的任务奖励，可兑换成RMB">
-                                    悬赏麦粒： <span><?php echo $item->MinLi;?></span>个
-                                    </li>
+                                    
                                 </ul>
                             </div>
                             <div class="allRw_proLink">
@@ -186,11 +184,20 @@
                             </div>
                         </div>
                     </div>
+                    <span class="vip_level"><i style="background: url(<?php echo VERSION2; ?>img/newlevel/<?php echo User::getuserlevelnum($item->publishid);?>.gif) center no-repeat;"></i></span>
+	  <?php if( $myinfo->VipLv > 0 && $myinfo->VipStopTime > time() ){?> <img src="<?php echo VERSION2;?>img/newlevel/VIP.png" /><?php }?>
                     <?php
+                        $count = Usertasklist::model()->count('task_id='.$item->id.' AND state=0');
                         if($item->status==0){
+                            if($count > 0){
                     ?>
-                        <a class="qcrw">等待接手</a>
+                        <a class="qcrw" onclick="shAcceptUser(<?php echo $item->id;?>);">审核接手</a>
                     <?php
+                            }else{
+                     ?>
+                        <a class="qcrw">等待接手</a>
+                     <?php 
+                            }
                         }
                         if($item->status==1){
                     ?>
@@ -294,22 +301,16 @@
                 ?>
                 <div class="taskFunMan"><!--taskFunMan start-->
                     <span style="cursor: pointer;" class="lookuptxtGoodsUrl" alt="<?php echo $item->txtGoodsUrl;?>">查看淘宝地址</span>
-					<?php
-						//查看是否有人申请此任务
-						$count = Usertasklist::model()->count('task_id='.$item->id.' AND state=0');
-						if($count > 0)
-						{ 
-					?>
-                    <span style="cursor: pointer; color:#FF0000;" class="showAcceptUserList" title="审核接手" onclick="shAcceptUser(<?php echo $item->id;?>);">审核</span>
-					<?php
-						}
-					?>
                     <!--已发任务功能操作-->
                     <!--<font><a href="javascript:;" class="delTask">取消</a></font>-->
                     <?php
                         //状态为无人接手，刚可以暂停
-                        if($item->status==0){
+                        if($item->status==0)
+                        {
                     ?>
+                        <?php if($myinfo->VipLv > 0 && $myinfo->VipStopTime > time()){?>
+                    <font><a href="javascript:;" class="refreshTask" lang="<?php echo $item->taskerid;?>" alt="<?php echo $item->id;?>">刷新置顶</a></font>
+                        <?php }?>
                     <font><a href="javascript:;" class="stopTask" lang="<?php echo $item->taskerid;?>" alt="<?php echo $item->id;?>">暂停</a></font>
                     <?php }?>
                     <?php
@@ -545,6 +546,38 @@
             	},function(){
             	   location.reload();//重新刷新当前页面
             	});
+            });
+            
+            //VIP刷新任务
+            $(".refreshTask").click(function(){
+            	var taskerid=$(this).attr("lang");
+                var id=$(this).attr("alt");
+                $.ajax({
+        			type:"POST",
+        			url:"<?php echo $this->createUrl('site/refreshTask');?>",
+        			data:{"taskerid":taskerid,"id":id},
+        			success:function(msg)
+        			{
+        			    if(msg == 'TASK_NO_FOUND')
+            		    {
+        			    	layer.confirm('无效的任务', {
+                        		btn: ['知道了'] //按钮
+                        	});
+            		    }else if(msg == 'USER_NO_FOUND'){
+            		    	layer.confirm('无效的任务发布者', {
+                        		btn: ['知道了'] //按钮
+                        	});
+             		     }else if(msg == 'REFRESH_SUCCESS'){
+              		    	layer.confirm('刷新成功', {
+                        		btn: ['知道了'] //按钮
+                        	});
+             		     }else if(msg == 'NO_VIP_USER'){
+              		    	layer.confirm('您不是VIP用户', {
+                        		btn: ['知道了'] //按钮
+                        	});
+                 		 }
+        			}
+                });
             });
             
             //商家审核接手信息通过

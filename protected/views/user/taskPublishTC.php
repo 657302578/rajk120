@@ -527,7 +527,7 @@
             </li>
             <li class="pdli11">
               <input type="radio" name="zd_one">
-              顺丰（<font class="pdfo">3</font>元）</li>
+              顺丰（<font class="pdfo">3</font>金币）</li>
           </ul>
           <ul class="pc1">
             <li>

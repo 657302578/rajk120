@@ -33,7 +33,7 @@
 <div class="dtSort">
   <div class="dtSortCen">
     <div class="dtSortLis">
-      <div class="dtSortLis_t">任务平台(VIP)：</div>
+      <div class="dtSortLis_t">任务平台<span style="color:#FF0000">(VIP)</span>：</div>
       <div class="<?php echo !isset($_GET['platform']) || @$_GET['platform']=='noVal' || @$_GET['platform']==''?'dtSortLis_pro':'dtSortLis_proBeore';?>"><a href="<?php
                         @$GetConditionArr['platform']='noVal';
                         echo $this->createUrl('site/taobaoTask',$GetConditionArr);
@@ -75,7 +75,7 @@
 </div>
 -->
 <div class="dtSortLis">
-  <div class="dtSortLis_t">星级要求(VIP)：</div>
+  <div class="dtSortLis_t">星级要求<span style="color:#FF0000"><span style="color:#FF0000">(VIP)</span></span>：</div>
   <div class="<?php echo !isset($_GET['BuyerJifen']) || @$_GET['BuyerJifen']=='noVal' || @$_GET['BuyerJifen']==''?'dtSortLis_pro':'dtSortLis_proBeore';?>"><a href="<?php
                         @$GetConditionArr['BuyerJifen']='noVal';
                         echo $this->createUrl('site/taobaoTask',$GetConditionArr);
@@ -84,48 +84,48 @@
     <li><a <?php echo @$_GET['BuyerJifen']==1?'class="searchOn"':'';?> href="<?php
                         $GetConditionArr['BuyerJifen']=1;
                         echo $this->createUrl('site/taobaoTask',$GetConditionArr);
-                    ?>">一心以上</a></li>
+                    ?>">一心</a></li>
     <li><a <?php echo @$_GET['BuyerJifen']==2?'class="searchOn"':'';?> href="<?php
                         $GetConditionArr['BuyerJifen']=2;
                         echo $this->createUrl('site/taobaoTask',$GetConditionArr);
-                    ?>">二心以上</a></li>
+                    ?>">二心</a></li>
     <li><a <?php echo @$_GET['BuyerJifen']==3?'class="searchOn"':'';?> href="<?php
                         $GetConditionArr['BuyerJifen']=3;
                         echo $this->createUrl('site/taobaoTask',$GetConditionArr);
-                    ?>">三心以上</a></li>
+                    ?>">三心</a></li>
     <li><a <?php echo @$_GET['BuyerJifen']==4?'class="searchOn"':'';?> href="<?php
                         $GetConditionArr['BuyerJifen']=4;
                         echo $this->createUrl('site/taobaoTask',$GetConditionArr);
-                    ?>">四心以上</a></li>
+                    ?>">四心</a></li>
     <li><a <?php echo @$_GET['BuyerJifen']==5?'class="searchOn"':'';?> href="<?php
                         $GetConditionArr['BuyerJifen']=5;
                         echo $this->createUrl('site/taobaoTask',$GetConditionArr);
-                    ?>">五心以上</a></li>
+                    ?>">五心</a></li>
     <li><a <?php echo @$_GET['BuyerJifen']==6?'class="searchOn"':'';?> href="<?php
                         $GetConditionArr['BuyerJifen']=6;
                         echo $this->createUrl('site/taobaoTask',$GetConditionArr);
-                    ?>">一钻以上</a></li>
+                    ?>">一钻</a></li>
     <li><a <?php echo @$_GET['BuyerJifen']==7?'class="searchOn"':'';?> href="<?php
                         $GetConditionArr['BuyerJifen']=7;
                         echo $this->createUrl('site/taobaoTask',$GetConditionArr);
-                    ?>">二钻以上</a></li>
+                    ?>">二钻</a></li>
     <li><a <?php echo @$_GET['BuyerJifen']==8?'class="searchOn"':'';?> href="<?php
                         $GetConditionArr['BuyerJifen']=8;
                         echo $this->createUrl('site/taobaoTask',$GetConditionArr);
-                    ?>">三钻以上</a></li>
+                    ?>">三钻</a></li>
     <li><a <?php echo @$_GET['BuyerJifen']==9?'class="searchOn"':'';?> href="<?php
                         $GetConditionArr['BuyerJifen']=9;
                         echo $this->createUrl('site/taobaoTask',$GetConditionArr);
-                    ?>">四钻以上</a></li>
+                    ?>">四钻</a></li>
     <li><a <?php echo @$_GET['BuyerJifen']==10?'class="searchOn"':'';?> href="<?php
                         $GetConditionArr['BuyerJifen']=10;
                         echo $this->createUrl('site/taobaoTask',$GetConditionArr);
-                    ?>">五钻以上</a></li>
+                    ?>">五钻</a></li>
   </ul>
   <?php @$GetConditionArr['BuyerJifen'] = $_GET['BuyerJifen'];?>
 </div>
 <div class="dtSortLis">
-  <div class="dtSortLis_t">任务类型(VIP)：</div>
+  <div class="dtSortLis_t">任务类型<span style="color:#FF0000">(VIP)</span>：</div>
   <div class="<?php echo !isset($_GET['isMobile']) || @$_GET['isMobile']=='noVal' || @$_GET['isMobile']==''?'dtSortLis_pro':'dtSortLis_proBeore';?>"><a href="<?php
                         @$GetConditionArr['isMobile']='noVal';
                         echo $this->createUrl('site/taobaoTask',$GetConditionArr);
@@ -197,7 +197,7 @@ createUrl('site/taobaoTask',$GetConditionArr);
 </div>
 -->
 <div class="dtSortLis">
-  <div class="dtSortLis_t">任务金额(VIP)：</div>
+  <div class="dtSortLis_t">任务金额<span style="color:#FF0000">(VIP)</span>：</div>
   <div class="<?php echo !isset($_GET['txtPrice']) || @$_GET['txtPrice']=='noVal' || @$_GET['txtPrice']==''?'dtSortLis_pro':'dtSortLis_proBeore';?>"><a href="<?php
                         @$GetConditionArr['txtPrice']='noVal';
                         echo $this->createUrl('site/taobaoTask',$GetConditionArr);
@@ -210,44 +210,28 @@ createUrl('site/taobaoTask',$GetConditionArr);
     <li><a <?php echo @$_GET['txtPrice']==2?'class="searchOn"':'';?> href="<?php
                         $GetConditionArr['txtPrice']=2;
                         echo $this->createUrl('site/taobaoTask',$GetConditionArr);
-                    ?>">100-200元</a></li>
+                    ?>">101-200元</a></li>
     <li><a <?php echo @$_GET['txtPrice']==3?'class="searchOn"':'';?> href="<?php
                         $GetConditionArr['txtPrice']=3;
                         echo $this->createUrl('site/taobaoTask',$GetConditionArr);
-                    ?>">200-300元</a></li>
+                    ?>">201-300元</a></li>
     <li><a <?php echo @$_GET['txtPrice']==4?'class="searchOn"':'';?> href="<?php
                         $GetConditionArr['txtPrice']=4;
                         echo $this->createUrl('site/taobaoTask',$GetConditionArr);
-                    ?>">300-400元</a></li>
+                    ?>">301-500元</a></li>
     <li><a <?php echo @$_GET['txtPrice']==5?'class="searchOn"':'';?> href="<?php
                         $GetConditionArr['txtPrice']=5;
                         echo $this->createUrl('site/taobaoTask',$GetConditionArr);
-                    ?>">400-500元</a></li>
-    <li><a <?php echo @$_GET['txtPrice']==6?'class="searchOn"':'';?> href="<?php
-                        $GetConditionArr['txtPrice']=6;
-                        echo $this->createUrl('site/taobaoTask',$GetConditionArr);
-                    ?>">500-600元</a></li>
-    <li><a <?php echo @$_GET['txtPrice']==7?'class="searchOn"':'';?> href="<?php
-                        $GetConditionArr['txtPrice']=7;
-                        echo $this->createUrl('site/taobaoTask',$GetConditionArr);
-                    ?>">600-700元</a></li>
-    <li><a <?php echo @$_GET['txtPrice']==8?'class="searchOn"':'';?> href="<?php
-                        $GetConditionArr['txtPrice']=8;
-                        echo $this->createUrl('site/taobaoTask',$GetConditionArr);
-                    ?>">700-800元</a></li>
-    <li><a <?php echo @$_GET['txtPrice']==9?'class="searchOn"':'';?> href="<?php
-                        $GetConditionArr['txtPrice']=9;
-                        echo $this->createUrl('site/taobaoTask',$GetConditionArr);
-                    ?>">800-900元</a></li>
+                    ?>">501-1000元</a></li>
     <li><a <?php echo @$_GET['txtPrice']==10?'class="searchOn"':'';?> href="<?php
                         $GetConditionArr['txtPrice']=10;
                         echo $this->createUrl('site/taobaoTask',$GetConditionArr);
-                    ?>">900以上</a></li>
+                    ?>">1000以上</a></li>
   </ul>
   <?php @$GetConditionArr['txtPrice'] = $_GET['txtPrice'];?>
 </div>
 <div class="dtSortLis">
-  <div class="dtSortLis_t">收货时长(VIP)：</div>
+  <div class="dtSortLis_t">收货时长<span style="color:#FF0000">(VIP)</span>：</div>
   <div class="<?php echo !isset($_GET['ddlOKDay']) || @$_GET['ddlOKDay']=='noVal' || @$_GET['ddlOKDay']==''?'dtSortLis_pro':'dtSortLis_proBeore';?>"><a href="<?php
                         @$GetConditionArr['ddlOKDay']='noVal';
                         echo $this->createUrl('site/taobaoTask',$GetConditionArr);
@@ -288,11 +272,12 @@ createUrl('site/taobaoTask',$GetConditionArr);
           <input type="submit" class="rwsoImg" value="&nbsp">
         </form>
       </div>
-      <a class="rwsoNo" href="/news/deatailInfo/id/147/catlogid/41.html" target="_blank">接任务必看，违者封号</a> <a href="<?php echo $this->createUrl('user/taskPublishPT');?>" class="rw_fb1">发布任务</a> <a href="javascript:window.location.href='<?php echo Yii::app()->request->url;?>';" class="rw_sx1">刷新任务</a> </div>
+      <a style="float:right; margin-right:20px;" href="javascript:window.location.href='<?php echo Yii::app()->request->url;?>';" class="rw_sx1">刷新任务</a> <a style="float:right; margin-right:20px;" href="<?php echo $this->createUrl('user/taskPublishPT');?>" class="rw_fb1">发布任务</a> </div>
   </div>
   <ul class="dtrwLis">
     <?php
                 foreach($proInfo as $item){
+				$myinfo=User::model()->findByPk($item->publishid);
             ?>
     <li class="taskItem">
     <div class="rebh">
@@ -357,7 +342,11 @@ createUrl('site/taobaoTask',$GetConditionArr);
                                 break;
                         }
                         echo "卖家要求威客买号等级在".$dj."以上";
-                    ;?>"  class="BuyerJifen" lang="<?php echo $item->BuyerJifen;?>" src="<?php echo VERSION2;?>img/level/<?php echo $item->BuyerJifen;?>.gif" style="vertical-align: text-top;cursor:pointer;" /> </div>
+                    ;?>"  class="BuyerJifen" lang="<?php echo $item->BuyerJifen;?>" src="<?php echo VERSION2;?>img/level/<?php echo $item->BuyerJifen;?>.gif" style="vertical-align: text-top;cursor:pointer;" /> <span style="float:right; margin-right:20px;">会员等级：<img src="<?php echo VERSION2; ?>img/newlevel/<?php echo User::getuserlevelnum($item->publishid);?>.gif" />
+      <?php if( $myinfo->VipLv > 0 && $myinfo->VipStopTime > time() ){?>
+      <img src="<?php echo VERSION2;?>img/newlevel/VIP.png" />
+      <?php }?>
+      </span> </div>
     <div class="allRw_pro"> <img src="<?php echo VERSION2;?>img/p<?php echo $item->taskCatalog==0?2:1;?>.jpg" alt="" title="<?php echo $item->taskCatalog==0?"普通任务":"来路搜索任务";?>" class="allRw_proImg" />
       <div class="allRw_pros">
         <div class="allRw_prosLis">
@@ -365,7 +354,7 @@ createUrl('site/taobaoTask',$GetConditionArr);
             <div class="allRw_pro1"> 掌柜：<span><?php echo XUtils::cutstr($item->ddlZGAccount,4)."***";?></span>
               <!--掌柜个人信息-->
               <?php
-                                        $myinfo=User::model()->findByPk($item->publishid);
+                                        
                                         //好评
                                         $hp=Appraise::model()->findAllByAttributes(array(
                                             'uid'=>$item->publishid,
@@ -402,8 +391,17 @@ createUrl('site/taobaoTask',$GetConditionArr);
               </div>
             </div>
             <ul class="othallRw_pro clearfix">
-              <li title="在拍下商品并支付后，<?php echo $item->ddlOKDay*24==0?"立即":"在".($item->ddlOKDay*24)."小时后";?>且物流信息显示已签收后确认收货五星好评！"> 收货时长： <span> <?php echo $item->ddlOKDay*24==0?"立即":($item->ddlOKDay*24)."小时立即";?> </span> 五星好评 </li>
-              <li title="平台担保：此任务卖家已缴纳全额担保存款，接手可放心购买，任务完成后，买家平台账号自动获得相应存款"> 任务金额： <span><?php echo $item->txtPrice;?></span>元 </li>
+              <li title="在拍下商品并支付后，<?php echo $item->ddlOKDay*24==0?"立即":"在".($item->ddlOKDay*24)."小时后";?>且物流信息显示已签收后确认收货五星好评！"> 收货时长： <span> 
+			  <?php
+			  	if($item->ddlOKDay == 9)
+				{
+				echo '根据物流';
+				}else{
+			  	 echo $item->ddlOKDay*24==0?"立即":($item->ddlOKDay*24)."小时立即";
+				}
+			  ?> 
+			  </span> 五星好评 </li>
+              <li title="平台担保：此任务卖家已缴纳全额担保存款，接手可放心购买，任务完成后，买家平台账号自动获得相应存款"> 任务金额：<span><?php echo $item->txtPrice;?></span>元&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;任务佣金： <span><?php echo $item->yongjin_money;?></span>元 </li>
               <!--<li title="完成任务后，您能获得的任务奖励，可兑换成RMB">
                                     悬赏麦粒： <span><?php echo $item->
               MinLi;?></span>个
@@ -420,7 +418,7 @@ createUrl('site/taobaoTask',$GetConditionArr);
 											$areaInfo = Area::model()->findByPk($item->Province);
 											if($item->is_xzqx_type == 2)
 											{
-											    $bzStr = 'style="border-color:red; color:red;text-decoration:line-through;"';
+											    $bzStr = 'style="text-decoration:line-through;"';
 											}else{
 											    $bzStr = '';
 											}
@@ -433,8 +431,8 @@ createUrl('site/taobaoTask',$GetConditionArr);
                                         echo '<a>手机</a>';
                                     if($item->isSign)
                                         echo '<a>真签</a>';
-                                    if($item->cbxIsAudit)
-                                        echo '<a>审核</a>'; 
+									if($item->cbxIsAddress)
+										echo '<a>地址</a>';
                                     if($item->isReal)
                                         echo '<a>实名</a>';
                                     if($item->cbxIsWW)
@@ -462,18 +460,9 @@ createUrl('site/taobaoTask',$GetConditionArr);
                                     {
                                         echo '<a alt="'.$item->txtRemind.'" title="'.$item->txtRemind.'">留言</a>';
                                     }
-                                    if($item->visitWay > 0)
-                                    {
-                                        $visitWayStr = array('1' => '搜索商品', '2' => '搜商品', '3' => '直通车', '4' => '其他');
-                                        echo '<a alt="'.$visitWayStr[$item->visitWay].'" title="'.$visitWayStr[$item->visitWay].'">进店</a>';
-                                    }
-                                    
-                                    
-                                ?>
-            <a class="bueryImg" alt="<?php echo $item->taskerHPingImg!=""?$item->taskerHPingImg:"";?>">好评截图</a> </div>
+                                ?><a class="bueryImg" alt="<?php echo $item->taskerHPingImg!=""?$item->taskerHPingImg:"";?>">评图</a> </div>
         </div>
       </div>
-      <span class="vip_level"><i style="background: url(<?php echo VERSION2; ?>img/newlevel/<?php echo User::getuserlevelnum($item->publishid);?>.gif) center no-repeat;"></i></span>
       <?php
 					   //查看此会员是否申请过此任务
 					   if(Yii::app()->user->getId())
@@ -485,10 +474,17 @@ createUrl('site/taobaoTask',$GetConditionArr);
 					       //获取卖家家的信息
 					       $sellerInfo = User::model()->findByPk($item->publishid);  
 					?>
-      <a href="javascript:;" class="qcrw" lang="<?php echo $item->id;?>" alt="<?php echo $item->publishid;?>">等待审核</a>
-      <?php if($sellerInfo && $aTinfo->state == 0){?>
-      <img class="QQ-Token"  style="CURSOR: pointer" onclick="javascript:window.open('http://b.qq.com/webc.htm?new=0&sid=<?php echo $sellerInfo->QQToken;?>&o=联系卖家&q=7', '_blank', 'height=502, width=644,toolbar=no,scrollbars=no,menubar=no,status=no');"  border="0" SRC=http://wpa.qq.com/pa?p=1:<?php echo $sellerInfo->QQToken;?>:1 alt="请及时联系商家QQ，并将您的旺旺号等级信息截图给商家，以便更快被审核" title="请及时联系商家QQ，并将您的旺旺号等级信息截图给商家，以便更快被审核"><span class="lx-QQ"><?php echo $sellerInfo->QQToken;?></span>
-      <?php }?>
+      <table cellpadding="5">
+        <tr>
+          <td><a href="javascript:;" style="top:0px;" class="qcrw" lang="<?php echo $item->id;?>" alt="<?php echo $item->publishid;?>">等待审核</a></td>
+        </tr>
+        <tr>
+          <td align="center" valign="middle"><?php if($sellerInfo && $aTinfo->state == 0){?>
+            <img style="margin-left:20px; margin-top:10px;" style="CURSOR: pointer" onclick="javascript:window.open('http://b.qq.com/webc.htm?new=0&sid=<?php echo $sellerInfo->QQToken;?>&o=联系卖家&q=7', '_blank', 'height=502, width=644,toolbar=no,scrollbars=no,menubar=no,status=no');"  border="0" SRC=http://wpa.qq.com/pa?p=1:<?php echo $sellerInfo->QQToken;?>:1 alt="请及时联系商家QQ，并将您的旺旺号等级信息截图给商家，以便更快被审核" title="请及时联系商家QQ，并将您的旺旺号等级信息截图给商家，以便更快被审核"> <?php echo $sellerInfo->QQToken;?>
+            <?php }?>
+          </td>
+        </tr>
+      </table>
       <?php }else{?>
       <a href="javascript:;" class="qcrw taskTask" lang="<?php echo $item->id;?>" alt="<?php echo $item->publishid;?>">立即申请</a>
       <?php }?>

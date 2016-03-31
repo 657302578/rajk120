@@ -49,7 +49,7 @@
                     <!--bankItem end-->
                     <div class="clear"></div>
                     <div class="certainMoney"><!--certainMoney start-->
-                        <font style="margin-right: 10px;">提现金额：</font><input type="text" class="txMoneyNum" style=" width:145px; height:30px; line-height:30px; border:2px dashed #57A0FF; text-indent: 10px;"/>&nbsp;&nbsp;元<span style="padding-left: 20px;">当前余额：<font class=remaindMoney" style="color:red; font-size:16px; font-weight:bold;"><?php echo $userInfo->Money;?></font>元</span>
+                        <font style="margin-right: 10px;">提现金额：</font><input type="text" class="txMoneyNum" style=" width:145px; height:30px; line-height:30px; border:2px dashed #57A0FF; text-indent: 10px;"/>&nbsp;&nbsp;金币<span style="padding-left: 20px;">当前余额：<font class=remaindMoney" style="color:red; font-size:16px; font-weight:bold;"><?php echo $userInfo->Money;?></font>金币</span>
                     </div><!--certainMoney end-->
                     <div class="sendTxMoney"><a href="javascript:;">申请提现</a></div>
                 </div>

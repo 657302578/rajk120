@@ -25,12 +25,12 @@
                     您已于<?php echo date('Y年m月d日 H时i分',$myinfo->JoinProtectPlanTime);?>加入商保
                 </li>
                 <?php }?>
-            	<li class="d_leftcolor">您已缴纳了：<span><?php echo $myinfo->JoinProtectPlanMoney;?> </span>元保证金</li>
+            	<li class="d_leftcolor">您已缴纳了：<span><?php echo $myinfo->JoinProtectPlanMoney;?> </span>金币保证金</li>
                 <?php
                     if($myinfo->JoinProtectPlan==0){
                 ?>
-                <li class="d_timecolor">本次需缴纳：<span>50 </span>元保证金</li>
-                <li class="shengyu">您剩余的存款：<span><?php echo $myinfo->Money;?> </span>元</li>
+                <li class="d_timecolor">本次需缴纳：<span>50 </span>金币保证金</li>
+                <li class="shengyu">您剩余的存款：<span><?php echo $myinfo->Money;?> </span>金币</li>
                 <?php
                     }
                 ?>

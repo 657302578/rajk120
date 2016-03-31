@@ -119,7 +119,7 @@
                         <td>费用</td>
                         <td>费用</td>
                         <td>费用</td>
-                        <td class="d_djcolor">188元/月</td>
+                        <td class="d_djcolor">188金币/月</td>
                     </tr>
                 </table>
             </div>

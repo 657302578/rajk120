@@ -50,32 +50,6 @@
             ?>
             <li class="taskItem">
                 <div class="rebh">
-                    <img class="payWay" width="30" src="<?php 
-                        switch($item->payWay)
-                        {
-                            case 1://接手垫付
-                                echo VERSION2."/img/ykdf.jpg";
-                                break;
-                            default://平台代付
-                                echo VERSION2."/img/df.jpg";
-                                break;
-                        }
-                    ?>" lang='<?php echo $item->payWay;?>' />
-                    <img class="platform" width="30" src="<?php 
-                        switch($item->platform)
-                        {
-                            case 1:
-                                echo VERSION2."/img/tm.jpg";
-                                break;
-                            case 2:
-                                echo VERSION2."/img/jd.jpg";
-                                break;
-                            default:
-                                echo VERSION2."/img/1688.jpg";
-                                break;
-                        }
-                    ?>" lang='<?php echo $item->platform;?>' />
-                    
                     <font>任务编号</font>：<span><?php echo $item->time.'*'.$item->id;?></span>
                     <img title="<?php 
                         switch($item->BuyerJifen)
@@ -166,11 +140,9 @@
                                         五星好评
                                     </li>
                                     <li title="平台担保：此任务卖家已缴纳全额担保存款，接手可放心购买，任务完成后，买家平台账号自动获得相应存款">
-                                        任务金额： <span><?php echo $item->txtPrice;?></span>元
+                                        任务金额： <span><?php echo $item->txtPrice;?></span>金币
                                     </li>
-                                    <li title="完成任务后，您能获得的任务奖励，可兑换成RMB">
-                                    悬赏麦粒： <span><?php echo $item->MinLi;?></span>个
-                                    </li>
+                                    
                                 </ul>
                             </div>
                             <div class="allRw_proLink">
@@ -212,6 +184,8 @@
                             </div>
                         </div>
                     </div>
+                    <span class="vip_level"><i style="background: url(<?php echo VERSION2; ?>img/newlevel/<?php echo User::getuserlevelnum($item->publishid);?>.gif) center no-repeat;"></i></span>
+	  <?php if( $myinfo->VipLv > 0 && $myinfo->VipStopTime > time() ){?> <img src="<?php echo VERSION2;?>img/newlevel/VIP.png" /><?php }?>
                     <?php
                         if($item->status==0){
                     ?>

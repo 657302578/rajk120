@@ -339,6 +339,32 @@ class PassportController extends Controller
                     }
                 }else//帐号被冻结
                 {
+                    //如果被冻结，则查看是否已到期
+                    if($userinfo->dj_time > 0 && $userinfo->dj_time < time())
+                    {
+                        //到期了，自动解锁
+                        $userinfo->Status = 0;
+                        $userinfo->save();
+                        if($userinfo->PlaceOtherLogin==0)//用户没有开启异地登录，则允许用户直接提交登录
+                        {
+                            echo "true";
+                        }else//开启异地登录
+                        {
+                            //1.检查此次登录的ip与最近一次登录的ip是否相同
+                            $lastLoginLog=Loginlog::model()->find(array(
+                                'condition'=>'userid='.$userinfo->id,
+                                'order'=>'id desc'
+                            ));
+                            if($lastLoginLog->loginip===XUtils::getClientIP())//如果本次登录ip与最近一次登录ip相同则允许用户直接提交
+                            {
+                                echo "true";
+                            }else//如果不同则返回通知使用短信验证
+                            {
+                                echo $userinfo->Phon;//需要手机接手短信验证码,返回手机号码，以便发送短信进行验证
+                            }
+                        }
+                        exit;
+                    }
                     echo "LOCK";
                 }
             }else

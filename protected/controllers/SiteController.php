@@ -23,6 +23,23 @@ class SiteController extends Controller
 			),
 		);
 	}
+	
+	public function actionRefreshTask()
+	{
+	    $id = intval($_POST['id']);
+	    $taskInfo = Companytasklist::model()->findByPk($id);
+	    if(!isset($taskInfo)) exit('TASK_NO_FOUND');
+	    $userInfo = User::model()->findByPk($taskInfo->publishid);
+	    if(!isset($taskInfo)) exit('USER_NO_FOUND');
+	    if($userInfo->VipLv > 0 && $userInfo->VipStopTime > time())
+	    {
+	        $taskInfo->refresh_time = time();
+	        $taskInfo->save();
+	        exit('REFRESH_SUCCESS');
+	    }else{
+	        exit('NO_VIP_USER');
+	    }
+	}
 
 	/**
 	 * This is the default 'index' action that is invoked
@@ -111,9 +128,10 @@ class SiteController extends Controller
         if(isset($_POST['keywords']) && $_POST['keywords']!="")
         {
             $keywordsArr=explode('*',$_POST['keywords']);//分解关键词
+            if(!isset($keywordsArr[1])) $keywordsArr[1] = 0;
             //任务大厅
     	    $criteria = new CDbCriteria;
-            $criteria->condition='status=0 and time='.trim($keywordsArr[0]).' and id='.trim($keywordsArr[1]);
+            $criteria->condition='status=0 and time='.intval(trim($keywordsArr[0])).' and id='.intval(trim($keywordsArr[1]));
             $criteria->order ="time desc";
         
             //分页开始
@@ -174,11 +192,20 @@ class SiteController extends Controller
                 if($k=='txtPrice' && $v!='noVal' && $v!='')//任务金额
                 {
                     if($v==10)
-                        $condition=$condition.' and '.$k.'>'.(($v-1)*100);
-                    else
-                        $condition=$condition.' and '.$k.'>'.(($v-1)*100).' and '.$k.'<'.(($v*100)+1);
+                    {
+                        $condition=$condition.' and '.$k.'> 1000';
+                    }else if($v == 4){
+                        $condition=$condition.' and '.$k.'>= 301 AND '.$k.' <= 500 ';
+                    }else if($v == 3){
+                        $condition=$condition.' and '.$k.'>= 201 AND '.$k.' <= 300 ';
+                    }else if($v == 2){
+                        $condition=$condition.' and '.$k.'>= 101 AND '.$k.' <= 200 ';
+                    }else if($v == 1){
+                        $condition=$condition.' and '.$k.' <= 100 ';
+                    }else if($v == 5){
+                        $condition=$condition.' and '.$k.'>= 501 AND '.$k.' <= 1000 ';
+                    }
                 }
-                
                 if($k=='ddlOKDay' && $v!='noVal' && $v!='')//收货时长
                 {
                         $condition=$condition.' and '.$k.'='.($v-1);
@@ -187,7 +214,7 @@ class SiteController extends Controller
             
             $criteria = new CDbCriteria;
             $criteria->condition=$condition;
-            $criteria->order ="time desc";
+            $criteria->order ="refresh_time,time desc";
         
             //分页开始
             $total =Companytasklist::model()->count($criteria);
@@ -2086,14 +2113,13 @@ class SiteController extends Controller
             $code = substr($randStr,0,6);
             
             $smsConf = array(
-                'key'   => '', //您申请的APPKEY
+                'key'   => '6ae1c329d00d4d34e45c234d78c49210', //您申请的APPKEY
                 'mobile'    => ''.$_POST['phone'].'', //接受短信的用户手机号码
-                'tpl_id'    => '9621', //您申请的短信模板ID，根据实际情况修改
+                'tpl_id'    => '11505', //您申请的短信模板ID，根据实际情况修改
                 'tpl_value' =>'#code#='.$code.'&#company#=聚合数据' //您设置的模板变量，根据实际情况修改
             );
-             
+
             $content = $this->juhecurl($sendUrl,$smsConf,1); //请求发送短信
-             
             if($content){
                 $result = json_decode($content,true);
                 $error_code = $result['error_code'];

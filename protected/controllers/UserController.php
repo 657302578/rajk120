@@ -47,20 +47,24 @@ class UserController extends Controller
             $userList = Usertasklist::model()->findAll(
                 array('condition' => 'task_id='.$task_id.' AND state=0') 
             );
-            $divStart="<div class='choseBuyer'><div style='font-size:14px; line-height:35px;'>选择接此任务的买号：</div>";
+            $divStart="<div class='choseBuyer'><div style='font-size:14px; line-height:35px;'>选择接手此任务的买号：</div>";
             $divEnd="</div>";
             $radioItemStr="";
             foreach($userList as $k=>$v)
             {
+                //查询此旺旺的信息
+                $wangwangInfo = Blindwangwang::model()->findByAttributes( array('userid' => $v['uid'], 'wangwang' => $v['user_wangwang']));
+                $userInfo = User::model()->findByPk($v['uid']);
+                $vip = '';
+                if($userInfo['VipLv'] > 0) $vip = '<img src="'.VERSION2.'img/newlevel/VIP.png" style="vertical-align: text-top;cursor:pointer;" />';
                 //获取此买手的等级
-                
                 if($k==0)
                 {
-                    $radioItemStr=$radioItemStr."<li><input type='radio' name='buyerSelected' checked='checked' value='".$v['id']."' />&nbsp;".$v['user_wangwang']."[".$this->getUserLevelInfo($v->uid)."]</li>";
+                    $radioItemStr=$radioItemStr."<li><input type='radio' name='buyerSelected' checked='checked' value='".$v['id']."' />&nbsp;接手买号：".$v['user_wangwang']."<img src=\"".VERSION2."img/level/".$wangwangInfo->wangwanginfo.".gif\" style=\"vertical-align: text-top;cursor:pointer;\" />&nbsp;&nbsp;(".Blindwangwang::getWwTaskNum($v['user_wangwang'], 1)."/".Blindwangwang::getWwTaskNum($v['user_wangwang'], 7)."/".Blindwangwang::getWwTaskNum($v['user_wangwang'], 1,'month').")，会员等级：<img src=\"".VERSION2."img/newlevel/".User::getuserlevelnum($v['uid']).".gif\" style=\"vertical-align: text-top;cursor:pointer;\" />{$vip}</li>";
                 }
                 else
                 {
-                    $radioItemStr=$radioItemStr."<li><input type='radio' name='buyerSelected' value='".$v['id']."' />&nbsp;".$v['user_wangwang']."[".$this->getUserLevelInfo($v->uid)."]</li>";
+                    $radioItemStr=$radioItemStr."<li><input type='radio' name='buyerSelected' value='".$v['id']."' />&nbsp;接手买号：".$v['user_wangwang']."<img src=\"".VERSION2."img/level/".$wangwangInfo->wangwanginfo.".gif\" style=\"vertical-align: text-top;cursor:pointer;\" />&nbsp;&nbsp;".Blindwangwang::getWwTaskNum($v['user_wangwang'], 1)."/".Blindwangwang::getWwTaskNum($v['user_wangwang'], 7)."/".Blindwangwang::getWwTaskNum($v['user_wangwang'], 1,'month')."，会员等级：<img src=\"".VERSION2."img/newlevel/".User::getuserlevelnum($v['uid']).".gif\" style=\"vertical-align: text-top;cursor:pointer;\" />{$vip}</li>";
                 }
             }
             echo $divStart.$radioItemStr.$divEnd;

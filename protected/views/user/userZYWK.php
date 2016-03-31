@@ -35,7 +35,7 @@
                 <ul>
                 	<li class="ph11">每周接手任务500个以上</li>
                     <li class="ph22">无奖励</li>
-                    <li class="ph33">前三名分别奖励：300元，200元，100元。4-10名奖励100麦粒 <a class="chakan" href="<?php echo $this->createUrl('user/userTop10');?>" target="_blank">查看排行榜</a></li>
+                    <li class="ph33">前三名分别奖励：300金币，200金币，100金币。4-10名奖励100麦粒 <a class="chakan" href="<?php echo $this->createUrl('user/userTop10');?>" target="_blank">查看排行榜</a></li>
                 </ul>
             </div>
         </div>

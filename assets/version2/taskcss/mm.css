@@ -3,7 +3,7 @@ body{ overflow-x: hidden;}
 
 
 /*新版本newversion*/
-.product_content2 ul li,#server ul li,#screen ul li,#express ul li {list-style:none;float:left;display: inline-block;}
+.product_content2 ul li,#server ul li,#screen ul li,#express ul li {list-style:none;float:left;display: inline-block; margin-right:10px;}
 .select-list li{float:none;width: 150px;}
 input[type=radio],input.h39,input.h45{width:20px;height:21px;vertical-align: middle;}
 textarea{overflow:hidden;}

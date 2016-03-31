@@ -19,7 +19,7 @@
                <div class="newsby">
                   <p class="nttl"><a href="<?php echo $this->createUrl('news/deatailInfo',array('id'=>$item->goods_id,'catlogid'=>$item->cat_id));?>" target="_blank"><?php echo $item->goods_name;?></a></p>
                   <p></p>
-                  <p class="newsfoot"><span><?php echo date('Y-m-d',$item->add_time);?></span> <span>阅读 <?php echo $item->click_count;?></span></p>
+                  <p class="newsfoot"><span><?php echo date('Y-m-d',$item->add_time);?></span></p>
                </div>
             </div>
         </div>

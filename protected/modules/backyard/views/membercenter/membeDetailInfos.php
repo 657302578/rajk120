@@ -89,6 +89,8 @@
                                         <li>
         									<span>帐户状态：
 												<input type="radio" <?php if($userinfo->Status == 0){?> checked="checked" <?php  } ?> name="Status" value="0" />正常 <input <?php if($userinfo->Status == 1){?> checked="checked" <?php  } ?> type="radio" name="Status" value="1" />冻结中
+                                                <br/>
+                                                <input type="text" name="dj_time" value="<?php echo date('Y/m/d H:i:s', $userinfo->dj_time);?>"> 冻结截止日期格式如：2016/03/31 12:10:11
                                             </span>
         								</li>
                                         <li>
@@ -148,6 +150,10 @@
         								</li>
                                         <li>
         									<a>注册时间：<?php echo date('Y年m月d日 H:i:s',$userinfo->RegTime)?></a>
+        								</li>
+        								<li>
+        									后台备注：<textarea name="admin_remarks"><?php echo $userinfo->admin_remarks;?></textarea>
+        									
         								</li>
 										<li>
 										<input type="hidden" name="uid" value="<?php echo $userinfo->id;?>" />

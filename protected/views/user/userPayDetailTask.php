@@ -37,13 +37,13 @@
                                 switch($item->catalog)
                                 {
                                     case 3:
-                                        echo '元';
+                                        echo '金币';
                                         break;
                                     case 4:
                                         echo '个';
                                         break;
                                     case 5:
-                                        echo '元';
+                                        echo '金币';
                                         break;
                                     case 6:
                                         echo '个';

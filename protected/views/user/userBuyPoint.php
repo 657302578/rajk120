@@ -11,7 +11,7 @@
                         <span class="zbuy113">拥有麦粒，就可以发布自己的任务，获得好评</span>
                     </div>
                     <div class="zbuy114">
-                        购买数量 :<input type="text" class="ez-bo1s MinLinNum" name='buymd'/>个<span>( <em>0.63</em>元/个 )</span>
+                        购买数量 :<input type="text" class="ez-bo1s MinLinNum" name='buymd'/>个<span>( <em>0.63</em>金币/个 )</span>
                     </div>
                     <a href="javascript:;" id="buymd"><div class="zbuy116 buyMinLi">立即购买</div></a>
                 </div>
@@ -36,10 +36,10 @@
                             <option value="3">三级VIP客户</option>
                         </select> 
                         <select id="months">
-                            <option value="1">一个月28元</option>
-                            <option value="3">三个月76元</option>
-                            <option value="6">半年118元</option>
-                            <option value="12">一年218元</option>
+                            <option value="1">一个月28金币</option>
+                            <option value="3">三个月76金币</option>
+                            <option value="6">半年118金币</option>
+                            <option value="12">一年218金币</option>
                         </select>
                         <input type="hidden" name="hash2" value="eA==">
                     </div>
@@ -89,7 +89,7 @@
             if(parseFloat($(".MinLinNum").val())*0.63>parseFloat($(".MoneyOwn").html()))//余额检查
             {
                 //询问框
-            	layer.confirm('<span style="color:red;">余额不足</span>，购买'+$(".MinLinNum").val()+'个麦粒需要<span style="color:red;">'+parseFloat($(".MinLinNum").val())*0.63+'</span>元。您现在的余额为<span style="color:red;">'+$(".MoneyOwn").html()+'</span>元。', {
+            	layer.confirm('<span style="color:red;">余额不足</span>，购买'+$(".MinLinNum").val()+'个麦粒需要<span style="color:red;">'+parseFloat($(".MinLinNum").val())*0.63+'</span>金币。您现在的余额为<span style="color:red;">'+$(".MoneyOwn").html()+'</span>金币。', {
             		btn: ['知道了'] //按钮
             	});
                 exit;
@@ -163,11 +163,11 @@
         $("#viptype").change(function(){
             var vipType=$(this).val();
             if(vipType==1)
-                optionHtml='<option value="1">一个月28元</option><option value="3">三个月76元</option><option value="6">半年118元</option><option value="12">一年218元</option>';
+                optionHtml='<option value="1">一个月28金币</option><option value="3">三个月76金币</option><option value="6">半年118金币</option><option value="12">一年218金币</option>';
             else if(vipType==2)
-                optionHtml='<option value="1">一个月58元</option><option value="3">三个月99元</option><option value="6">半年158元</option><option value="12">一年298元</option>';
+                optionHtml='<option value="1">一个月58金币</option><option value="3">三个月99金币</option><option value="6">半年158金币</option><option value="12">一年298金币</option>';
             else
-                optionHtml='<option value="1">一个月88元</option><option value="3">三个月128元</option><option value="6">半年198元</option><option value="12">一年368元</option>';
+                optionHtml='<option value="1">一个月88金币</option><option value="3">三个月128金币</option><option value="6">半年198金币</option><option value="12">一年368金币</option>';
             $("#months").html(optionHtml);
         });
         
@@ -197,7 +197,7 @@
             
             if(vipPriceArr[vipType][month]>MoneyOwn)
             {
-                layer.tips('余额不足，您的余额为'+MoneyOwn+'元', '#months');
+                layer.tips('余额不足，您的余额为'+MoneyOwn+'金币', '#months');
             }
             else
             {

@@ -140,11 +140,9 @@
                                         五星好评
                                     </li>
                                     <li title="平台担保：此任务卖家已缴纳全额担保存款，接手可放心购买，任务完成后，买家平台账号自动获得相应存款">
-                                        任务金额： <span><?php echo $item->txtPrice;?></span>元
+                                        任务金额： <span><?php echo $item->txtPrice;?></span>金币
                                     </li>
-                                    <li title="完成任务后，您能获得的任务奖励，可兑换成RMB">
-                                    悬赏麦粒： <span><?php echo $item->MinLi;?></span>个
-                                    </li>
+                                    
                                 </ul>
                             </div>
                             <div class="allRw_proLink">
@@ -258,6 +256,9 @@
                         //状态为无人接手，刚可以暂停
                         if($item->status==0){
                     ?>
+                        <?php if($myinfo->VipLv > 0 && $myinfo->VipStopTime > time()){?>
+                    <font><a href="javascript:;" class="refreshTask" lang="<?php echo $item->taskerid;?>" alt="<?php echo $item->id;?>">刷新置顶</a></font>
+                        <?php }?>
                     <font><a href="javascript:;" class="stopTask" lang="<?php echo $item->taskerid;?>" alt="<?php echo $item->id;?>">暂停</a></font>
                     <?php }?>
                     <?php
@@ -458,6 +459,38 @@
             	},function(){
             	   location.reload();//重新刷新当前页面
             	});
+            });
+
+            //VIP刷新任务
+            $(".refreshTask").click(function(){
+            	var taskerid=$(this).attr("lang");
+                var id=$(this).attr("alt");
+                $.ajax({
+        			type:"POST",
+        			url:"<?php echo $this->createUrl('site/refreshTask');?>",
+        			data:{"taskerid":taskerid,"id":id},
+        			success:function(msg)
+        			{
+        			    if(msg == 'TASK_NO_FOUND')
+            		    {
+        			    	layer.confirm('无效的任务', {
+                        		btn: ['知道了'] //按钮
+                        	});
+            		    }else if(msg == 'USER_NO_FOUND'){
+            		    	layer.confirm('无效的任务发布者', {
+                        		btn: ['知道了'] //按钮
+                        	});
+             		     }else if(msg == 'REFRESH_SUCCESS'){
+              		    	layer.confirm('刷新成功', {
+                        		btn: ['知道了'] //按钮
+                        	});
+             		     }else if(msg == 'NO_VIP_USER'){
+              		    	layer.confirm('您不是VIP用户', {
+                        		btn: ['知道了'] //按钮
+                        	});
+                 		 }
+        			}
+                });
             });
             
             //商家审核接手信息通过
