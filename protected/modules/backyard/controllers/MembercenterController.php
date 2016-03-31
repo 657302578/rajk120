@@ -66,6 +66,46 @@
             ));
         }
         
+        public function actionAddBuyerAddress()
+        {
+            if(isset($_POST['data']))
+            {
+                $ud = new Useraddress();
+                foreach ($_POST['data'] as $k => $v)
+                {
+                    $ud->$k = $v;
+                }
+                $ud->save();
+                $this->redirect( $this->createUrl('membercenter/buyerAddress'));
+            }else{
+                $areaList = Area::model()->findAll( array(
+                    'condition' => 'parentid=0'
+                ) );
+                $this->render('editBuyerAddress',array(
+                    'area' => $areaList
+                ));
+            }            
+        }
+        
+        public function actionUpdateCities()
+        {
+            $areaName = $_POST['area'];
+            $query = Yii::app()->db->createCommand('select id,name from zxjy_area where parentid='.intval($_POST['pid']));
+            $data = $query->queryAll();
+            $nextArea = $areaName == 'shi' ? 'qu' : 'shi';
+            if($areaName == 'qu') $nextArea = '';
+            $html='<select name="data['.$areaName.'_id]" id="'.$areaName.'_id" onChange="getSonCity(this.value,\''.$nextArea.'\');">';
+            $html.='<option value="">请选择</option>';
+            foreach($data as $value=>$name)
+            {
+                $html.='<option value=\''.$name['id'].'\'>'.$name['name'].'</option>';
+            }
+            $html .= '</select';
+            exit($html);
+
+        }
+
+        
         /**
          * 保存收货地址
          */

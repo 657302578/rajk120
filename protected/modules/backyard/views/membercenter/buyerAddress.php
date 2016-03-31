@@ -86,7 +86,7 @@
     <!--theBody start-->
     <div class="panel-heading"> <i class="fa fa-indent red"></i> <span>收货地址列表</span>
       <div class="panel-actions">
-        <a href="">添加收货地址</a>
+        <a href="<?php echo $this->createUrl("membercenter/addBuyerAddress")?>" title="添加收货地址功能">添加收货地址</a>
       </div>
     </div>
     <div class="panel-body">
@@ -116,7 +116,12 @@
 				    {
 				        $shengInfo = Area::model()->findByPk($item->sheng_id);
 				        echo $shengInfo->name;
+						$shengInfo = Area::model()->findByPk($item->shi_id);
+				        echo $shengInfo->name;
+						$shengInfo = Area::model()->findByPk($item->qu_id);
+				        echo $shengInfo->name;
 				    }
+					echo $item->address;
 				?>
 			</td>
             <td>
