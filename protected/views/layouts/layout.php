@@ -57,12 +57,11 @@
                             </span>
                         </li>
                         <li class="bt_1">
-                            麦粒：
+                            签收积分：
                             <span class="or_wz">
                                 <span class="MinLinOwn"><?php echo $userInfo->MinLi;?></span>
                             </span>
                             <span class="dow_rInf">
-                                <a href="<?php echo $this->createUrl('user/userBuyPoint');?>">购买</a>
                                 <a href="<?php echo $this->createUrl('user/userMiliToCash');?>">兑换</a>
                                 <a href="<?php echo $this->createUrl('user/userPayDetail');?>" class="linkIco1"><img src="<?php echo VERSION2;?>img/ico02.png" alt="" /></a>
                             </span>

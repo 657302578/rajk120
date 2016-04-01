@@ -253,8 +253,8 @@ createUrl('site/taobaoTask',$GetConditionArr);
                         $GetConditionArr['ddlOKDay']=4;
                         echo $this->createUrl('site/taobaoTask',$GetConditionArr);
                     ?>">72小时确认</a></li>
-    <li><a <?php echo @$_GET['ddlOKDay']==9?'class="searchOn"':'';?> href="<?php
-                        $GetConditionArr['ddlOKDay']=9;
+    <li><a <?php echo @$_GET['ddlOKDay']==8?'class="searchOn"':'';?> href="<?php
+                        $GetConditionArr['ddlOKDay']=8;
                         echo $this->createUrl('site/taobaoTask',$GetConditionArr);
                     ?>">根据物流</a></li>
   </ul>
@@ -393,7 +393,7 @@ createUrl('site/taobaoTask',$GetConditionArr);
             <ul class="othallRw_pro clearfix">
               <li title="在拍下商品并支付后，<?php echo $item->ddlOKDay*24==0?"立即":"在".($item->ddlOKDay*24)."小时后";?>且物流信息显示已签收后确认收货五星好评！"> 收货时长： <span> 
 			  <?php
-			  	if($item->ddlOKDay == 9)
+			  	if($item->ddlOKDay == 8)
 				{
 				echo '根据物流';
 				}else{
@@ -542,11 +542,22 @@ createUrl('site/taobaoTask',$GetConditionArr);
                             	}, function(){
                             		window.location.href="<?php echo $this->createUrl('passport/login');?>";
                             	});
-                            }else if(msg == "ADDRESS_NO_PIPEI"){
+                            }else if(msg == "USER_DAY_TASK_LIMIT"){
+							  <?php
+							  	$ptConfig = Config::model()->findByPk(1);
+							  ?>
+								layer.confirm('<span style="color:red;">每日最多可接<?php echo $ptConfig->buyertaskmaxnum;?>任务，请明日再来继续接任务！</span>', {
+                                            		btn: ['知道了'] //按钮
+                                });						
+							}else if(msg == "ADDRESS_NO_PIPEI"){
 								layer.confirm('<span style="color:red;">您不符合条件！</span>', {
                                             		btn: ['知道了'] //按钮
                                 });
-							}else if(msg=="NOBUYSER")//没有绑定买号，去绑定
+							}else if(msg == "ten_day_cftask"){
+								 layer.confirm('<span style="color:red;">您10天内做过该会员的任务，不能再次申请他的任务。</span>', {
+									btn: ['知道了'] //按钮
+								});
+							}else  if(msg=="NOBUYSER")//没有绑定买号，去绑定
                             {
                                 //询问框
                             	layer.confirm('您还没有符合条件的买号或买号未通过审核，去绑定吗？', {
@@ -623,11 +634,11 @@ createUrl('site/taobaoTask',$GetConditionArr);
                                             	   location.href="<?php echo $this->createUrl('user/userSBcenter');?>";
                                             	});
                                             }else if(msg == 'ALLOW_GET_300'){
-                                            	layer.confirm('<span style="color:red;">您只能接金额在300元以下的任务！</span>', {
+                                            	layer.confirm('<span style="color:red;">您的账户余额不能申请此任务，规则如下：<br/>a)余额150金币以下，可接300元以内的任务；<br/>b)余额150-1000金币，可接余额2倍金额以内的任务；<br/>c)余额1000金币以上，可接任意金额任务。<br/></span>', {
                                             		btn: ['知道了'] //按钮
                                             	});
                                             }else if(msg == 'ALLOW_GET_1000'){
-                                            	layer.confirm('<span style="color:red;">您只能接金额为您当前余额2倍以下的任务！</span>', {
+                                            	layer.confirm('<span style="color:red;">您的账户余额不能申请此任务，规则如下：<br/>a)余额150金币以下，可接300元以内的任务；<br/>b)余额150-1000金币，可接余额2倍金额以内的任务；<br/>c)余额1000金币以上，可接任意金额任务。<br/></span>', {
                                             		btn: ['知道了'] //按钮
                                             	});
                                             }else if(msg=="NOBuyerJifen"){//等级不符合要求

@@ -2,33 +2,13 @@
             echo $this->renderPartial('/user/usercenterTopNav');
             $userInfo=User::model()->findByPk(Yii::app()->user->getId());
         ?>
-        <!--麦粒回收-->
+        <!--签收积分回收-->
         <div class="d_qie6 clearfix">
          	<div class="d_mili">
-            	<p>麦粒回收</p>
+            	<p>签收积分回收</p>
             </div>
             <div class="d_hs clearfix">
-                <p class="d_dengji">
-                    您当前等级为：
-                    <?php
-                        switch($userInfo->VipLv)
-                        {
-                            case 0:
-                                echo '新手会员';
-                                break;
-                            case 1:
-                                echo 'Vip1';
-                                break;
-                            case 2:
-                                echo 'Vip2';
-                                break;
-                            case 3:
-                                echo 'Vip3';
-                                break;
-                        }
-                    ?>    
-                </p>
-                <p class="d_yongyou">你现在有：<span style="font-weight: bold;"><?php echo $userInfo->MinLi;?></span>个麦粒</p>
+                <p class="d_yongyou">你现在有：<span style="font-weight: bold;"><?php echo $userInfo->MinLi;?></span>个签收积分</p>
             </div>
             <div class="d_hssl clearfix">
             	<form class="d_hssl_form clearfix">
@@ -48,7 +28,7 @@
                 
                 <div class="d_duihuan clearfix">
                 	<a class="d_duohuan_a MinLinToCsh" href="javascript:;">兑换</a>
-                    <p>麦粒回收价格：1个麦粒
+                    <p>签收积分回收价格：1个签收积分
                         <?php
                             switch($userInfo->VipLv)
                             {
@@ -82,7 +62,7 @@
         $(".MinLinToCsh").click(function(){
             if(parseFloat($(".MinLi").val())>parseFloat($(".MinLinOwn").html()))
             {
-                layer.confirm('回收麦粒的数量不能大于您帐户麦粒的总数', {
+                layer.confirm('回收签收积分的数量不能大于您帐户签收积分的总数', {
             		btn: ['知道了'] //按钮
             	});
             }else
@@ -104,7 +84,7 @@
                 			{
                 				if(msg=="SUCCESS")//安全码正确
                                 {
-                                    //麦粒回收开始
+                                    //签收积分回收开始
                                     $.ajax({
                             			type:"POST",
                             			url:"<?php echo $this->createUrl('user/userMiliToCash');?>",
@@ -113,14 +93,14 @@
                             			{
                                             if(msg=="SUCCESS")
                                             {
-                                                layer.confirm('麦粒回收成功，请注意您的帐户金额与麦粒数量的变化', {
+                                                layer.confirm('签收积分回收成功，请注意您的帐户金额与签收积分数量的变化', {
                                             		btn: ['知道了'] //按钮
                                             	},function(){
                                             	   location.reload();
                                             	});
                                             }else
                                             {
-                                                layer.confirm('回收麦粒的数量不能大于您帐户麦粒的总数', {
+                                                layer.confirm('回收签收积分的数量不能大于您帐户签收积分的总数', {
                                             		btn: ['知道了'] //按钮
                                             	},function(){
                                             	   location.reload();
@@ -128,7 +108,7 @@
                                             }
                             			}
                             		});
-                                    //麦粒回收结束
+                                    //签收积分回收结束
                                 }else
                                 {
                                     $(".safePwd").val("");

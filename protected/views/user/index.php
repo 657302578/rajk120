@@ -10,7 +10,7 @@
             <div class="d-t-center">
                 <ul class="d_t_cen">
                     <li class="d_num"><?php echo Yii::app()->user->getName();?><img class="d_n_img" src="<?php echo VERSION2;?>img/d_red.gif" /></li>
-                    <li class="jingyan">经验值：</li>
+                    <li class="jingyan">积分：</li>
                     <li class="d_jyt">
                         <span><?php echo $userInfo->Experience;?>/1000</span>
                     </li>

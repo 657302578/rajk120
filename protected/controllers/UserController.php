@@ -74,6 +74,7 @@ class UserController extends Controller
        
     }
     
+    //新的审核接手
     public function actionTaskBindingBuyer()
     {
         $buyerId = intval($_POST['buyer']);
@@ -92,6 +93,8 @@ class UserController extends Controller
         $buyer->save();
         //删除此任务的其他申请者
         Usertasklist::model()->deleteAll('task_id='.$taskId.' AND state=0');
+        //删除此买号的其他未审核任务
+        Usertasklist::model()->deleteAllByAttributes( array('uid' => $buyer->uid,'user_wangwang' => $buyer->user_wangwang, 'state' => 0));
         echo 'SUCCESS';
     }
     
@@ -938,7 +941,7 @@ class UserController extends Controller
         //发布的任务
 	    $criteria = new CDbCriteria;
         $criteria->condition='publishid='.Yii::app()->user->getId().' and taskCompleteStatus<>1';//不查询已完成的任务
-        $criteria->order ="status desc";
+        $criteria->order ="`time` desc";
     
         //分页开始
         $total =Companytasklist::model()->count($criteria);
@@ -1065,7 +1068,7 @@ class UserController extends Controller
             //任务大厅
     	    $criteria = new CDbCriteria;
             $criteria->condition='publishid='.Yii::app()->user->getId().' and time='.trim($keywordsArr[0]).' and id='.trim($keywordsArr[1]);
-            $criteria->order ="status asc";
+            $criteria->order ="`time` asc";
         
             //分页开始
             $total =Companytasklist::model()->count($criteria);
@@ -1085,7 +1088,7 @@ class UserController extends Controller
         //发布的任务
 	    $criteria = new CDbCriteria;
         $criteria->condition='publishid='.Yii::app()->user->getId();//商家暂停的任务
-        $criteria->order ="status asc";
+        $criteria->order ="`time` asc";
     
         //分页开始
         $total =Companytasklist::model()->count($criteria);
@@ -1284,7 +1287,7 @@ class UserController extends Controller
             
             if(count($checkBlindwangwang)>0)//买号已存在
             {
-                $warning="该买号已经被绑定过";
+                $warning="该掌柜号已经被绑定过";
             }
             else
             {
@@ -1310,6 +1313,7 @@ class UserController extends Controller
                 $blindwangwang->blindtime=time();//绑定时间
                 $blindwangwang->auth_url=$_POST['auth_url'];
                 $blindwangwang->auth_price = $_POST['auth_price'];
+                $blindwangwang->shop_url = $_POST['shop_url'];
                 if($blindwangwang->save())
                     $warning="恭喜您，买号绑定成功！";
                 else
@@ -1457,6 +1461,7 @@ class UserController extends Controller
             $task=new Companytasklist();
             $task->publishid=Yii::app()->user->getId();//发布人id
             $task->time=time();//发布任务时间
+            $task->refresh_time=time();//发布任务时间
             $task->taskCatalog=$_POST['taskCatalog'];//任务类别（0-普通任务，1-来路来搜索任务）
             $task->platform=$_POST['platform'];//任务所属平台
             $task->payWay=$_POST['payWay'];//任务支付方式
@@ -1477,7 +1482,7 @@ class UserController extends Controller
             $task->ddlZGAccount=$_POST['ddlZGAccount'];//淘宝掌柜名
             $task->ddlOKDay=$_POST['ddlOKDay'];//要求确认时间
             $task->txtGoodsUrl=$_POST['txtGoodsUrl'];//商品链接地址
-            $task->txtPrice=$_POST['txtPrice'];//商品价格：(包含邮费)
+            $task->txtPrice= isset($_POST['txtPrice']) ? $_POST['txtPrice'] : 0;//商品价格：(包含邮费)
             $txtMinMPrice=(float)$_POST['txtMinMPrice'];//基本米粒
                 $MinLi=$MinLi+$txtMinMPrice;//增加基本米粒
                 $_POST['ddlOKDay']!=0?$MinLi=$MinLi+($txtMinMPrice*1.5+($_POST['ddlOKDay']-1)):$MinLi=$MinLi+0;//根据确认时间增加对应米粒
@@ -1498,15 +1503,15 @@ class UserController extends Controller
             ///$task->isViewEnd=$_POST['isViewEnd'];//是否选中浏览到底，1选中，0未选中
                // $_POST['isViewEnd']==1?$MinLi=$MinLi+0.5:$MinLi=$MinLi+0;//选中浏览到底米粒基数加0.5
                 
-            $task->pinimage=$_POST['pinimage'];//是否选中好评截图，1选中，0未选中
-                $_POST['pinimage']==1?$MinLi=$MinLi+0.5:$MinLi=$MinLi+0;//选中好评截图米粒基数加0.5
+            $task->pinimage=isset($_POST['pinimage']) ? $_POST['pinimage'] : 0;//是否选中好评截图，1选中，0未选中
+                //$_POST['pinimage']==1?$MinLi=$MinLi+0.5:$MinLi=$MinLi+0;//选中好评截图米粒基数加0.5
                 
             $task->stopDsTime=$_POST['stopDsTime'];//是否选中停留时间，1选中，0未选中
             //$task->stopTime=$_POST['stopTime'];//停留时间长度
               
-            $task->cbxIsMsg=$_POST['cbxIsMsg'];//是否选中好评内容，1选中，0未选中
-            $task->txtMessage=$_POST['txtMessage'];//好评内容
-                $_POST['cbxIsMsg']==1?$MinLi=$MinLi+0.5:$MinLi=$MinLi+0;//选中好评内容米粒基数加0.5
+            $task->cbxIsMsg= isset($_POST['cbxIsMsg']) ? $_POST['cbxIsMsg'] : 0;//是否选中好评内容，1选中，0未选中
+            $task->txtMessage= isset($_POST['txtMessage']) ? $_POST['txtMessage'] : '';//好评内容
+                //$_POST['cbxIsMsg']==1?$MinLi=$MinLi+0.5:$MinLi=$MinLi+0;//选中好评内容米粒基数加0.5
                 
             $task->cbxIsTip=$_POST['cbxIsTip'];//是否选中留言提醒，1选中，0未选中
             $task->txtRemind=$_POST['txtRemind'];//留言提醒内容
@@ -1534,7 +1539,7 @@ class UserController extends Controller
                 $_POST['isLimitCity']==1?$MinLi=$MinLi+2:$MinLi=$MinLi+0;//选中指定区域米粒基数加2
                 
             $task->Province=$_POST['Province'];//限制接手所属区域
-            $task->is_xzqx_type = $_POST['is_xzqx_type'];
+            $task->is_xzqx_type = isset($_POST['is_xzqx_type']) ? $_POST['is_xzqx_type'] : 0;
             
             $task->isBuyerFen=$_POST['isBuyerFen'];//是否选中限制等级，1选中，0未选中
                 if($_POST['isBuyerFen']==1)//根据限制接手要求增加对应的米粒
@@ -1588,8 +1593,8 @@ class UserController extends Controller
             $task->isSign= isset($_POST['isSign']) ? 1 : 0;//是否选中真实签收，1选中，0未选中
                 //$_POST['isSign']==1?$MinLi=$MinLi+2:$MinLi=$MinLi+0;//选中真实签收米粒基数加2
                 
-            $task->cbxIsAddress=$_POST['cbxIsAddress'];//是否选中收货地址，1选中，0未选中
-                $_POST['cbxIsAddress']==1?$MinLi=$MinLi+0.5:$MinLi=$MinLi+0;//选中收货地址米粒基数加0.5
+            $task->cbxIsAddress= isset($_POST['cbxIsAddress']) ? $_POST['cbxIsAddress'] : 0;//是否选中收货地址，1选中，0未选中
+                //$_POST['cbxIsAddress']==1?$MinLi=$MinLi+0.5:$MinLi=$MinLi+0;//选中收货地址米粒基数加0.5
                 
             //具体的收货地址信息
             $task->cbxIsAddressContent="".$_POST['cbxName'].'|'.$_POST['cbxMobile'].'|'.$_POST['cbxcode'].'|'.$_POST['cbxAddress']."";
@@ -1603,10 +1608,29 @@ class UserController extends Controller
             $task->operate_pt = $_POST['operate_pt'];
             $taskmoreArr=$task->attributes;
             $plConfig = Config::model()->findByPk(1);
+            $userinfoDone=User::model()->findByPk(Yii::app()->user->getId());
+            //检查用户余额是否充足
+            $payMoney = (intval($_POST['txtFCount'])*intval($plConfig->task_price));
+            $task_typeUrl='taskPublishPT';
+            switch($_POST['taskCatalog'])
+            {
+                case 0://普通任务
+                    $task_typeUrl="taskPublishPT";
+                    break;
+                case 1://来路任务
+                    $task_typeUrl="taskPublishLU";
+                    break;
+            }
+            
+            if($payMoney > $userinfoDone->Money)
+            {
+                $taskPublistStatus =2 ;
+                //余额不足，请充值
+                $this->redirect($this->createUrl('user/'.$task_typeUrl.'',array('taskPublistStatus'=>$taskPublistStatus,'task_typeUrl'=>$task_typeUrl)));
+                exit;
+            }
             if($_POST['txtFCount']<2)//单任务
             {
-                
-                $userinfoDone=User::model()->findByPk(Yii::app()->user->getId());
                 //前提条件判断一.帐户余额充足，同时米粒充足
 //                 if($_POST['txtPrice']>$userinfoDone->Money || $MinLi>$userinfoDone->MinLi)
 //                 {
@@ -1686,16 +1710,6 @@ class UserController extends Controller
                 $taskPublistStatus=1;
             }
             
-            $task_typeUrl='taskPublishPT';
-            switch($_POST['taskCatalog'])
-            {
-                case 0://普通任务
-                    $task_typeUrl="taskPublishPT";
-                    break;
-                case 1://来路任务
-                    $task_typeUrl="taskPublishLU";
-                    break;
-            }
             $this->redirect($this->createUrl('user/'.$task_typeUrl.'',array('taskPublistStatus'=>$taskPublistStatus,'task_typeUrl'=>$task_typeUrl)));
             /*echo "<pre/>";
             var_dump($MinLi);*/

@@ -34,8 +34,12 @@ class SiteController extends Controller
 	    if($userInfo->VipLv > 0 && $userInfo->VipStopTime > time())
 	    {
 	        $taskInfo->refresh_time = time();
-	        $taskInfo->save();
-	        exit('REFRESH_SUCCESS');
+	        if($taskInfo->save())
+	        {
+	            exit('REFRESH_SUCCESS');
+	        }else{
+	           exit('REFRESH_FAIL');
+	        }
 	    }else{
 	        exit('NO_VIP_USER');
 	    }
@@ -132,7 +136,7 @@ class SiteController extends Controller
             //任务大厅
     	    $criteria = new CDbCriteria;
             $criteria->condition='status=0 and time='.intval(trim($keywordsArr[0])).' and id='.intval(trim($keywordsArr[1]));
-            $criteria->order ="time desc";
+            $criteria->order ="`refresh_time` desc";
         
             //分页开始
             $total =Companytasklist::model()->count($criteria);
@@ -214,7 +218,7 @@ class SiteController extends Controller
             
             $criteria = new CDbCriteria;
             $criteria->condition=$condition;
-            $criteria->order ="refresh_time,time desc";
+            $criteria->order ="`refresh_time` desc";
         
             //分页开始
             $total =Companytasklist::model()->count($criteria);
@@ -235,7 +239,7 @@ class SiteController extends Controller
         //任务大厅
 	    $criteria = new CDbCriteria;
         $criteria->condition='status=0';
-        $criteria->order ="time desc";
+        $criteria->order ="refresh_time desc";
     
         //分页开始
         $total =Companytasklist::model()->count($criteria);
@@ -387,6 +391,18 @@ class SiteController extends Controller
                 }
             }
             $ptConfig = Config::model()->findByPk(1);
+            //查询此会员号号今日已接任务数量
+            $count = Companytasklist::model()->count('taskerid='.$loginUserInfo->id.' AND status > 1 AND tasksecondTime >'.strtotime(date('Y/m/d')).' AND tasksecondTime < '.strtotime(date('Y/m/d 23:59:59')));
+            if($count >= $ptConfig->buyertaskmaxnum)
+            {
+                exit('USER_DAY_TASK_LIMIT');
+            }
+            //判断此会员10日内是否做过此会员的任务
+            $count = Companytasklist::model()->count('taskerid='.$loginUserInfo->id.' AND taskerid='.$loginUserInfo->id.' AND status > 1 AND tasksecondTime >'.strtotime('-10 day', time()).' AND tasksecondTime <= '.time());
+            if(false)//$count > 0)
+            {
+                exit('ten_day_cftask');
+            }
             //查询符合条件的买号 
             $buyerInfo=Blindwangwang::model()->findAll(array(
                 'condition'=>'userid='.Yii::app()->user->getId().' and statue=1 and catalog=1 AND is_check=1',
@@ -396,13 +412,6 @@ class SiteController extends Controller
             {
                 foreach ($buyerInfo as $bk => $bv)
                 {
-                    //查询此买号今日已接任务数量
-                    $count = Companytasklist::model()->count('taskerWangwang=\''.$bv['wangwang'].'\' AND status > 1 AND tasksecondTime >'.strtotime(date('Y/m/d')).' AND tasksecondTime < '.strtotime(date('Y/m/d 23:59:59')));
-                    if($count >= $ptConfig->buyertaskmaxnum)
-                    { 
-                        unset($buyerInfo[$bk]);
-                        continue;
-                    }
                     //是否限制接手的接单数量
                     if($taskInfo->cbxIsFMaxMCount)
                     {
@@ -414,8 +423,8 @@ class SiteController extends Controller
                         $monthNum = Blindwangwang::getWwTaskNum($bv['wangwang'], 1, 'month');
                         if($dayNum >= $fmaxmc[0] || $wNum >= $fmaxmc[1] || $monthNum >= $fmaxmc[2])
                         {
-                            unset($buyerInfo[$bk]);
-                            continue;
+                            //unset($buyerInfo[$bk]);
+                            //continue;
                         }
                     }
                 }
@@ -462,7 +471,11 @@ class SiteController extends Controller
                 $taskInfo->status=2;//任务状态变2，即暂停通过审核，等待接手付款
                 $taskInfo->tasksecondTime=time();//商家审核通过，即设置任务开始时间
                 if($taskInfo->save())
+                {
+                    //审核通过，处理相关任务申请
+                    
                     echo "SUCCESS";
+                }
                 else
                 {
                     echo "FAIL";
@@ -2111,7 +2124,7 @@ class SiteController extends Controller
             //生成验证码
             $randStr = str_shuffle('1234567890');//短信验证码由数字组成
             $code = substr($randStr,0,6);
-            
+            echo $code;
             $smsConf = array(
                 'key'   => '6ae1c329d00d4d34e45c234d78c49210', //您申请的APPKEY
                 'mobile'    => ''.$_POST['phone'].'', //接受短信的用户手机号码

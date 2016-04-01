@@ -1,9 +1,12 @@
-    <!--推广赚钱-->
+    <?php
+		$ptConfig = Config::model()->findByPk(1);
+	?>
+	<!--推广赚钱-->
    	<div class="d_tui">
     	<div class="d_guize">
         	<p class="d_p1">推广规则：通过推广链接注册成功后</p>
-            <p class="d_p2">发布或接手10个任务为有效推广</p>
-            <p class="d_p3">即奖励您<span>18</span>金币现金</p>
+            <p class="d_p2">接手<?php echo $ptConfig->tj_task_num;?>个任务为有效推广</p>
+            <p class="d_p3">即奖励您<span><?php echo $ptConfig->tj_award_num;;?></span>金币现金</p>
             <!--推广链接-->
             <p class="getMyTgLink" style="width:395px; height: 100px; text-indent: -10000px; position: absolute; top:370px; left:310px; cursor: pointer;">
                 获取我的专属推广链接

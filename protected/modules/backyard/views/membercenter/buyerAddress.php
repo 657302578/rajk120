@@ -97,7 +97,7 @@
             <th><div align="center">收货人姓名</div></th>
             <th><div align="center">收货电话</div></th>
             <th><div align="center">收货人详细地址</div></th>
-            <th><div align="center">是否被占用</div></th>
+            <th><div align="center">占用者</div></th>
             <th><div align="center">添加时间</div></th>
             <th><div align="center">操作</div></th>
           </tr>
@@ -115,21 +115,30 @@
 				    if($item->sheng_id > 0)
 				    {
 				        $shengInfo = Area::model()->findByPk($item->sheng_id);
-				        echo $shengInfo->name;
+				        if(isset($shengInfo)) echo $shengInfo->name;
 						$shengInfo = Area::model()->findByPk($item->shi_id);
-				        echo $shengInfo->name;
+				          if(isset($shengInfo)) echo $shengInfo->name;
 						$shengInfo = Area::model()->findByPk($item->qu_id);
-				        echo $shengInfo->name;
+				          if(isset($shengInfo)) echo $shengInfo->name;
 				    }
 					echo $item->address;
 				?>
 			</td>
             <td>
-				<?php if($item->occupy_uid > 0){echo '是';}else{echo '否';} ?>
+				<?php if($item->occupy_uid > 0){
+					$ocInfo = User::model()->findByPk($item->occupy_uid);
+					if(!isset($ocInfo))
+					{
+						$temp = Useraddress::model()->findByPk($item->id);
+						$temp->occupy_uid = 0;
+						$temp->save();
+					}
+					echo isset($ocInfo) ? $ocInfo->Username : '无';
+				}else{echo '无';} ?>
 			</td>
             <td><?php echo $item->create_time;?></td>
             <td>
-				删除
+				<a href="<?php echo $this->createUrl("membercenter/addBuyerAddress", array('id' => $item->id))?>" alt="<?php echo $item->id;?>" class="delUserAddress" title="修改收货地址">修改</a>&nbsp;<a href="javascript:delUserAddress(<?php echo $item->id;?>);" alt="<?php echo $item->id;?>" class="delUserAddress" title="删除收货地址">删除</a>
 			</td>
           </tr>
           <?php
@@ -249,6 +258,35 @@
 <script src="<?php echo ASSET_URL;?>plugins/d3/d3.min.js"></script>
 <!-- inline scripts related to this page -->
 <script src="<?php echo ASSET_URL;?>js/pages/index.js"></script>
+<script>
+function delUserAddress(id)
+{
+	if(confirm("确定要删除吗？此操作不可恢复！"))
+	{
+		$.ajax({
+			type:"POST",
+			url:"<?php echo $this->createUrl("membercenter/delBuyerAddress");?>",
+			data:"id="+id,
+			success:function(msg){
+				if(msg == "success")
+				{
+					//询问框
+					layer.confirm('删除成功！', {
+						btn: ['确定'] //按钮
+					},function(){
+					   location.reload();//重新刷新当前页面
+					});
+				}else{
+					//询问框
+					layer.confirm('删除失败，请重试！', {
+						btn: ['确定'] //按钮
+					});
+				}
+			}
+		});
+	}
+}
+</script>
 <!-- end: JavaScript-->
 </body>
 </html>

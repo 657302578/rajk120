@@ -91,7 +91,7 @@
             		</ol>
             	</div>
             </div>
-            <form method="post" action="<?php echo $this->createUrl("membercenter/zhangguilist")?>">
+            <form method="get" action="<?php echo $this->createUrl("membercenter/zhangguilist")?>">
                 <input type="text" name="keyword" placeholder="请输入旺旺名称" style="text-indent: 5px; color: #666; font-size:14px; width:260px;" /><select name="is_check"><option value="">审核状态</option><option value="1">未审核</option><option value="2">审核通过</option><option value="3">审核未通过</option></select><button type="submit" class="btn btn-sm btn-success" border="0" id="reg_submit"><i class="fa fa-dot-circle-o"></i>&nbsp;搜索</button>
             </form>
             <br />
@@ -107,15 +107,9 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th>买号ID</th>
-                                <th><div align="center">旺旺名称</div></th>
-                                <th><div align="center">是否实名</div></th>
-                                <th><div align="center">买家信誉</div></th>
-                                <th><div align="center">支付宝账号</div></th>
-                                <th><div align="center">真实姓名</div></th>
-                                <th><div align="center">身份证号</div></th>
-                                <th><div align="center">认证银行</div></th>
-                                <th><div align="center">银行卡号码</div></th>
+                                <th>掌柜号ID</th>
+								<th>所属会员账号</th>
+								<th><div align="center">店铺首页</div></th>
                                 <th><div align="center">认证链接</div></th>
                                 <th><div align="center">是否启用</div></th>
                                 <th><div align="center">审核状态</div></th>
@@ -129,25 +123,19 @@
                         ?>
                         <tr style="color:#666;">
                             <td><?php echo $item->id;?></td>
-                            <td><div align="center"><?php echo $item->wangwang;?></div></td>
-                            <td><div align="center">
-								<?php if($item->taotaorz){?>是<?php }else{?>否<?php }?>
-							</div></td>
-                            <td><div align="center"><?php echo $item->wangwanginfo;?></div></td>
-                            <td><div align="center" style="color: #FF5454; font-weight:bold; font-size:14px;"><?php echo $item->alipay_account;?></div></td>
-                            <td><div align="center" style="color: #FF5454; font-weight:bold; font-size:14px;"><?php echo $item->real_name;?></div></td>
-                            <td style="text-align: center;">
-                                <?php
-                                  echo $item->id_card;
-                                ?>
-                                </td>
-                            <td><div align="center">
-                                <?php echo $item->bank_name;?>
-                            </div></td>
-                            <td><div align="center">
-                                <?php
-                                   echo $item->bank_no;
-                                ?>
+							<td>
+								<?php
+									$userInfo = User::model()->findByPk($item->userid);
+									if(isset($userInfo))
+									{
+										echo $userInfo->Username;
+									}else{
+										echo '无';
+									}
+								?>
+							</td>
+							<td><div align="center">
+                               <?php if($item->shop_url){?><a href="<?php echo $item->shop_url?>" title="查看店铺首页" target="_blank">查看</a><?php }else{?>未填写<?php }?>
                             </div></td>
                             <td><div align="center">
                                <?php if($item->auth_url){?><a href="<?php echo $item->auth_url?>" title="查看认证链接" target="_blank">查看</a><?php }else{?>未填写<?php }?>

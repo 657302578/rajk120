@@ -643,4 +643,18 @@ $(function(){
     </script>
 <?php
     }
+	if(isset($_GET['taskPublistStatus']) && $_GET['taskPublistStatus'] == 2){
+?>
+    <script>
+    	//询问框
+    	layer.confirm('任务发布失败，您的账户余额不足', {
+    		btn: ['去充值','返回大厅'] //按钮
+    	}, function(){
+    		window.location.href="<?php echo $this->createUrl('user/userPayCenter');?>";
+    	}, function(){
+    		window.location.href="<?php echo $this->createUrl('site/taobaoTask');?>";
+    	});       
+    </script>
+<?php
+	}
 ?>

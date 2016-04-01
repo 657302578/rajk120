@@ -34,7 +34,7 @@
         <div class="dtrwCen">
             <div class="dtrwCen_t">
                 <div class="rwso">
-                    <form action="<?php echo $this->createUrl('user/taobaoInTaskComplete');?>" method="post">
+                    <form action="<?php echo $this->createUrl('user/taobaoInTask');?>" method="post">
                         <input type="text" name="keywords" class="rwsoInp" placeholder="任务编号搜索">
                         <input type="submit" class="rwsoImg" value="&nbsp">
                     </form>
@@ -47,9 +47,10 @@
         <ul class="dtrwLis">
             <?php
                 foreach($proInfo as $item){
+				$myinfo=User::model()->findByPk($item->publishid);
             ?>
             <li class="taskItem">
-                <div class="rebh">
+                <div class="rebh"> 
                     <font>任务编号</font>：<span><?php echo $item->time.'*'.$item->id;?></span>
                     <img title="<?php 
                         switch($item->BuyerJifen)
@@ -81,12 +82,17 @@
                             case 9:
                                 $dj="四钻";
                                 break;
+
                             default:
                                 $dj="五钻";
                                 break;
                         }
                         echo "卖家要求威客买号等级在".$dj."以上";
-                    ;?>"  class="BuyerJifen" lang="<?php echo $item->BuyerJifen;?>" src="<?php echo VERSION2;?>img/level/<?php echo $item->BuyerJifen;?>.gif" style="vertical-align: text-top;cursor:pointer;" />
+                    ;?>"  class="BuyerJifen" lang="<?php echo $item->BuyerJifen;?>" src="<?php echo VERSION2;?>img/level/<?php echo $item->BuyerJifen;?>.gif" style="vertical-align: text-top;cursor:pointer;" /><span style="float:right; margin-right:20px;">会员等级：<img src="<?php echo VERSION2; ?>img/newlevel/<?php echo User::getuserlevelnum($item->publishid);?>.gif" />
+      <?php if( $myinfo->VipLv > 0 && $myinfo->VipStopTime > time() ){?>
+      <img src="<?php echo VERSION2;?>img/newlevel/VIP.png" />
+      <?php }?>
+      </span>
                 </div>
                 <div class="allRw_pro">
                     <img src="<?php echo VERSION2;?>img/p<?php echo $item->taskCatalog==0?2:1;?>.jpg" alt="" title="<?php echo $item->taskCatalog==0?"普通任务":"来路搜索任务";?>" class="allRw_proImg" />
@@ -97,7 +103,7 @@
                                     掌柜：<span><?php echo XUtils::cutstr($item->ddlZGAccount,4)."***";?></span>
                                     <!--掌柜个人信息-->
                                     <?php
-                                        $myinfo=User::model()->findByPk($item->publishid);
+                                        
                                         //好评
                                         $hp=Appraise::model()->findAllByAttributes(array(
                                             'uid'=>$item->publishid,
@@ -142,7 +148,6 @@
                                     <li title="平台担保：此任务卖家已缴纳全额担保存款，接手可放心购买，任务完成后，买家平台账号自动获得相应存款">
                                         任务金额： <span><?php echo $item->txtPrice;?></span>金币
                                     </li>
-                                    
                                 </ul>
                             </div>
                             <div class="allRw_proLink">
@@ -184,48 +189,65 @@
                             </div>
                         </div>
                     </div>
-                    <span class="vip_level"><i style="background: url(<?php echo VERSION2; ?>img/newlevel/<?php echo User::getuserlevelnum($item->publishid);?>.gif) center no-repeat;"></i></span>
-	  <?php if( $myinfo->VipLv > 0 && $myinfo->VipStopTime > time() ){?> <img src="<?php echo VERSION2;?>img/newlevel/VIP.png" /><?php }?>
                     <?php
                         if($item->status==0){
                     ?>
-                    <a href="#" class="qcrw">等待接手</a>
+                    <a class="qcrw" style="width: auto; padding:0 8px; cursor: pointer; top:0px;" title="点击查看提醒">等待商家审核</a>
                     <?php
                         }
                         if($item->status==1){
                     ?>
-                        <a class="qcrw waitSeller" style="width: auto; padding:0 8px; cursor: pointer;" title="点击查看提醒">等待商家审核</a>
+                        <a class="qcrw waitSeller" style="width: auto; padding:0 8px; cursor: pointer;top:0px;" title="点击查看提醒">等待商家审核</a>
                         <div class="clear"></div>
                         <span style="width: auto; position: relative; top:-30px; left:805px;" class="settime" lang="<?php echo $item->taskerid;?>" alt="<?php echo $item->id;?>" endTime="<?php echo date("Y-m-d H:i:s",$item->taskfristTime+760);?>"></span>
                     <?php
                         }
                         if($item->status==2){
                     ?>
-                         <a href="javascript:;" class="qcrw certainGoToPay" alt="<?php echo $item->id;?>" style="width: auto; padding:0 8px; cursor: pointer;">等待您对商品付款</a>
+                         <a href="javascript:;" class="qcrw certainGoToPay" alt="<?php echo $item->id;?>" style="width: auto; padding:0 8px; cursor: pointer; top:0px;">等待您完成操作</a>
                          <div class="clear"></div>
                          <span style="width: auto; position: relative; top:-30px; left:805px;" class="settime" action="waiterBuyerPay" lang="<?php echo $item->taskerid;?>" alt="<?php echo $item->id;?>" endTime="<?php echo date("Y-m-d H:i:s",$item->tasksecondTime+1800);?>"></span>
                     <?php
                         }
                         if($item->status==3){
                     ?>
-                        <a href="javascript:;" class="qcrw sellerSendGood" alt="<?php echo $item->id;?>" style="width: auto; padding:0 8px; cursor: pointer;">您已付款，等待商家发货</a>
+                        <a href="javascript:;" class="qcrw sellerSendGood" alt="<?php echo $item->id;?>" style="width: auto; padding:0 8px; cursor: pointer;top:0px;">您已完成，等待商家返款</a>
                         <div class="clear"></div>
-                        <span style="width: auto; position: relative; top:-30px; left:805px;" class="settime" action="waiteSellerSendGood" lang="<?php echo $item->taskerid;?>" alt="<?php echo $item->id;?>" endTime="<?php echo date("Y-m-d H:i:s",$item->taskthirdTime+10800);?>"></span>
+                        <span style="width: auto; position: relative; top:-30px; left:805px;" class="settime" action="waiteSellerSendGood" lang="<?php echo $item->taskerid;?>" alt="<?php echo $item->id;?>" endTime="<?php echo date("Y-m-d H:i:s",$item->taskthirdTime+86400);?>"></span>
                     <?php
                         }
                         if($item->status==4){
                     ?>
-                        <a href="javascript:;" class="qcrw waitBuyerHP" alt="<?php echo $item->id;?>" style="width: auto; padding:0 8px; cursor: pointer;">等待您收货好评</a>
+                        <a href="javascript:;" class="qcrw waitBuyerHP" alt="<?php echo $item->id;?>" style="width: auto; padding:0 8px; cursor: pointer;top:0px;">等待您收货好评</a>
                     <?php
                         }
-                        if($item->status==5 && $item->taskCompleteStatus==0){
+                        if($item->status==5 && $item->taskCompleteStatus==0 && $item->complian_status==0){
                     ?>
-                        <a href="javascript:;" class="qcrw waitSellerLastCertain" lang="<?php echo $item->id;?>" style="width: auto; padding:0 8px; cursor: pointer;">等待商家审核完成</a>
+                        <a href="javascript:;" class="qcrw waitSellerLastCertain" lang="<?php echo $item->id;?>" style="width: auto; padding:0 8px; cursor: pointer;top:0px;">等待商家审核完成</a>
+                        <a href="javascript:;" class="qcrw complain" lang="<?php echo $item->id;?>" style="width:auto; margin-top: 10px; padding:0 8px;top:0px;">我要投诉商家</a>
                     <?php
+                        }
+                        if($item->complian_status==1)
+                        {
+                    ?>
+                        <a href="javascript:;" class="qcrw complianDuring" lang="<?php echo $item->id;?>" style="width: auto; padding:0 8px; cursor: pointer; margin-top:-9px;">投诉待处理</a>
+                    <?php
+                        }
+                        if($item->complian_status==2)
+                        {
+                    ?>
+                        <a class="qcrw">投诉处理中</a>
+                    <?php
+                        }
+                        if($item->complian_status==3)
+                        {
+                    ?>
+                        <a class="qcrw" style="width: auto; padding:0 8px;">投诉处理完成</a>
+                    <?php   
                         }
                         if($item->taskCompleteStatus==1){
                     ?>
-                        <a href="javascript:;" class="qcrw" style="width: auto; padding:0 8px; cursor: pointer;">任务已完成</a>
+                        <a href="javascript:;" class="qcrw" style="width: auto; padding:0 8px; cursor: pointer;top:0px;">任务已完成</a>
                     <?php
                         }
                     ?>
@@ -239,7 +261,12 @@
                         $usermsg=User::model()->findByPk($item->publishid);
                 ?>
                 <div class="takerInfo"><!--taskFunMan start-->
-                    <span>商家信息：</span><?php echo $usermsg->Username;?>　<img src="<?php echo VERSION2?>img/wang.jpg" width="20" style="position: relative; top:5px;" />&nbsp;采用买号：<?php echo $item->ddlZGAccount;?>　　　　　联系对方：&nbsp;<a title="点击添加对方为好友" target=blank href=http://wpa.qq.com/msgrd?V=3&uin=<?php echo $usermsg->QQToken;?>&Site=点击添加好友&Menu=yes><img border="0" SRC=http://wpa.qq.com/pa?p=1:<?php echo $usermsg->QQToken;?>:4 alt="点击这里给我发消息" style="position: relative; top:2px; left:-3px" /></a>　<img title="右侧为接手电话，如有需要可联系" src="<?php echo VERSION2;?>img/mobile.jpg" style="position:relative; top:4px;"/>&nbsp;<a style="color:#e99f4b;"><?php echo $usermsg->Phon;?></a>　　<a href="javascript:;" class="taskBack" lang="<?php echo $item->taskerid;?>" alt="<?php echo $item->id;?>" style="border: 1px solid red; border-radius: 3px; padding:3px 5px; color:red;">退出任务</a>
+                    <span>商家信息：</span><?php echo $usermsg->Username;?>　<img src="<?php echo VERSION2?>img/wang.jpg" width="20" style="position: relative; top:5px;" />&nbsp;采用买号：<?php echo $item->ddlZGAccount;?>　　　　　联系对方：&nbsp;<a title="点击添加对方为好友" target=blank href=http://wpa.qq.com/msgrd?V=3&uin=<?php echo $usermsg->QQToken;?>&Site=点击添加好友&Menu=yes><img border="0" SRC=http://wpa.qq.com/pa?p=1:<?php echo $usermsg->QQToken;?>:4 alt="点击这里给我发消息" style="position: relative; top:2px; left:-3px" /></a><?php echo $usermsg->QQToken;?>&nbsp;&nbsp;&nbsp;<img title="右侧为接手电话，如有需要可联系" src="<?php echo VERSION2;?>img/mobile.jpg" style="position:relative; top:4px;"/>&nbsp;<a style="color:#e99f4b;"><?php echo $usermsg->Phon;?></a>　　
+                    <?php
+                        if($item->status==1){
+                    ?>
+                    <a href="javascript:;" class="taskBack" lang="<?php echo $item->taskerid;?>" alt="<?php echo $item->id;?>" style="border: 1px solid red; border-radius: 3px; padding:3px 5px; color:red;">退出任务</a>
+                    <?php }?>
                 </div><!--taskFunMan end-->
                 <?php
                     }
@@ -253,7 +280,7 @@
                         ?>
                         姓名：<?php echo $addressInfoArr['0'];?>　地址：<font style='color:#e99f4b;'><?php echo $addressInfoArr['3'];?></font>　邮编：<?php echo $addressInfoArr['2'];?>　电话：<?php echo $addressInfoArr['1'];?>
                     </p>
-                    <p>卖家留言提醒：<?php echo $item->txtRemind;?></p>
+                    <p>卖家留言提醒：<?php echo $item->txtRemind!=""?$item->txtRemind:"请按要求完成任务";?></p>
                 </div><!--introduce end-->
             </li>
             <?php }?>
@@ -326,10 +353,10 @@
                     var day = Math.floor((lag / 3600) / 24);
                     if($(this).attr("action")=="waiterBuyerPay")//倒计时提示方案根据任务状态进行调整
                     {
-                        actionName="您付款";
+                        actionName="您操作";
                     }else if($(this).attr("action")=="waiteSellerSendGood")
                     {
-                        actionName="自动发货";
+                        actionName="返款";
                     }
                     else
                     {
@@ -429,11 +456,35 @@
             			data:{"taskerid":taskerid,"id":id},
             			success:function(msg)
             			{
-       			            layer.confirm('任务退出成功返回任务大厅', {
-                        		btn: ['知道了'] //按钮
-                        	},function(){
-                        	   location.reload();//重新刷新当前页面
-                        	});
+                            if(msg=="SUCCESS")
+                            {
+                                layer.confirm('任务退出成功返回任务大厅', {
+                            		btn: ['知道了'] //按钮
+                            	},function(){
+                            	   location.reload();//重新刷新当前页面
+                            	});
+                            }else if(msg=="nothing")
+                            {
+                                layer.confirm('该任务存在异常，您可以联系我们的客服人员', {
+                            		btn: ['知道了'] //按钮
+                            	},function(){
+                            	   location.reload();//重新刷新当前页面
+                            	});
+                            }else if(msg=="SELLERPASS")
+                            {
+                                layer.confirm('该任务已在进行中，无法退出', {
+                            		btn: ['知道了'] //按钮
+                            	},function(){
+                            	   location.reload();//重新刷新当前页面
+                            	});
+                            }else
+                            {
+                                layer.confirm('任务退出失败，您可以联系我们的客服人员', {
+                            		btn: ['知道了'] //按钮
+                            	},function(){
+                            	   location.reload();//重新刷新当前页面
+                            	});
+                            }
             			}
             		});
             	});
@@ -441,24 +492,57 @@
             
             //接手执行付款操作
             $(".certainGoToPay").click(function(){
-                layer.open({
-                    type: 2,
-                    title:'聚宝盆任务提示',
-                    area: ['526px','560px'],
-                    skin: 'layui-layer-rim', //加上边框
-                    content: ['/site/buyerToPay.html?taskid='+$(this).attr('alt')+'', 'no']
-                });
+				
+                $.ajax({
+					type:"POST",
+					url:"<?php echo $this->createUrl('site/buyerToPayCertain');?>",
+					data:{"taskid":$(this).attr('alt')},
+					success:function(data)
+					{
+						if(data=="SUCCESS")
+						{
+							layer.confirm('操作完成', {
+								btn: ['确定'] //按钮
+							}, function(){
+								location.reload();//刷新父级页面
+							});
+						}else
+						{
+							layer.confirm('付款失败，请联系客服人员', {
+								btn: ['确定'] //按钮
+							}, function(){
+								location.reload();//刷新父级页面
+							}); 
+						}
+					}
+				});
             });
             
             //接手执行收货好评操作
             $(".waitBuyerHP").click(function(){
-                layer.open({
-                    type: 2,
-                    title:'收货好评',
-                    area: ['526px','360px'],
-                    skin: 'layui-layer-rim', //加上边框
-                    content: ['/site/waitBuyerHP.html?taskid='+$(this).attr('alt')+'', 'no']
-                });
+				$.ajax({
+					type:"POST",
+					url:"<?php echo $this->createUrl('site/waitBuyerHPDone');?>",  
+					data:{"taskid":$(this).attr('alt')},
+					success:function(data)
+					{
+						if(data=="SUCCESS")
+						{
+							layer.confirm('收货好评成功', {
+								btn: ['确定'] //按钮
+							}, function(){
+								location.reload();//刷新父级页面
+							});
+						}else
+						{
+							layer.confirm('收货好评失败，请联系客服人员', {
+								btn: ['确定'] //按钮
+							}, function(){
+								location.reload();//刷新父级页面
+							}); 
+						}
+					}
+				});
             });
             
             //商家查看接手上传截图
@@ -562,6 +646,24 @@
                 }
                 layer.confirm('此任务对威客帐号等级要求为：<a href="javascript:;" style="color:red;">'+dj+'以上</a>', {
                 	btn: ['知道了'] //按钮
+                });
+            });
+            
+            //威客发起投诉
+            $(".complain").click(function(){
+                var taskid=$(this).attr('lang');
+                layer.confirm('<div style="color:#000; margin-bottom:10px; text-align:center; font-size:20px; font-weight:bold;">《投诉商家须知》</div><span style="color:red;">&nbsp;&nbsp;&nbsp;&nbsp;您确定要投诉发布此任务的商家吗？如果投诉失败将会对您的信用产生影响，同时如果发现此次投诉为恶意投诉，您的帐号将受到处罚，情节严重的将会被永久封号！</span>', {
+                	btn: ['提交投诉资料','取消投诉'] //按钮
+                },function()
+                {
+                    //提交投诉资料
+                    layer.open({
+                        type: 2,
+                        title:'投诉商家-提交资料',
+                        area: ['526px','100%'],
+                        skin: 'layui-layer-rim', //加上边框
+                        content: ['/user/userTaskComplian.html?taskid='+taskid+'&userStyle=1', 'no']//userStyle发起投诉的人的类型，0为商家发起的投诉，1为接手发起的投诉
+                    });
                 });
             });
         })

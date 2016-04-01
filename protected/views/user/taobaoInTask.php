@@ -47,6 +47,7 @@
         <ul class="dtrwLis">
             <?php
                 foreach($proInfo as $item){
+				$myinfo=User::model()->findByPk($item->publishid);
             ?>
             <li class="taskItem">
                 <div class="rebh"> 
@@ -86,7 +87,11 @@
                                 break;
                         }
                         echo "卖家要求威客买号等级在".$dj."以上";
-                    ;?>"  class="BuyerJifen" lang="<?php echo $item->BuyerJifen;?>" src="<?php echo VERSION2;?>img/level/<?php echo $item->BuyerJifen;?>.gif" style="vertical-align: text-top;cursor:pointer;" />
+                    ;?>"  class="BuyerJifen" lang="<?php echo $item->BuyerJifen;?>" src="<?php echo VERSION2;?>img/level/<?php echo $item->BuyerJifen;?>.gif" style="vertical-align: text-top;cursor:pointer;" /><span style="float:right; margin-right:20px;">会员等级：<img src="<?php echo VERSION2; ?>img/newlevel/<?php echo User::getuserlevelnum($item->publishid);?>.gif" />
+      <?php if( $myinfo->VipLv > 0 && $myinfo->VipStopTime > time() ){?>
+      <img src="<?php echo VERSION2;?>img/newlevel/VIP.png" />
+      <?php }?>
+      </span>
                 </div>
                 <div class="allRw_pro">
                     <img src="<?php echo VERSION2;?>img/p<?php echo $item->taskCatalog==0?2:1;?>.jpg" alt="" title="<?php echo $item->taskCatalog==0?"普通任务":"来路搜索任务";?>" class="allRw_proImg" />
@@ -97,7 +102,7 @@
                                     掌柜：<span><?php echo XUtils::cutstr($item->ddlZGAccount,4)."***";?></span>
                                     <!--掌柜个人信息-->
                                     <?php
-                                        $myinfo=User::model()->findByPk($item->publishid);
+                                        
                                         //好评
                                         $hp=Appraise::model()->findAllByAttributes(array(
                                             'uid'=>$item->publishid,
@@ -183,44 +188,42 @@
                             </div>
                         </div>
                     </div>
-                    <span class="vip_level"><i style="background: url(<?php echo VERSION2; ?>img/newlevel/<?php echo User::getuserlevelnum($item->publishid);?>.gif) center no-repeat;"></i></span>
-	  <?php if( $myinfo->VipLv > 0 && $myinfo->VipStopTime > time() ){?> <img src="<?php echo VERSION2;?>img/newlevel/VIP.png" /><?php }?>
                     <?php
                         if($item->status==0){
                     ?>
-                    <a class="qcrw" style="width: auto; padding:0 8px; cursor: pointer;" title="点击查看提醒">等待商家审核</a>
+                    <a class="qcrw" style="width: auto; padding:0 8px; cursor: pointer; top:0px;" title="点击查看提醒">等待商家审核</a>
                     <?php
                         }
                         if($item->status==1){
                     ?>
-                        <a class="qcrw waitSeller" style="width: auto; padding:0 8px; cursor: pointer;" title="点击查看提醒">等待商家审核</a>
+                        <a class="qcrw waitSeller" style="width: auto; padding:0 8px; cursor: pointer;top:0px;" title="点击查看提醒">等待商家审核</a>
                         <div class="clear"></div>
                         <span style="width: auto; position: relative; top:-30px; left:805px;" class="settime" lang="<?php echo $item->taskerid;?>" alt="<?php echo $item->id;?>" endTime="<?php echo date("Y-m-d H:i:s",$item->taskfristTime+760);?>"></span>
                     <?php
                         }
                         if($item->status==2){
                     ?>
-                         <a href="javascript:;" class="qcrw certainGoToPay" alt="<?php echo $item->id;?>" style="width: auto; padding:0 8px; cursor: pointer;">等待您完成操作</a>
+                         <a href="javascript:;" class="qcrw certainGoToPay" alt="<?php echo $item->id;?>" style="width: auto; padding:0 8px; cursor: pointer; top:0px;">等待您完成操作</a>
                          <div class="clear"></div>
                          <span style="width: auto; position: relative; top:-30px; left:805px;" class="settime" action="waiterBuyerPay" lang="<?php echo $item->taskerid;?>" alt="<?php echo $item->id;?>" endTime="<?php echo date("Y-m-d H:i:s",$item->tasksecondTime+1800);?>"></span>
                     <?php
                         }
                         if($item->status==3){
                     ?>
-                        <a href="javascript:;" class="qcrw sellerSendGood" alt="<?php echo $item->id;?>" style="width: auto; padding:0 8px; cursor: pointer;">您已完成，等待商家返款</a>
+                        <a href="javascript:;" class="qcrw sellerSendGood" alt="<?php echo $item->id;?>" style="width: auto; padding:0 8px; cursor: pointer;top:0px;">您已完成，等待商家返款</a>
                         <div class="clear"></div>
                         <span style="width: auto; position: relative; top:-30px; left:805px;" class="settime" action="waiteSellerSendGood" lang="<?php echo $item->taskerid;?>" alt="<?php echo $item->id;?>" endTime="<?php echo date("Y-m-d H:i:s",$item->taskthirdTime+86400);?>"></span>
                     <?php
                         }
                         if($item->status==4){
                     ?>
-                        <a href="javascript:;" class="qcrw waitBuyerHP" alt="<?php echo $item->id;?>" style="width: auto; padding:0 8px; cursor: pointer;">等待您收货好评</a>
+                        <a href="javascript:;" class="qcrw waitBuyerHP" alt="<?php echo $item->id;?>" style="width: auto; padding:0 8px; cursor: pointer;top:0px;">等待您收货好评</a>
                     <?php
                         }
                         if($item->status==5 && $item->taskCompleteStatus==0 && $item->complian_status==0){
                     ?>
-                        <a href="javascript:;" class="qcrw waitSellerLastCertain" lang="<?php echo $item->id;?>" style="width: auto; padding:0 8px; cursor: pointer;">等待商家审核完成</a>
-                        <a href="javascript:;" class="qcrw complain" lang="<?php echo $item->id;?>" style="width:auto; margin-top: 10px; padding:0 8px;">我要投诉商家</a>
+                        <a href="javascript:;" class="qcrw waitSellerLastCertain" lang="<?php echo $item->id;?>" style="width: auto; padding:0 8px; cursor: pointer;top:0px;">等待商家审核完成</a>
+                        <a href="javascript:;" class="qcrw complain" lang="<?php echo $item->id;?>" style="width:auto; margin-top: 10px; padding:0 8px;top:0px;">我要投诉商家</a>
                     <?php
                         }
                         if($item->complian_status==1)
@@ -243,7 +246,7 @@
                         }
                         if($item->taskCompleteStatus==1){
                     ?>
-                        <a href="javascript:;" class="qcrw" style="width: auto; padding:0 8px; cursor: pointer;">任务已完成</a>
+                        <a href="javascript:;" class="qcrw" style="width: auto; padding:0 8px; cursor: pointer;top:0px;">任务已完成</a>
                     <?php
                         }
                     ?>

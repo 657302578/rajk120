@@ -47,6 +47,7 @@
         <ul class="dtrwLis">
             <?php
                 foreach($proInfo as $item){
+				$myinfo=User::model()->findByPk($item->publishid);
             ?>
             <li class="taskItem">
                 <div class="rebh">
@@ -86,7 +87,11 @@
                                 break;
                         }
                         echo "卖家要求接手买号等级在".$dj."以上";
-                    ;?>"  class="BuyerJifen" lang="<?php echo $item->BuyerJifen;?>" src="<?php echo VERSION2;?>img/level/<?php echo $item->BuyerJifen;?>.gif" style="vertical-align: text-top;cursor:pointer;" />
+                    ;?>"  class="BuyerJifen" lang="<?php echo $item->BuyerJifen;?>" src="<?php echo VERSION2;?>img/level/<?php echo $item->BuyerJifen;?>.gif" style="vertical-align: text-top;cursor:pointer;" /><span style="float:right; margin-right:20px;">会员等级：<img src="<?php echo VERSION2; ?>img/newlevel/<?php echo User::getuserlevelnum($item->publishid);?>.gif" />
+      <?php if( $myinfo->VipLv > 0 && $myinfo->VipStopTime > time() ){?>
+      <img src="<?php echo VERSION2;?>img/newlevel/VIP.png" />
+      <?php }?>
+      </span>
                 </div>
                 <div class="allRw_pro">
                     <img src="<?php echo VERSION2;?>img/p<?php echo $item->taskCatalog==0?2:1;?>.jpg" alt="" title="<?php echo $item->taskCatalog==0?"普通任务":"来路搜索任务";?>" class="allRw_proImg" />
@@ -97,7 +102,7 @@
                                     掌柜：<span><?php echo XUtils::cutstr($item->ddlZGAccount,4)."***";?></span>
                                     <!--掌柜个人信息-->
                                     <?php
-                                        $myinfo=User::model()->findByPk($item->publishid);
+                                        
                                         //好评
                                         $hp=Appraise::model()->findAllByAttributes(array(
                                             'uid'=>$item->publishid,
@@ -184,8 +189,6 @@
                             </div>
                         </div>
                     </div>
-                    <span class="vip_level"><i style="background: url(<?php echo VERSION2; ?>img/newlevel/<?php echo User::getuserlevelnum($item->publishid);?>.gif) center no-repeat;"></i></span>
-	  <?php if( $myinfo->VipLv > 0 && $myinfo->VipStopTime > time() ){?> <img src="<?php echo VERSION2;?>img/newlevel/VIP.png" /><?php }?>
                     <?php
                         $count = Usertasklist::model()->count('task_id='.$item->id.' AND state=0');
                         if($item->status==0){
@@ -208,33 +211,33 @@
                         }
                         if($item->status==2){
                     ?>
-                         <a href="javascript:;" class="qcrw waiterBuyerPayWarning" style="width: auto; padding:0 8px; cursor: pointer;" title="点击查看提醒">等待接手付款</a>
+                         <a href="javascript:;" class="qcrw waiterBuyerPayWarning" style="width: auto; padding:0 8px; cursor: pointer;top:0px;" title="点击查看提醒">等待接手付款</a>
                          <div class="clear"></div>
                          <span style="width: auto; position: relative; top:-30px; left:805px;" class="settime" action="waiterBuyerPay" lang="<?php echo $item->taskerid;?>" alt="<?php echo $item->id;?>" endTime="<?php echo date("Y-m-d H:i:s",$item->tasksecondTime+1800);?>"></span>
                     <?php
                         }
                         if($item->status==3){
                     ?>
-                        <a href="javascript:;" class="qcrw sellerCertainSendGood" lang="<?php echo $item->id;?>" style="width: auto; padding:0 8px; cursor: pointer;">接手已完成，等待您返款</a>
+                        <a href="javascript:;" class="qcrw sellerCertainSendGood" lang="<?php echo $item->id;?>" style="width: auto; padding:0 8px; cursor: pointer;top:0px;">接手已完成，等待您返款</a>
                         <div class="clear"></div>
                         <span style="width: auto; position: relative; top:-30px; left:805px;" class="settime" action="waiteSellerSendGood" lang="<?php echo $item->taskerid;?>" alt="<?php echo $item->id;?>" endTime="<?php echo date("Y-m-d H:i:s",$item->taskthirdTime+86400);?>"></span>
                     <?php
                         }
                         if($item->status==4){
                     ?>
-                        <a href="javascript:;" class="qcrw" lang="<?php echo $item->id;?>" style="width: auto; padding:0 8px; cursor: pointer;">等待接手收货好评</a>
+                        <a href="javascript:;" class="qcrw" lang="<?php echo $item->id;?>" style="width: auto; padding:0 8px; cursor: pointer;top:0px;">等待接手收货好评</a>
                     <?php
                         }
                         if($item->status==5 && $item->taskCompleteStatus==0 && $item->complian_status==0){
                     ?>
-                        <a href="javascript:;" class="qcrw sellerLastCertain" lang="<?php echo $item->id;?>" style="width: auto; padding:0 8px; cursor: pointer; margin-top:-9px;">接手已收货好评，等待审核</a><br />
-                        <a href="javascript:;" class="qcrw complain" lang="<?php echo $item->id;?>" style="width:auto; margin-top: 10px; padding:0 8px;">我要投诉接手</a>
+                        <a href="javascript:;" class="qcrw sellerLastCertain" lang="<?php echo $item->id;?>" style="width: auto; padding:0 8px; cursor: pointer; margin-top:-9px;top:0px;">接手已收货好评，等待审核</a><br />
+                        <a href="javascript:;" class="qcrw complain" lang="<?php echo $item->id;?>" style="width:auto; margin-top: 10px; padding:0 8px;top:0px;">我要投诉接手</a>
                     <?php
                         }
                         if($item->complian_status==1)
                         {
                     ?>
-                        <a href="javascript:;" class="qcrw complianDuring" lang="<?php echo $item->id;?>" style="width: auto; padding:0 8px; cursor: pointer; margin-top:-9px;">接手任务的接手已被您投诉</a>
+                        <a href="javascript:;" class="qcrw complianDuring" lang="<?php echo $item->id;?>" style="width: auto; padding:0 8px; cursor: pointer; margin-top:-9px;top:0px;">接手任务的接手已被您投诉</a>
                     <?php
                         }
                         if($item->complian_status==2)
@@ -252,7 +255,7 @@
                         }
                         if($item->taskCompleteStatus==1){
                     ?>
-                        <a href="javascript:;" class="qcrw" style="width: auto; padding:0 8px; cursor: pointer;">任务已完成</a>
+                        <a href="javascript:;" class="qcrw" style="width: auto; padding:0 8px; cursor: pointer;top:0px;">任务已完成</a>
                     <?php
                         }
                         if($item->status==6){

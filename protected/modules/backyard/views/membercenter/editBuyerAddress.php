@@ -45,7 +45,9 @@
 						success:function(msg)
 						{
 							$("#"+domid).html(msg);
+							if(domid == 'shi') $("#qu").html('');
 							if(domid == 'shi') $("#"+qu).html();
+							
 						}
 					});
 				}
@@ -78,6 +80,9 @@
                     <span>
                         收货地址管理 - 编辑地址信息 
                     </span>
+					<div class="panel-actions">
+						<a href="javascript:history.back();" title="返回">返回</a>
+					 </div>
                 </div>
                 <div class="panel-body">
                     <div class="clear"></div>
@@ -102,13 +107,29 @@
 								<?php
 									foreach($area as $k=>$v){
 								?>
-								<option value="<?php echo $v->id;?>"><?php echo $v->name ?></option>
+								<option <?php if(isset($addressInfo) && $addressInfo->sheng_id == $v->id){?>  selected="selected" <?php }?>  value="<?php echo $v->id;?>"><?php echo $v->name ?></option>
 								<?php
 									}
 								?>
 							</select>
-							<span id="shi"></span>
-							<span id="qu"></span>
+							<span id="shi">
+							<?php if(isset($shiList)){?>
+							<select name="data[shi_id]" onChange="getSonCity(this.value,'qu')">
+								<?php foreach($shiList as $v){?>
+								<option <?php if(isset($addressInfo) && $addressInfo->shi_id == $v->id){?>  selected="selected" <?php }?> value="<?php echo $v->id;?>"><?php echo $v->name;?></option>
+								<?php }?>
+							</select>
+							<?php }?>
+							</span>
+							<span id="qu">
+							<?php if(isset($shiList)){?>
+							<select name="data[qu_id]">
+								<?php foreach($quList as $v){?>
+								<option <?php if(isset($addressInfo) && $addressInfo->qu_id == $v->id){?>  selected="selected" <?php }?> value="<?php echo $v->id;?>"><?php echo $v->name;?></option>
+								<?php }?>
+							</select>
+							<?php }?>
+							</span>
 							
 							</td>
                     		<td width="4%"><div class="errorMessage" id="Article_add_time_em_" style="display:none"></div></td>
@@ -116,24 +137,24 @@
                     
                     	<tr>
                     		<td><label for="Article_sort_order">收货人姓名</label></td>
-                    		<td><input name="data[user_name]" id="Article_sort_order" type="text" value=""></td>
+                    		<td><input required="required" name="data[user_name]" id="Article_sort_order" type="text" value="<?php if(isset($addressInfo)) echo $addressInfo->user_name;?>"></td>
                     		<td><div class="errorMessage" id="Article_sort_order_em_" style="display:none"></div></td>
                     	</tr>
                     	<tr>
                     		<td><label for="Article_sort_order">收货人手机号</label></td>
-                    		<td><input name="data[mobile]" id="Article_sort_order" type="text" value=""></td>
+                    		<td><input required="required" name="data[mobile]" id="Article_sort_order" type="text" value="<?php if(isset($addressInfo)) echo $addressInfo->mobile;?>"></td>
                     		<td><div class="errorMessage" id="Article_sort_order_em_" style="display:none"></div></td>
                     	</tr>
                     
                     	<tr>
                     		<td><label for="Article_sort_order">收货人详细地址：</label></td>
-                    		<td><input name="data[address]" id="Article_sort_order" type="text" value=""></td>
+                    		<td><input required="required" name="data[address]" id="Article_sort_order" type="text" value="<?php if(isset($addressInfo)) echo $addressInfo->address;?>"></td>
                     		<td><div class="errorMessage" id="Article_sort_order_em_" style="display:none"></div></td>
                     	</tr>
                     	<tr height="10"></tr>
                     	<tr>
-                            <td><input name="data[id]" type="hidden" value=""></td>
-                            <td><input type="submit" value="确定新增地址"></td>
+                            <td><input name="data[id]" type="hidden" value="<?php if(isset($addressInfo)) echo $addressInfo->id;?>"></td>
+                            <td><input type="submit" value="保存"></td>
                             <td></td>
                     	</tr>
                         </tbody></table>

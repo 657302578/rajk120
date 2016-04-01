@@ -92,9 +92,9 @@
                             </div>
                             <br /><br />
                             <div class="examItem">
-                                <label class="col-sm-3 control-label" for="input-small" style="width: auto;">买号每日最大可接任务数：</label>
+                                <label class="col-sm-3 control-label" for="input-small" style="width: auto;">会员号每日最大可接任务数：</label>
                                 <div class="col-sm-3">
-    		                        <input type="text" name="buyertaskmaxnum" id="input-small"  class="form-control input-sm" placeholder="1积分等于多少元" value="<?php if(isset($config)) echo $config->buyertaskmaxnum;?>"/>
+    		                        <input type="text" name="buyertaskmaxnum" id="input-small"  class="form-control input-sm" placeholder="会员号每日最大任务数量" value="<?php if(isset($config)) echo $config->buyertaskmaxnum;?>"/>
     		                    </div>
                             </div>
                             <br /><br />

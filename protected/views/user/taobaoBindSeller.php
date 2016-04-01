@@ -4,13 +4,14 @@
     <div class="bdmh">
         <form action="<?php $this->createUrl('user/taobaoBindSeller');?>" method="post">
             <div class="bd_zh clearfix">
-                <img src="<?php echo VERSION2;?>img/wang.jpg" alt="" class="wang">
                 <div class="bd_zht">淘宝掌柜名（旺旺名）：</div>
                 <input type="text" class="zhsr" name="bdmh"/>
+				<div class="bd_zht">店铺首页地址：</div>
+                <input type="text" class="zhsr" name="shop_url" />
+				<br/><br/>
 				<div class="bd_zht">认证链接：</div>
                 <input type="text" class="zhsr" name="auth_url" />
 				<button class="bdtbmh">绑定淘宝掌柜</button>
-				<br/>
                 <span style="padding-left: 10px; color:red;"><?php echo @$warning;?></span>
             </div>
 			<div style="font-weight:bold; font-size:12px; margin-left:20px; margin-top:30px;">
@@ -18,6 +19,7 @@
 					$auth_price = mt_rand(1,9).'.'.mt_rand(1,9);
 				?>
 				<input type="hidden" name="auth_price" value="<?php echo $auth_price;?>" />
+				<br/><br/><br/>
 				请在您要认证的店铺中新建一个宝贝，命名为“认证链接”，价格为<?php echo $auth_price;?>元，然后复制链接填写到“认证链接中”，然后点击“绑定淘宝掌柜”
 			</div>
             <div class="zh_infs clearfix" style="color: #0099cc; font-weight: bold;">

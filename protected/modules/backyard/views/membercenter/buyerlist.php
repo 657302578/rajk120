@@ -91,7 +91,7 @@
             		</ol>
             	</div>
             </div>
-            <form method="post" action="<?php echo $this->createUrl("membercenter/buyerlist")?>">
+            <form method="get" action="<?php echo $this->createUrl("membercenter/buyerlist")?>">
                 <input type="text" name="keyword" placeholder="请输入旺旺名称" style="text-indent: 5px; color: #666; font-size:14px; width:260px;" /><select name="is_check"><option value="">审核状态</option><option value="1">未审核</option><option value="2">审核通过</option><option value="3">审核未通过</option></select>　<button type="submit" class="btn btn-sm btn-success" border="0" id="reg_submit"><i class="fa fa-dot-circle-o"></i>&nbsp;搜索</button>
             </form>
             <br />
@@ -108,6 +108,7 @@
                         <thead>
                             <tr>
                                 <th>买号ID</th>
+								<th>所属会员账号</th>
                                 <th><div align="center">旺旺名称</div></th>
                                 <th><div align="center">是否实名</div></th>
                                 <th><div align="center">买家信誉</div></th>
@@ -129,11 +130,24 @@
                         ?>
                         <tr style="color:#666;">
                             <td><?php echo $item->id;?></td>
+							<td>
+								<?php
+									$userInfo = User::model()->findByPk($item->userid);
+									if(isset($userInfo))
+									{
+										echo $userInfo->Username;
+									}else{
+										echo '无';
+									}
+								?>
+							</td>
                             <td><div align="center"><?php echo $item->wangwang;?></div></td>
                             <td><div align="center">
 								<?php if($item->taotaorz){?>是<?php }else{?>否<?php }?>
 							</div></td>
-                            <td><div align="center"><?php echo $item->wangwanginfo;?></div></td>
+                            <td><div align="center">
+							 <img src="<?php echo VERSION2;?>img/level/<?php echo $item->wangwanginfo;?>.gif" style="vertical-align: text-top;cursor:pointer;" />
+							</div></td>
                             <td><div align="center" style="color: #FF5454; font-weight:bold; font-size:14px;"><?php echo $item->alipay_account;?></div></td>
                             <td><div align="center" style="color: #FF5454; font-weight:bold; font-size:14px;"><?php echo $item->real_name;?></div></td>
                             <td style="text-align: center;">

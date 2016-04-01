@@ -23,7 +23,7 @@
                     <a href="<?php echo $this->createUrl('user/userPayDetail');?>">收支明细</a>
                 </li>
                 <li <?php echo Yii::app()->controller->id=="user" && $this->getAction()->getId()=="userMiliToCash"?"class='on'":"";?>>
-                    <a href="<?php echo $this->createUrl('user/userMiliToCash');?>">麦粒回收</a>
+                    <a href="<?php echo $this->createUrl('user/userMiliToCash');?>">签收积分</a>
                 </li>
                 <li <?php echo Yii::app()->controller->id=="user" && $this->getAction()->getId()=="userBlackAccountList"?"class='on'":"";?>>
                     <a href="<?php echo $this->createUrl('user/userBlackAccountList');?>">黑名单</a>

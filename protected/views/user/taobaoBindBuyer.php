@@ -85,7 +85,7 @@
                     $quInfo = Area::model()->findByPk($addressInfo['qu_id']);
             ?>
     当前被分配到的地址：<br/>
-    <?php echo $shengInfo->name;?>&nbsp;<?php echo $shiInfo->name;?>&nbsp;<?php echo $quInfo->name;?>&nbsp;<?php echo $addressInfo->address;?>&nbsp;收件人：<?php echo $addressInfo->user_name;?>&nbsp;电话：<?php echo $addressInfo->mobile;?><br/>
+    <?php if(isset($shengInfo)) echo $shengInfo->name;?>&nbsp;<?php if(isset($shiInfo))  echo $shiInfo->name;?>&nbsp;<?php if(isset($quInfo)) echo $quInfo->name;?>&nbsp;<?php echo $addressInfo->address;?>&nbsp;收件人：<?php echo $addressInfo->user_name;?>&nbsp;电话：<?php echo $addressInfo->mobile;?><br/>
     请将所有绑定的账号的地址更改为此地址
     <?php
                 }

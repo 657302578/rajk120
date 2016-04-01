@@ -2,20 +2,8 @@
         <div class="zbuy1">
             <div class="zbuy11">
             
-                <div class="zbuy12">
-                    <span class="zbuy111">
-                        购买麦粒
-                    </span>
-                    <div class="zbuy112">
-                        <img src="<?php echo VERSION2;?>img/zbuy111.jpg" alt="" />
-                        <span class="zbuy113">拥有麦粒，就可以发布自己的任务，获得好评</span>
-                    </div>
-                    <div class="zbuy114">
-                        购买数量 :<input type="text" class="ez-bo1s MinLinNum" name='buymd'/>个<span>( <em>0.63</em>金币/个 )</span>
-                    </div>
-                    <a href="javascript:;" id="buymd"><div class="zbuy116 buyMinLi">立即购买</div></a>
-                </div>
-                <div class="zbuy13">
+                
+                <div class="zbuy13" style="float:none; margin-left:auto; margin-right:auto;">
                     <span class="zbuy111">
                         升级VIP
                     </span>
@@ -25,21 +13,19 @@
                         $vipInfo->VipStopTime!=""?$vipInfo->VipStopTime:0;//VIP到期时间处理
                         if($vipInfo->VipStopTime<time()){
                     ?>
-                    <div class="zbuy112">
+                    <div class="zbuy112" >
                         <img src="<?php echo VERSION2;?>img/vip.jpg" alt="" />
-                        <span class="zbuy113">拥有VIP刷钻更高效 <a href="<?php echo $this->createUrl('site/userLeveldoc');?>" target="_blank" style="color:#57a0ff;margin-left:20px;font-size:14px">查看VIP特权</a></span>
+                        <span class="zbuy113"> VIP可使用任务大厅搜索、任务刷新置顶等功能</span>
                     </div>
                     <div class="zbuy114">
                         <select id="viptype">
-                            <option value="1">一级VIP客户</option>
-                            <option value="2">二级VIP客户</option>
-                            <option value="3">三级VIP客户</option>
+                            <option value="1">VIP</option>
                         </select> 
                         <select id="months">
                             <option value="1">一个月28金币</option>
-                            <option value="3">三个月76金币</option>
-                            <option value="6">半年118金币</option>
-                            <option value="12">一年218金币</option>
+                            <option value="3">三个月84金币</option>
+                            <option value="6">半年168金币</option>
+                            <option value="12">一年280金币</option>
                         </select>
                         <input type="hidden" name="hash2" value="eA==">
                     </div>
@@ -73,92 +59,6 @@
 <link href="<?php echo ASSET_URL;?>layer/layer.css" rel="stylesheet" type="text/css" />
 <script>
     $(function(){
-        //点击购买麦粒
-        $(".buyMinLi").click(function(){
-            if($(".MinLinNum").val()=="")//检查是否为空
-            {
-                layer.tips('购买麦粒数量不能为空', '.MinLinNum');
-                exit;
-            }
-            if(isNaN($(".MinLinNum").val()))//检查是否为数字
-            {
-                $(".MinLinNum").val("");
-                layer.tips('必须为数字', '.MinLinNum');
-                exit;
-            }
-            if(parseFloat($(".MinLinNum").val())*0.63>parseFloat($(".MoneyOwn").html()))//余额检查
-            {
-                //询问框
-            	layer.confirm('<span style="color:red;">余额不足</span>，购买'+$(".MinLinNum").val()+'个麦粒需要<span style="color:red;">'+parseFloat($(".MinLinNum").val())*0.63+'</span>金币。您现在的余额为<span style="color:red;">'+$(".MoneyOwn").html()+'</span>金币。', {
-            		btn: ['知道了'] //按钮
-            	});
-                exit;
-            }
-            
-            //输入安全码
-            layer.confirm('输入安全码<input type="password" name="safePwd" class="text1 safePwd" style="margin-left:5px;" />', {
-            	btn: ['确定'] //按钮
-            },function(){
-                if($(".safePwd").val()=="")//安全码必填
-                {
-                    layer.tips('请输入安全码', '.safePwd');
-                }else
-                {
-                    $.ajax({
-            			type:"POST",
-            			url:"<?php echo $this->createUrl('user/checkSafePwd');?>",
-            			data:{"safePwd":$(".safePwd").val()},
-            			success:function(msg)
-            			{
-            				if(msg=="SUCCESS")//安全码正确
-                            {
-                                //检查通过申请提现
-                                $.ajax({
-                        			type:"POST",
-                        			url:"<?php echo $this->createUrl('user/userBuyPoint');?>",
-                        			data:{"MinLinNum":$(".MinLinNum").val()},
-                        			success:function(msg)
-                        			{
-                        				if(msg=="SUCCESS")
-                                        {
-                                            //询问框
-                                        	layer.confirm('麦粒购买成功', {
-                                        		btn: ['知道了'] //按钮
-                                        	},function(){
-                                        	    location.reload();//刷新当前页面
-                                        	});
-                                        }else if(msg=="MONEYNOTENOUGH")
-                                        {
-                                            //询问框
-                                        	layer.confirm('<span style="color:red;">余额不足</span>', {
-                                        		btn: ['知道了'] //按钮
-                                        	},function(){
-                                        	    location.reload();//刷新当前页面
-                                        	});
-                                        }else
-                                        {
-                                            //询问框
-                                        	layer.confirm('<span style="color:red;">购买麦粒失败，您可以联系我们的客服人员</span>', {
-                                        		btn: ['知道了'] //按钮
-                                        	},function(){
-                                        	    location.reload();//刷新当前页面
-                                        	});
-                                        }
-                        			}
-                        		});
-                                //检查通过申请提现
-                            }else
-                            {
-                                $(".safePwd").val("");
-                                layer.tips('安全码不正确', '.safePwd');
-                            }
-            			}
-            		});
-                }
-            });
-            //输入安全码
-        });
-        
         //vip二级联动
         $("#viptype").change(function(){
             var vipType=$(this).val();
@@ -179,22 +79,9 @@
             var vipPriceArr=new Array();
             vipPriceArr[1]=new Array();
             vipPriceArr[1][1]=28;//vip1 一个月价格
-            vipPriceArr[1][3]=76;//vip1 三个月价格
-            vipPriceArr[1][6]=118;//vip1 半年价格
-            vipPriceArr[1][12]=218;//vip1 一年价格
-            
-            vipPriceArr[2]=new Array();
-            vipPriceArr[2][1]=58;//vip2 一个月价格
-            vipPriceArr[2][3]=99;//vip2 三个月价格
-            vipPriceArr[2][6]=158;//vip2 半年价格
-            vipPriceArr[2][12]=298;//vip2 一年价格
-            
-            vipPriceArr[3]=new Array();
-            vipPriceArr[3][1]=88;//vip2 一个月价格
-            vipPriceArr[3][3]=128;//vip2 三个月价格
-            vipPriceArr[3][6]=198;//vip2 半年价格
-            vipPriceArr[3][12]=368;//vip2 一年价格
-            
+            vipPriceArr[1][3]=84;//vip1 三个月价格
+            vipPriceArr[1][6]=168;//vip1 半年价格
+            vipPriceArr[1][12]=280;//vip1 一年价格
             if(vipPriceArr[vipType][month]>MoneyOwn)
             {
                 layer.tips('余额不足，您的余额为'+MoneyOwn+'金币', '#months');

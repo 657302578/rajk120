@@ -9,12 +9,15 @@
         public function actionMemberlist()
         {
             parent::acl();
-            if(isset($_POST['keyword']) || isset($_GET['id_is_check']))//关键词搜索
+            if(isset($_GET['keyword']) || isset($_GET['id_is_check']))//关键词搜索
             {
                 $criteria = new CDbCriteria;
                 $criteria->condition = '1 ';
-                if(isset($_POST['keyword']) && !empty($_POST['keyword'])) $criteria->condition=' AND (Username="'.$_POST['keyword'].'" or Phon="'.$_POST['keyword'].'")';
-                if(isset($_POST['id_is_check']) && $_POST['id_is_check'] > 0 ) $criteria->condition.=' AND id_is_check='.(intval($_POST['id_is_check'])-1);
+                if(isset($_GET['keyword']) && !empty($_GET['keyword'])) $criteria->condition.=' AND (Username="'.$_GET['keyword'].'" or Phon="'.$_GET['keyword'].'")';
+                if(isset($_GET['id_is_check']) && $_GET['id_is_check'] > 0 )
+                { 
+                    $criteria->condition.=' AND id_is_check='.(intval($_GET['id_is_check'])-1)." AND id_card <> '' AND id_photo_front <> '' AND id_photo_rear <> ''";
+                }
                 //分页开始
                 $total = User::model()->count($criteria);
                 $pages = new CPagination($total);
@@ -70,21 +73,61 @@
         {
             if(isset($_POST['data']))
             {
-                $ud = new Useraddress();
-                foreach ($_POST['data'] as $k => $v)
+                if(intval($_POST['data']['id']) > 0)
                 {
-                    $ud->$k = $v;
+                    $addressInfo = Useraddress::model()->findByPk(intval($_POST['data']['id']));
+                    foreach ($_POST['data'] as $k => $v)
+                    {
+                        $addressInfo->$k = $v;
+                    }
+                    $addressInfo->save();
+                    $this->redirect( $this->createUrl('membercenter/buyerAddress'));
+                }else{
+                    $ud = new Useraddress();
+                    foreach ($_POST['data'] as $k => $v)
+                    {
+                        $ud->$k = $v;
+                    }
+                    $ud->save();
+                    $this->redirect( $this->createUrl('membercenter/buyerAddress'));
                 }
-                $ud->save();
-                $this->redirect( $this->createUrl('membercenter/buyerAddress'));
             }else{
                 $areaList = Area::model()->findAll( array(
                     'condition' => 'parentid=0'
                 ) );
-                $this->render('editBuyerAddress',array(
-                    'area' => $areaList
+                
+                if(isset($_GET['id']))
+                {
+                    $addressInfo = Useraddress::model()->findByPk(intval($_GET['id']));
+                    if(isset($addressInfo))
+                    {
+                        $shiList = Area::model()->findAll(array(
+                    'condition' => 'parentid='.$addressInfo->sheng_id
                 ));
+                        $quList = Area::model()->findAll(array(
+                    'condition' => 'parentid='.$addressInfo->shi_id
+                ));
+                        $this->render('editBuyerAddress',array(
+                            'area' => $areaList , 'shiList' => $shiList, 'quList' => $quList, 'addressInfo' => $addressInfo
+                        ));
+                    }
+                }else{
+                    $this->render('editBuyerAddress',array(
+                        'area' => $areaList
+                    ));
+                }
             }            
+        }
+        
+        public function actionDelBuyerAddress()
+        {
+            if(isset($_POST['id']))
+            {
+                $result = Useraddress::model()->deleteByPk(intval($_POST['id']));
+                echo $result ? 'success' : 'fail';
+            }else{
+                echo 'fail';
+            }
         }
         
         public function actionUpdateCities()
@@ -149,11 +192,41 @@
             if(isset($_GET['uid']) && $_GET['uid']<>0)
             {
                 $userinfo=User::model()->findByPk($_GET['uid']);
+                //从地址库中获取一些地址
+                $addressList = Useraddress::model()->findAllBySql("SELECT * FROM zxjy_useraddress WHERE occupy_uid=0 LIMIT 50");
                 $this->render('membeDetailInfos',array(
-                    'userinfo'=>$userinfo
+                    'userinfo'=>$userinfo,
+                    'addressList' => $addressList
                 ));
             }
         }
+        
+        /*
+         * 绑定收货地址
+         */
+        public function actionBindUserAddress()
+        {
+            $uid = intval($_POST['uid']);
+            $aid = intval($_POST['aid']);
+            if(!$uid || !$aid) exit('fail');
+            //查询此会员当前绑定的地址
+            $nowAddress = Useraddress::model()->find('occupy_uid='.$uid);
+            if(isset($nowAddress))
+            {
+                //解绑
+                $nowAddress->occupy_uid = 0;
+                $nowAddress->save();
+            }
+            $newAddress = Useraddress::model()->findByPk($aid);
+            if(isset($nowAddress) && $newAddress->occupy_uid <= 0)
+            {
+                $newAddress->occupy_uid = $uid;
+                $newAddress->save();
+                exit('SUCCESS');
+            }
+            exit('fail');
+        }
+        
         /**
          * 保存会员信息
          */
@@ -185,12 +258,13 @@
         {
             //读取系统中的买号
             parent::acl();
-            if(isset($_POST['keyword']) || isset($_POST['is_check']))//关键词搜索
+            
+            if(isset($_GET['keyword']) || isset($_GET['is_check']))//关键词搜索
             {
                 $criteria = new CDbCriteria;
-                $criteria->condition = '1 ';
-                if(isset($_POST['keyword']) && !empty($_POST['keyword'])) $criteria->condition.=' AND (wangwang="'.$_POST['keyword'].'" AND catalog=1)';
-                if(isset($_POST['is_check']) && $_POST['is_check'] > 0) $criteria->condition.=' AND is_check='.(intval($_POST['is_check'])-1);
+                $criteria->condition = 'catalog=1 ';
+                if(isset($_GET['keyword']) && !empty($_GET['keyword'])) $criteria->condition.=' AND (wangwang="'.$_GET['keyword'].'" AND catalog=1)';
+                if(isset($_GET['is_check']) && $_GET['is_check'] > 0) $criteria->condition.=' AND is_check='.(intval($_GET['is_check'])-1);
                 //分页开始
                 $total = Blindwangwang::model()->count($criteria);
                 $pages = new CPagination($total);
@@ -237,18 +311,18 @@
         }
         
         /**
-         * 买手审核
+         * 掌柜审核
          */
         public function actionZhangguilist()
         {
             //读取系统中的买号
             parent::acl();
-            if(isset($_POST['keyword']) || isset($_POST['is_check']))//关键词搜索
+            if(isset($_GET['keyword']) || isset($_GET['is_check']))//关键词搜索
             {
                 $criteria = new CDbCriteria;
-                $criteria->condition = '1 ';
-                if(isset($_POST['keyword']) && !empty($_POST['keyword'])) $criteria->condition.=' AND (wangwang="'.$_POST['keyword'].'" AND catalog=1)';
-                if(isset($_POST['is_check']) && $_POST['is_check'] > 0) $criteria->condition.=' AND is_check='.(intval($_POST['is_check'])-1);
+                $criteria->condition = 'catalog=2 ';
+                if(isset($_GET['keyword']) && !empty($_GET['keyword'])) $criteria->condition.=' AND (wangwang="'.$_GET['keyword'].'" AND catalog=1)';
+                if(isset($_GET['is_check']) && $_GET['is_check'] > 0) $criteria->condition.=' AND is_check='.(intval($_GET['is_check'])-1);
                 //分页开始
                 $total = Blindwangwang::model()->count($criteria);
                 $pages = new CPagination($total);

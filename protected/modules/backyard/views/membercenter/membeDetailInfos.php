@@ -116,7 +116,20 @@
                                                 ?>
                                             </a>
         								</li>
-                                        
+                                        <li>
+        									修改会员等级：
+											<select name="VipLv">
+											<option <?php if($userinfo->VipLv == 0){?> selected="selected" <?php }?> value="0">新手会员</option>
+											<option <?php if($userinfo->VipLv == 1){?> selected="selected" <?php }?> value="0">VIP</option>
+											</select><br/>
+											VIP过期时间：
+											<input type="text" name="VipStopTime" <?php if($userinfo->VipLv > 0 && $userinfo->VipStopTime > 0){?> value="<?php echo date('Y/m/d H:i:s',$userinfo->VipStopTime )?>" <?php }else{?> value="<?php echo date('Y/m/d H:i:s',strtotime("+1 month"))?>" <?php } ?> />
+        								</li>
+										<li>
+        									<a>是否加入商保：
+                                                <input type="radio" <?php if($userinfo->JoinProtectPlan > 0 ){?>  checked="checked" <?php }?> name="JoinProtectPlan" value="1" />是 <input type="radio"  name="JoinProtectPlan" value="0" <?php if($userinfo->JoinProtectPlan == 0 ){?>  checked="checked" <?php }?> />未加入
+                                            </a>
+        								</li>
                                         <li>
         									<a>用户手机：
                                                 <?php 
@@ -168,6 +181,74 @@
                         <div class="col-md-3">
         					<div class="panel panel-default">
         						<div class="panel-body inbox-menu">
+								<a class="btn btn-danger btn-block">收货地址相关</a>
+                                    <ul>
+        								<li>
+                                        <a>指派的收货地址：
+                                            <font style=" color:green;">
+                                               <?php
+											   	 $addressInfo = Useraddress::model()->find('occupy_uid='.$userinfo->id);
+											   	 if(!isset($addressInfo))
+											   	 {
+											   	     echo '未绑定收货地址';
+											   	 }else{
+											   	    $shengInfo = Area::model()->findByPk($addressInfo['sheng_id']);
+                                                    $shiInfo = Area::model()->findByPk($addressInfo['shi_id']);
+                                                    $quInfo = Area::model()->findByPk($addressInfo['qu_id']);
+                                                ?>
+                                                <?php if(isset($shengInfo)) echo $shengInfo->name;?>&nbsp;<?php if(isset($shiInfo))  echo $shiInfo->name;?>&nbsp;<?php if(isset($quInfo)) echo $quInfo->name;?>&nbsp;<?php echo $addressInfo->address;?>&nbsp;收件人：<?php echo $addressInfo->user_name;?>&nbsp;电话：<?php echo $addressInfo->mobile;?>
+                                                <?php }?>
+                                            </font>
+                                        </a>
+                                        </li>
+                                        <li>
+                                        <a>绑定的收货地址：
+                                            <font style=" color:green;">
+                                               <?php
+											   	 $addressInfo = Useraddress::model()->find('uid='.$userinfo->id);
+											   	 if(!isset($addressInfo))
+											   	 {
+											   	     echo '未绑定收货地址';
+											   	 }else{
+											   	    $shengInfo = Area::model()->findByPk($addressInfo['sheng_id']);
+                                                    $shiInfo = Area::model()->findByPk($addressInfo['shi_id']);
+                                                    $quInfo = Area::model()->findByPk($addressInfo['qu_id']);
+                                                ?>
+                                                <?php if(isset($shengInfo)) echo $shengInfo->name;?>&nbsp;<?php if(isset($shiInfo))  echo $shiInfo->name;?>&nbsp;<?php if(isset($quInfo)) echo $quInfo->name;?>&nbsp;<?php echo $addressInfo->address;?>&nbsp;收件人：<?php echo $addressInfo->user_name;?>&nbsp;电话：<?php echo $addressInfo->mobile;?>
+                                                <br/>
+                                                <?php
+											   	     if($addressInfo->occupy_uid > 0)
+											   	     {
+											   	         $occUser = User::model()->findByPk($addressInfo->occupy_uid);
+											   	         echo isset($occUser) ? '地址使用者：'.$occUser->Username : '当前无人使用此地址';
+											   	     }else{
+											   	         echo '当前无人使用此地址';
+											   	     }
+											   	 }
+											   	 ?>
+                                            </font>
+                                        </a>
+                                        </li>
+                                        <li>
+                                        <a>指派新的地址：
+										<br/>
+                                            <font style=" color:green;">
+                                                <select  id="addressId" name="addressId">
+                                                    <?php
+                                                    foreach ($addressList as $v){
+                                                        $shengInfo = Area::model()->findByPk($v['sheng_id']);
+                                                        $shiInfo = Area::model()->findByPk($v['shi_id']);
+                                                        $quInfo = Area::model()->findByPk($v['qu_id']);
+                                                    ?>
+                                                        <option value="<?php echo $v->id?>"><?php echo $v->user_name;?>[<?php if(isset($shengInfo)) echo $shengInfo->name;?><?php if(isset($shiInfo)) echo $shiInfo->name;?><?php if(isset($quInfo)) echo $quInfo->name;?>][<?php echo $v->mobile;?>]</option>
+                                                    <?php }?>
+                                                </select>
+												<br/>
+                                            </font>
+											<input type="button" id="bindAddress" alt="<?php echo $userinfo->id; ?>" name="button" value="确定绑定" />
+                                        </a>
+                                        </li>
+                                    </ul>
         							<a class="btn btn-danger btn-block">财务信息</a>
         							<ul>
         								<li>
@@ -185,7 +266,8 @@
                                             </font>&nbsp;&nbsp;元</a>
         								</li>
         							</ul>
-                                    <a class="btn btn-danger btn-block">安全相关</a>
+                                    
+									<a class="btn btn-danger btn-block">安全相关</a>
                                     <ul>
         								<li>
                                         <a>安全码设置：
@@ -508,6 +590,31 @@
     <link href="<?php echo ASSET_URL;?>layer/layer.css" rel="stylesheet" type="text/css" />
     <script>
         $(function(){
+		
+			$("#bindAddress").click(function(){
+				var userId = $(this).attr("alt");
+				var addressId = $("#addressId").val();
+				$.ajax({
+					type:"POST",
+					url:"<?php echo $this->createUrl("membercenter/bindUserAddress");?>",
+					data:"uid="+userId+"&aid="+addressId,
+					success:function(msg){
+						if(msg == "SUCCESS")
+						{
+							layer.confirm('绑定成功!', {
+                                	btn: ['知道了'] //按钮
+                                },function(){
+									location.reload();
+								});
+						}else{
+							layer.confirm('绑定失败！', {
+                                	btn: ['知道了'] //按钮
+                             });
+						}
+					}
+				});
+			});
+		
             $("#saveUserInfo").click(function(){
 				$.ajax({
 						type:"POST",
