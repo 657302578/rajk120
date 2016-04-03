@@ -57,7 +57,7 @@
                 </div>
                 <div class="zgPro4">
                     <p style="color:#FF0000; font-weight:bold;" alt='<?php echo $item->id;?>'>
-                       <?php if($item->is_check){?>审核通过<?php }elseif($item->is_check == 2){ ?>未通过<?php }else{ ?>未审核<?php }?>
+                       <?php if($item->is_check == 1){?>审核通过<?php }elseif($item->is_check == 2){ ?>未通过<?php }else{ ?>未审核<?php }?>
                     </p>
                 </div>
 				
