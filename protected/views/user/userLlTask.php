@@ -101,7 +101,7 @@
                 <li class="s35" id="divkey">商品位置截图：</li>
                 <li>
 					<input type="hidden" name="task_type" value="1" />
-                    <input type="text" id="url3" name="goodsImgPosition" class="pc11 inputp s36_ts" readonly="readonly" placeholder="上传商品位置截图" style="background: #F0F0F0;" /> <input type="button" id="image3" value="选择图片" style="font-weight: normal; background:#3498db; color:#fff; width: 70px; height:30px; font-size:12px;" /><span id="imagewarning" style="color: green; padding-left:10px;"></span>
+                    <input type="text" id="url3" value="<?php echo $taskInfo->goodsImgPosition; ?>" name="goodsImgPosition" class="pc11 inputp s36_ts" readonly="readonly" placeholder="上传商品位置截图" style="background: #F0F0F0;" /> <input type="button" id="image3" value="选择图片" style="font-weight: normal; background:#3498db; color:#fff; width: 70px; height:30px; font-size:12px;" /><span id="imagewarning" style="color: green; padding-left:10px;"></span>
                 </li>
               </ul>
             </div>
@@ -109,7 +109,18 @@
 				<ul class="dowebok">
 			  	<li class="s35" ><img src="<?php echo VERSION2;?>taskcss/c12.jpg" alt="">商品链接地址：</li>
                 <li class="s34">
-                  <input type="text" value="<?php echo $taskInfo->txtGoodsUrl;?>" name="txtGoodsUrl" id="txtGoodsUrl" class="pc11 inputp s36_ts" placeholder="http://" datatype="*" nullmsg="请填写商品链接" errormsg="请填写商品链接" />
+                 <select required="required" name="txtGoodsUrl" class="ui-select zhsr">
+						<?php
+							if(isset($linkUrl))
+							{
+								foreach($linkUrl as $k => $v){
+						?>
+							<option <?php if( intval($taskInfo->goods_link_id) == $v->id){?> selected="selected" <?php }?> value="<?php echo $v->id;?>"><?php echo $v->goods_name;?></option>
+						<?php
+								}
+							}
+						?>
+					</select>
                 </li>
 			  </ul>
 			  <ul class="dowebok">

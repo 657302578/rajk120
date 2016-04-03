@@ -154,8 +154,18 @@
 					<ul class="dowebok">
 				  	<li class="s35" ><img src="<?php echo VERSION2;?>taskcss/c12.jpg" alt="">商品链接地址：</li>
                     <li class="s34">
-                      <input type="text" name="txtGoodsUrl" id="txtGoodsUrl" class="pc11 inputp s36_ts" placeholder="http://" datatype="*" nullmsg="请填写商品链接" errormsg="请填写商品链接" />
-                    </li>
+				<select required="required" name="txtGoodsUrl" class="ui-select zhsr">
+						<?php
+							if(isset($linkUrl))
+							{
+								foreach($linkUrl as $k => $v){
+						?>
+							<option value="<?php echo $v->id;?>"><?php echo $v->goods_name;?></option>
+						<?php
+								}
+							}
+						?>
+					</select>                    </li>
 				  </ul>
 				  <input type="hidden" name="txtPrice" value="0" />
 				  <ul class="dowebok">

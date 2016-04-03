@@ -1473,6 +1473,12 @@ class UserController extends Controller
                 $task->txtSearchDes=$_POST['txtSearchDes'];//商品搜索提示
                 $task->goodsImgPosition=$_POST['goodsImgPosition'];//商品位置截图
             }
+            if(isset($_POST['txtGoodsUrl']) && intval($_POST['txtGoodsUrl']) > 0)
+            {
+                $linkInfo = Goodsurl::model()->findByPk( intval($_POST['txtGoodsUrl']) );
+                $task->txtGoodsUrl=$linkInfo->goods_url;//商品链接地址
+                $task->goods_link_id = $linkInfo->id;
+            }
             
             //米粒初始化
             $MinLi=0;
@@ -1481,7 +1487,7 @@ class UserController extends Controller
             $task->task_type=$_POST['task_type'];//任务类型
             $task->ddlZGAccount=$_POST['ddlZGAccount'];//淘宝掌柜名
             $task->ddlOKDay=$_POST['ddlOKDay'];//要求确认时间
-            $task->txtGoodsUrl=$_POST['txtGoodsUrl'];//商品链接地址
+            
             $task->txtPrice= isset($_POST['txtPrice']) ? $_POST['txtPrice'] : 0;//商品价格：(包含邮费)
             $txtMinMPrice=(float)$_POST['txtMinMPrice'];//基本米粒
                 $MinLi=$MinLi+$txtMinMPrice;//增加基本米粒
@@ -1730,10 +1736,13 @@ class UserController extends Controller
         ));
         //获取模板信息
         $tplList = Companytasklist::model()->findAllByAttributes( array('isTpl'=> 1, 'taskCatalog' => 0, 'publishid'=>Yii::app()->user->getId()) );
+        //获取审核通过的商品连接信息
+        $linkUrl = Goodsurl::model()->findAllByAttributes(array('uid' => Yii::app()->user->getid(), 'is_check'=>1));
         $this->render('taskPublishPT',array(
             'sellerInfo'=>$sellerInfo,
             'area' => $areaList,
-            'tplList' => $tplList
+            'tplList' => $tplList,
+            'linkUrl' => $linkUrl
         ));
     }
     
@@ -1755,14 +1764,17 @@ class UserController extends Controller
         }
         //获取模板信息
         $tplList = Companytasklist::model()->findAllByAttributes( array('isTpl'=> 1, 'taskCatalog' => 0, 'publishid'=>Yii::app()->user->getId()) );
+        
         //获取掌柜号
         $sellerInfo=Blindwangwang::model()->findAll(array(
             'condition'=>'userid='.Yii::app()->user->getId().' and statue=1 and catalog=2 AND is_check=1',
             'select'=>'id,wangwang',
             'order'=>'id desc'
         ));
+        //获取审核通过的商品连接信息
+        $linkUrl = Goodsurl::model()->findAllByAttributes(array('uid' => Yii::app()->user->getid(), 'is_check'=>1));        
         $areaList = Area::model()->findAll( array('condition'=>'parentid=0'));
-        echo $this->renderPartial($tplName[$tplType], array('taskInfo' =>$taskInfo,'tplList' => $tplList,'area' => $areaList,'sellerInfo'=>$sellerInfo, 'fmaxmc' => $fmaxmc, 'zdAddress' => $zdAddress), true);
+        echo $this->renderPartial($tplName[$tplType], array('taskInfo' =>$taskInfo,'linkUrl' =>$linkUrl,'tplList' => $tplList,'area' => $areaList,'sellerInfo'=>$sellerInfo, 'fmaxmc' => $fmaxmc, 'zdAddress' => $zdAddress), true);
     }
     
     /*
@@ -1780,10 +1792,14 @@ class UserController extends Controller
         $tplList = Companytasklist::model()->findAllByAttributes( array('isTpl'=> 1, 'taskCatalog' => 0, 'publishid'=>Yii::app()->user->getId()) );
         //获取模板信息
         $tplList = Companytasklist::model()->findAllByAttributes( array('isTpl'=> 1,'taskCatalog' => 1, 'publishid'=>Yii::app()->user->getId()) );
+        //获取审核通过的商品连接信息
+        $linkUrl = Goodsurl::model()->findAllByAttributes(array('uid' => Yii::app()->user->getid(), 'is_check'=>1));
+        
         $this->render('taskPublishLU',array(
             'sellerInfo'=>$sellerInfo,
             'area' => $areaList,
-            'tplList' => $tplList
+            'tplList' => $tplList,
+            'linkUrl' =>$linkUrl
         ));
     }
     
@@ -1811,6 +1827,74 @@ class UserController extends Controller
     public function actionTaskPublishTemplete()
     {
         $this->render('taskPublishTemplete');
+    }
+    
+    /*
+                     用户中心-绑定商品链接
+     */
+    public function actionGoodsUrlManage()
+    {
+        //任务大厅
+        $criteria = new CDbCriteria;
+        $criteria->condition = 'uid='.Yii::app()->user->getId();
+        $criteria->order ="create_time desc";
+        $count = Goodsurl::model()->count($criteria);
+        $pages = new CPagination($count);
+        $pages->pageSize=10;//分页大小
+        $pages->applyLimit($criteria);
+        $linkList = Goodsurl::model()->findAll($criteria);
+        $this->render('goodsUrlManage', array('linkList' => $linkList,'pages' => $pages));
+    }
+    
+    public function actionDelGoodsUrl()
+    {
+        if(isset($_GET['id']) && $_GET['id'] > 0)
+        {
+            Goodsurl::model()->deleteAllByAttributes(array('uid' => Yii::app()->user->getId(),'id'=>intval($_GET['id']) ) );
+        }
+        $this->redirect( $this->createUrl('user/goodsUrlManage', array('delResult' => 200)));
+    }
+    
+    /**
+     * 编辑商品链接
+     */
+    public function actionEditGoodsUrl()
+    {
+        if(!isset($_POST['goods_name']))
+        {
+            $linkInof = array();
+            $shopList = array();
+            if(isset($_GET['id']) && intval($_GET['id']) > 0)
+            {
+                $linkInof =Goodsurl::model()->findByPk(intval($_GET['id']));
+            }
+            //获取掌柜号信息
+            $shopList = Blindwangwang::model()->findAllByAttributes( array('userid' => Yii::app()->user->getId(), 'catalog'=>2, 'is_check' => 1));
+            $this->render('editGoodsUrl', array('linkInof' => $linkInof, 'shopList' => $shopList) );
+        }else{
+            if(isset($_POST) && $_POST['id'] > 0)
+            {
+                $link = Goodsurl::model()->findByPk(intval($_POST['id']));
+                if(isset($link))
+                {
+                    $link->goods_name = $_POST['goods_name'];
+                    $link->shop_id = $_POST['shop_id'];
+                    $link->goods_url = $_POST['goods_url'];
+                    $link->is_check = 0;
+                    $link->save();
+                }
+            }else{
+                $url = new Goodsurl();
+                $url->goods_name = $_POST['goods_name'];
+                $url->shop_id = $_POST['shop_id'];
+                $url->goods_url = $_POST['goods_url'];
+                $url->is_check = 0;
+                $url->uid = Yii::app()->user->getId();
+                $url->create_time = time();
+                $url->save();
+            }
+            $this->redirect($this->createUrl('user/editGoodsUrl', array('addResult' => 200)));
+        }
     }
     
     

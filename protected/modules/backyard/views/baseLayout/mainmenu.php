@@ -39,6 +39,7 @@
 								<a href="javascript:;"><i class="fa fa-briefcase"></i><span class="text"> 任务管理中心</span> <span class="fa fa-angle-down pull-right"></span></a>
 								<ul class="nav sub" <?php echo Yii::app()->controller->id=="taskcenter"?"style='display:block;'":"";?>>
 									<li <?php echo $this->getAction()->getId()=="tasklist"?"class='active opened'":"";?>><a href="<?php echo $this->createUrl('taskcenter/tasklist');?>"><i class="fa fa-list"></i><span class="text">平台任务总览</span></a></li>
+									<li <?php echo $this->getAction()->getId()=="goodsUrlManage"?"class='active opened'":"";?>><a href="<?php echo $this->createUrl('taskcenter/goodsUrlManage');?>"><i class="fa fa-list"></i><span class="text">商品链接管理</span></a></li>
 								</ul>
 							</li>
                             <li>
