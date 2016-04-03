@@ -140,7 +140,7 @@
                   </p></td>
                 <td align="center" valign="middle" class="t42"><?php echo Blindwangwang::getWwTaskNum($item->wangwang, 1, 'day');?> / <?php echo Blindwangwang::getWwTaskNum($item->wangwang, 7, 'day');?> / <?php echo Blindwangwang::getWwTaskNum($item->wangwang, 1, 'month');?> </td>
                 <td align="center"><span style="color:#FF0000; font-weight:bold;">
-                  <?php if($item->is_check){?>
+                  <?php if($item->is_check == 1){?>
                   审核通过
                   <?php }elseif($item->is_check == 2){?>
                   审核未通过
