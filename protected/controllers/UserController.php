@@ -801,7 +801,7 @@ class UserController extends Controller
             $proreg = Companytasklist::model()->findAll($criteria);
             //分页结束
             
-            $this->render('taobaoInTaskWaitPay',array(
+            $this->render('taobaoInTask',array(
                 'proInfo' => $proreg,
                 'pages' => $pages
             ));
@@ -821,7 +821,7 @@ class UserController extends Controller
         $proreg = Companytasklist::model()->findAll($criteria);
         //分页结束
         
-        $this->render('taobaoInTaskWaitPay',array(
+        $this->render('taobaoInTask',array(
             'proInfo' => $proreg,
             'pages' => $pages
         ));
@@ -850,7 +850,7 @@ class UserController extends Controller
             $proreg = Companytasklist::model()->findAll($criteria);
             //分页结束
             
-            $this->render('taobaoInTaskWaitSHHP',array(
+            $this->render('taobaoInTask',array(
                 'proInfo' => $proreg,
                 'pages' => $pages
             ));
@@ -870,7 +870,7 @@ class UserController extends Controller
         $proreg = Companytasklist::model()->findAll($criteria);
         //分页结束
         
-        $this->render('taobaoInTaskWaitSHHP',array(
+        $this->render('taobaoInTask',array(
             'proInfo' => $proreg,
             'pages' => $pages
         ));
@@ -899,7 +899,7 @@ class UserController extends Controller
             $proreg = Companytasklist::model()->findAll($criteria);
             //分页结束
             
-            $this->render('taobaoInTaskComplete',array(
+            $this->render('taobaoInTask',array(
                 'proInfo' => $proreg,
                 'pages' => $pages
             ));
@@ -919,7 +919,7 @@ class UserController extends Controller
         $proreg = Companytasklist::model()->findAll($criteria);
         //分页结束
         
-        $this->render('taobaoInTaskComplete',array(
+        $this->render('taobaoInTask',array(
             'proInfo' => $proreg,
             'pages' => $pages
         ));
@@ -948,7 +948,7 @@ class UserController extends Controller
             $proreg = Companytasklist::model()->findAll($criteria);
             //分页结束
             
-            $this->render('taobaoInTaskAllList',array(
+            $this->render('taobaoInTask',array(
                 'proInfo' => $proreg,
                 'pages' => $pages
             ));
@@ -968,7 +968,7 @@ class UserController extends Controller
         $proreg = Companytasklist::model()->findAll($criteria);
         //分页结束
         
-        $this->render('taobaoInTaskAllList',array(
+        $this->render('taobaoInTask',array(
             'proInfo' => $proreg,
             'pages' => $pages
         ));
@@ -1047,7 +1047,7 @@ class UserController extends Controller
             $proreg = Companytasklist::model()->findAll($criteria);
             //分页结束
             
-            $this->render('taobaoOutTaskStop',array(
+            $this->render('taobaoOutTask',array(
                 'proInfo' => $proreg,
                 'pages' => $pages
             ));
@@ -1067,12 +1067,60 @@ class UserController extends Controller
         $proreg = Companytasklist::model()->findAll($criteria);
         //分页结束
         
-        $this->render('taobaoOutTaskStop',array(
+        $this->render('taobaoOutTask',array(
             'proInfo' => $proreg,
             'pages' => $pages
         ));
     }
+
+    /*
+     用户中心-淘宝大厅-已发任务-暂停的任务-没有人申请的
+     */
+    public function actionTaobaoOutTaskStop2()
+    {
+        //关键词搜索
+        if(isset($_POST['keywords']) && $_POST['keywords']!="")
+        {
+            $keywordsArr=explode('*',$_POST['keywords']);//分解关键词
+            //任务大厅
+            $criteria = new CDbCriteria;
+            $criteria->condition='publishid='.Yii::app()->user->getId().' and status IN(6,0) and time='.trim($keywordsArr[0]).' and id='.trim($keywordsArr[1]);
+            $criteria->order ="time desc";
     
+            //分页开始
+            $total =Companytasklist::model()->count($criteria);
+            $pages = new CPagination($total);
+            $pages->pageSize=10;//分页大小
+            $pages->applyLimit($criteria);
+    
+            $proreg = Companytasklist::model()->findAll($criteria);
+            //分页结束
+    
+            $this->render('taobaoOutTask',array(
+                'proInfo' => $proreg,
+                'pages' => $pages
+            ));
+            Yii::app()->end();
+        }
+        //发布的任务
+        $criteria = new CDbCriteria;
+        $criteria->condition='publishid='.Yii::app()->user->getId().' and status IN(6,0)';//商家暂停的任务
+        $criteria->order ="time desc";
+    
+        //分页开始
+        $total =Companytasklist::model()->count($criteria);
+        $pages = new CPagination($total);
+        $pages->pageSize=10;//分页大小
+        $pages->applyLimit($criteria);
+    
+        $proreg = Companytasklist::model()->findAll($criteria);
+        //分页结束
+    
+        $this->render('taobaoOutTask',array(
+            'proInfo' => $proreg,
+            'pages' => $pages
+        ));
+    }
     /*
         用户中心-淘宝大厅-已发任务-已完成的任务
     */
@@ -1096,7 +1144,7 @@ class UserController extends Controller
             $proreg = Companytasklist::model()->findAll($criteria);
             //分页结束
             
-            $this->render('taobaoOutTaskComplete',array(
+            $this->render('taobaoOutTask',array(
                 'proInfo' => $proreg,
                 'pages' => $pages
             ));
@@ -1116,7 +1164,7 @@ class UserController extends Controller
         $proreg = Companytasklist::model()->findAll($criteria);
         //分页结束
         
-        $this->render('taobaoOutTaskComplete',array(
+        $this->render('taobaoOutTask',array(
             'proInfo' => $proreg,
             'pages' => $pages
         ));
@@ -1145,7 +1193,7 @@ class UserController extends Controller
             $proreg = Companytasklist::model()->findAll($criteria);
             //分页结束
             
-            $this->render('taobaoOutTaskAllList',array(
+            $this->render('taobaoOutTask',array(
                 'proInfo' => $proreg,
                 'pages' => $pages
             ));
@@ -1165,7 +1213,7 @@ class UserController extends Controller
         $proreg = Companytasklist::model()->findAll($criteria);
         //分页结束
         
-        $this->render('taobaoOutTaskAllList',array(
+        $this->render('taobaoOutTask',array(
             'proInfo' => $proreg,
             'pages' => $pages
         ));

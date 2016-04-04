@@ -34,12 +34,12 @@
         <div class="dtrwCen">
             <div class="dtrwCen_t">
                 <div class="rwso">
-                    <form action="<?php echo $this->createUrl('user/taobaoOutTask');?>" method="post">
+                    <form action="" method="post">
                         <input type="text" name="keywords" class="rwsoInp" placeholder="任务编号搜索">
                         <input type="submit" class="rwsoImg" value="&nbsp">
                     </form>
                 </div>
-                <a class="rwsoNo" href="/news/deatailInfo/id/147/catlogid/41.html" target="_blank">接任务必看，违者封号</a>
+                <a class="rwsoNo" href="/news/deatailInfo/id/147/catlogid/41.html" target="_blank">商家任务注意事项（必看）</a>
                 <a href="<?php echo $this->createUrl('user/taskPublishPT');?>" class="rw_fb1">发布任务</a>
                 <a href="javascript:window.location.href='<?php echo Yii::app()->request->url;?>';" class="rw_sx1">刷新任务</a>
             </div>
@@ -297,7 +297,7 @@
                         $usermsg=User::model()->findByPk($item->taskerid);
                 ?>
                 <div class="takerInfo"><!--taskFunMan start-->
-                    <span>接手账号：</span><?php echo $usermsg->Username;?>&nbsp;<img src="<?php echo VERSION2?>img/newlevel/<?php echo User::getuserlevelnum($usermsg->id); ?>.gif" style="position: relative; top:5px;" />&nbsp;&nbsp;<?php if($usermsg->VipLv > 0 && $usermsg->VipStopTime > time()){?><img src="<?php echo VERSION2?>img/newlevel/VIP.png" style="position: relative; top:5px;" /><?php }?>&nbsp;&nbsp;&nbsp;<img src="<?php echo VERSION2?>img/wang.jpg" width="20" style="position: relative; top:5px;" />&nbsp;&nbsp;&nbsp;&nbsp;接手买号：<?php echo $item->taskerWangwang;?>&nbsp;<img src="<?php echo VERSION2;?>img/level/<?php echo $buyerinfo->wangwanginfo;?>.gif" style="position:relative; top:3px;"/> &nbsp;&nbsp;&nbsp;&nbsp;联系对方：&nbsp;<a title="点击添加对方为好友" target=blank href=http://wpa.qq.com/msgrd?V=3&uin=<?php echo $usermsg->QQToken;?>&Site=点击添加好友&Menu=yes><img border="0" SRC=http://wpa.qq.com/pa?p=1:<?php echo $usermsg->QQToken;?>:4 alt="点击这里给我发消息" style="position: relative; top:2px; left:-3px" /></a><?php echo $usermsg->QQToken;?>&nbsp;&nbsp;&nbsp;&nbsp;<img title="右侧为接手电话，如有需要可联系" src="<?php echo VERSION2;?>img/mobile.jpg" style="position:relative; top:4px;"/>&nbsp;<a style="color:#e99f4b;"><?php echo $usermsg->Phon;?></a>
+                    <span>接手账号：</span><?php echo $usermsg->Username;?>&nbsp;<img src="<?php echo VERSION2?>img/newlevel/<?php echo User::getuserlevelnum($usermsg->id); ?>.gif" style="position: relative; top:5px;" />&nbsp;&nbsp;<?php if($usermsg->VipLv > 0 && $usermsg->VipStopTime > time()){?><img src="<?php echo VERSION2?>img/newlevel/VIP.png" style="position: relative; top:5px;" /><?php }?>&nbsp;&nbsp;&nbsp;<img src="<?php echo VERSION2?>img/wang.jpg" width="20" style="position: relative; top:5px;" />&nbsp;&nbsp;&nbsp;&nbsp;接手买号：<?php echo $item->taskerWangwang;?>&nbsp;<img src="<?php echo VERSION2;?>img/level/<?php echo $buyerinfo->wangwanginfo;?>.gif" style="position:relative; top:3px;"/> &nbsp;&nbsp;&nbsp;&nbsp;联系对方：&nbsp;<a title="点击添加对方为好友" target=blank href=http://wpa.qq.com/msgrd?V=3&uin=<?php echo $usermsg->QQToken;?>&Site=点击添加好友&Menu=yes><img border="0" SRC=http://wpa.qq.com/pa?p=1:<?php echo $usermsg->QQToken;?>:4 alt="点击这里给我发消息" style="position: relative; top:2px; left:-3px" /></a><?php echo $usermsg->QQToken;?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <br/>
                     <span>返款支付宝账号：</span><?php echo $usermsg->alipay_account; ?>（<?php echo $usermsg->TrueName;?>）&nbsp;&nbsp;&nbsp;&nbsp;财付通账号：<?php echo $usermsg->QQToken ?>（<?php echo $usermsg->TrueName;?>）
                     <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;下单地址：

@@ -10,6 +10,11 @@
                 $taobaoOutTaskStopCount=Companytasklist::model()->findAll(array(
                     'condition'=>'publishid='.Yii::app()->user->getId().' and status IN(2,3)'
                 ));
+				
+                //2.我发布的-等待我返款
+                $taobaoOutTaskStopCount2=Companytasklist::model()->findAll(array(
+                    'condition'=>'publishid='.Yii::app()->user->getId().' and status IN(6,0)'
+                ));
                 
                 //3.我发布的-等待我完成
                 $taobaoOutTaskCompleteCount=Companytasklist::model()->findAll(array(
@@ -23,8 +28,9 @@
                 
             ?>
             <ul class="yfrwPro clearfix">
-                <li <?php echo Yii::app()->controller->id=="user" && $this->getAction()->getId()=="taobaoOutTask"?"class='yjrwProSelected'":"";?>><a href="<?php echo $this->createUrl('user/taobaoOutTask');?>">等待我审核<span><?php echo count($taobaoOutTaskCount);?></span></a></li>
-                <li <?php echo Yii::app()->controller->id=="user" && $this->getAction()->getId()=="taobaoOutTaskStop"?"class='yjrwProSelected'":"";?>><a href="<?php echo $this->createUrl('user/taobaoOutTaskStop');?>">等待我返款<span><?php echo count($taobaoOutTaskStopCount);?></span></a></li>
-                <li <?php echo Yii::app()->controller->id=="user" && $this->getAction()->getId()=="taobaoOutTaskComplete"?"class='yjrwProSelected'":"";?>><a href="<?php echo $this->createUrl('user/taobaoOutTaskComplete');?>">等待我完成<span><?php echo count($taobaoOutTaskCompleteCount);?></span></a></li>
-                <li <?php echo Yii::app()->controller->id=="user" && $this->getAction()->getId()=="taobaoOutTaskAllList"?"class='yjrwProSelected'":"";?>><a href="<?php echo $this->createUrl('user/taobaoOutTaskAllList');?>">全部任务<span><?php echo count($taobaoOutTaskAllListCount);?></span></a></li>
+			 <li style="width:204px;" <?php echo Yii::app()->controller->id=="user" && $this->getAction()->getId()=="taobaoOutTaskStop2"?"class='yjrwProSelected'":"";?>><a href="<?php echo $this->createUrl('user/taobaoOutTaskStop2');?>">等待接手申请<span><?php echo count($taobaoOutTaskStopCount2);?></span></a></li>
+                <li style="width:204px;" <?php echo Yii::app()->controller->id=="user" && $this->getAction()->getId()=="taobaoOutTask"?"class='yjrwProSelected'":"";?>><a href="<?php echo $this->createUrl('user/taobaoOutTask');?>">等待我审核<span><?php echo count($taobaoOutTaskCount);?></span></a></li>
+                <li style="width:204px;" <?php echo Yii::app()->controller->id=="user" && $this->getAction()->getId()=="taobaoOutTaskStop"?"class='yjrwProSelected'":"";?>><a href="<?php echo $this->createUrl('user/taobaoOutTaskStop');?>">等待我返款<span><?php echo count($taobaoOutTaskStopCount);?></span></a></li>
+                <li style="width:204px;" <?php echo Yii::app()->controller->id=="user" && $this->getAction()->getId()=="taobaoOutTaskComplete"?"class='yjrwProSelected'":"";?>><a href="<?php echo $this->createUrl('user/taobaoOutTaskComplete');?>">等待我完成<span><?php echo count($taobaoOutTaskCompleteCount);?></span></a></li>
+                <li style="width:204px;" <?php echo Yii::app()->controller->id=="user" && $this->getAction()->getId()=="taobaoOutTaskAllList"?"class='yjrwProSelected'":"";?>><a href="<?php echo $this->createUrl('user/taobaoOutTaskAllList');?>">全部任务<span><?php echo count($taobaoOutTaskAllListCount);?></span></a></li>
             </ul>

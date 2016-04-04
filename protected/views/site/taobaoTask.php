@@ -272,6 +272,7 @@ createUrl('site/taobaoTask',$GetConditionArr);
           <input type="submit" class="rwsoImg" value="&nbsp">
         </form>
       </div>
+	  <a class="rwsoNo" href="/news/deatailInfo/id/147/catlogid/38.html" target="_blank">龙堂网总堂规（必看）</a>
       <a style="float:right; margin-right:20px;" href="javascript:window.location.href='<?php echo Yii::app()->request->url;?>';" class="rw_sx1">刷新任务</a> <a style="float:right; margin-right:20px;" href="<?php echo $this->createUrl('user/taskPublishPT');?>" class="rw_fb1">发布任务</a> </div>
   </div>
   <ul class="dtrwLis">

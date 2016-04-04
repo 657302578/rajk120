@@ -34,7 +34,7 @@
         <div class="dtrwCen">
             <div class="dtrwCen_t">
                 <div class="rwso">
-                    <form action="<?php echo $this->createUrl('user/taobaoOutTask');?>" method="post">
+                    <form action="" method="post">
                         <input type="text" name="keywords" class="rwsoInp" placeholder="任务编号搜索">
                         <input type="submit" class="rwsoImg" value="&nbsp">
                     </form>

@@ -34,12 +34,12 @@
         <div class="dtrwCen">
             <div class="dtrwCen_t">
                 <div class="rwso">
-                    <form action="<?php echo $this->createUrl('user/taobaoInTask');?>" method="post">
+                    <form action="" method="post">
                         <input type="text" name="keywords" class="rwsoInp" placeholder="任务编号搜索">
                         <input type="submit" class="rwsoImg" value="&nbsp">
                     </form>
                 </div>
-                <a class="rwsoNo" href="/news/deatailInfo/id/147/catlogid/41.html" target="_blank">接任务必看，违者封号</a>
+                <a class="rwsoNo" href="/news/deatailInfo/id/147/catlogid/39.html" target="_blank">接手任务注意事项（必看）</a>
                 <a href="<?php echo $this->createUrl('user/taskPublishPT');?>" class="rw_fb1">发布任务</a>
                 <a href="javascript:window.location.href='<?php echo Yii::app()->request->url;?>';" class="rw_sx1">刷新任务</a>
             </div>
@@ -275,20 +275,37 @@
                     ?>
                 </div>
                 <div class="clear"></div>
-                <?php
-                    if($item->status<>0){
+                  <?php
+                    if($item->status<>0 && $item->status<>6){
                         $buyerinfo=Blindwangwang::model()->findByAttributes(array(
-                            'wangwang'=>$item->ddlZGAccount
+                            'wangwang'=>$item->taskerWangwang
                         ));
-                        $usermsg=User::model()->findByPk($item->publishid);
+                        $usermsg=User::model()->findByPk($item->taskerid);
+						$shopUserInfo = User::model()->findByPk($item->publishid);
                 ?>
                 <div class="takerInfo"><!--taskFunMan start-->
-                    <span>商家信息：</span><?php echo $usermsg->Username;?>　<img src="<?php echo VERSION2?>img/wang.jpg" width="20" style="position: relative; top:5px;" />&nbsp;采用买号：<?php echo $item->ddlZGAccount;?>　　　　　联系对方：&nbsp;<a title="点击添加对方为好友" target=blank href=http://wpa.qq.com/msgrd?V=3&uin=<?php echo $usermsg->QQToken;?>&Site=点击添加好友&Menu=yes><img border="0" SRC=http://wpa.qq.com/pa?p=1:<?php echo $usermsg->QQToken;?>:4 alt="点击这里给我发消息" style="position: relative; top:2px; left:-3px" /></a><?php echo $usermsg->QQToken;?>&nbsp;&nbsp;&nbsp;<img title="右侧为接手电话，如有需要可联系" src="<?php echo VERSION2;?>img/mobile.jpg" style="position:relative; top:4px;"/>&nbsp;<a style="color:#e99f4b;"><?php echo $usermsg->Phon;?></a>　　
+                    <span>接手账号：</span><?php echo $usermsg->Username;?>&nbsp;<img src="<?php echo VERSION2?>img/newlevel/<?php echo User::getuserlevelnum($usermsg->id); ?>.gif" style="position: relative; top:5px;" />&nbsp;&nbsp;<?php if($usermsg->VipLv > 0 && $usermsg->VipStopTime > time()){?><img src="<?php echo VERSION2?>img/newlevel/VIP.png" style="position: relative; top:5px;" /><?php }?>&nbsp;&nbsp;&nbsp;<img src="<?php echo VERSION2?>img/wang.jpg" width="20" style="position: relative; top:5px;" />&nbsp;&nbsp;&nbsp;&nbsp;店铺掌柜：<?php echo $item->ddlZGAccount;?>&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;联系对方：&nbsp;<a title="点击添加对方为好友" target=blank href=http://wpa.qq.com/msgrd?V=3&uin=<?php echo $shopUserInfo->QQToken;?>&Site=点击添加好友&Menu=yes><img border="0" SRC=http://wpa.qq.com/pa?p=1:<?php echo $shopUserInfo->QQToken;?>:4 alt="点击这里给我发消息" style="position: relative; top:2px; left:-3px" /></a><?php echo $usermsg->QQToken;?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;下单地址：
                     <?php
-                        if($item->status==1){
-                    ?>
-                    <a href="javascript:;" class="taskBack" lang="<?php echo $item->taskerid;?>" alt="<?php echo $item->id;?>" style="border: 1px solid red; border-radius: 3px; padding:3px 5px; color:red;">退出任务</a>
-                    <?php }?>
+                        $userAddressInfo = Useraddress::model()->findByAttributes( array('occupy_uid' => $usermsg->id));
+                        if($userAddressInfo){
+                            $addressStr = '';
+                            $addressStr.= $userAddressInfo->user_name.'&nbsp';
+                            $addressStr.= $userAddressInfo->mobile.'&nbsp';
+                            $area1 = Area::model()->findByPk($userAddressInfo->sheng_id);
+                            $addressStr.= $area1->name.'&nbsp';
+                            $area1 = Area::model()->findByPk($userAddressInfo->shi_id);
+                            $addressStr.= $area1->name.'&nbsp';
+                            $area1 = Area::model()->findByPk($userAddressInfo->qu_id);
+                            $addressStr.= $area1->name.'&nbsp';
+                            $addressStr .= $userAddressInfo->address;
+                            echo $addressStr;
+                        }else{
+                            echo '未分配地址，请联系买家进行修改收货地址';
+                        }
+                    ?>（商家规定地址的遵循商家要求）
+                    <br/>
+                    <span style="color: red;">请认真核对下单的收货地址，确保与以上地址一致，若不一致，商家有权不返款并可能产生投诉及纠纷。</span>
                 </div><!--taskFunMan end-->
                 <?php
                     }
@@ -320,7 +337,7 @@
                         }else{
                             echo '未分配地址，请联系买家进行修改收货地址';
                         }
-                    ?>（商家规定地址的遵循商家要求）</p>
+                    ?></p>
                     <p>卖家留言提醒：<?php echo $item->txtRemind!=""?$item->txtRemind:"请按要求完成任务";?></p>
                 </div><!--introduce end-->
             </li>
