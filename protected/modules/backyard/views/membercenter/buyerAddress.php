@@ -279,7 +279,7 @@ function delUserAddress(id)
 		$.ajax({
 			type:"POST",
 			url:"<?php echo $this->createUrl("membercenter/delBuyerAddress");?>",
-			data:"id="+id+"&s="+s,
+			data:"id="+id,
 			success:function(msg){
 				if(msg == 200)
 				{
