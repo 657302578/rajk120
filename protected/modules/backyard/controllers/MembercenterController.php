@@ -33,7 +33,7 @@
                 Yii::app()->end();
             }
             $criteria = new CDbCriteria;
-            $criteria->order ="RegTime desc";
+            $criteria->order ="RegTime asc";
             //分页开始
             $total = User::model()->count($criteria);
             $pages = new CPagination($total);
