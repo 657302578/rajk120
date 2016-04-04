@@ -251,7 +251,53 @@
             $userInfo->alipay_account = trim($_POST['alipay_account']);
             $userInfo->Phon = trim($_POST['Phon']);
             $userInfo->VipStopTime = strtotime($_POST['VipStopTime']);
+            //处理收货地址审核的功能,大于0说明审核通过
+            if(intval($_POST['address_is_check']) > 0)
+            {
+                //审核通过之后，自动分配收货一个收货地址
+                $userAddress = Useraddress::model()->findByAttributes( array('uid'=> $userInfo->id));
+                if(isset($userAddress))
+                {
+                    //如果存在收货地址,则修改审核状态
+                    $userAddress->is_check =1;
+                    $userAddress->save();
+                    //分配收货地址
+                    $zdAddress = Useraddress::model()->findByAttributes( array('occupy_uid'=> $userInfo->id));
+                    if(!isset($zdAddress))
+                    {
+                        $zdAddress = Useraddress::model()->findByAttributes( array('occupy_uid'=> 0, 'is_check'=>1));
+                        $zdAddress->occupy_uid = $userInfo->id;
+                        $zdAddress->save();
+                    }
+                }
+            }
             echo $userInfo->save() ? 'SUCCESS' : 'FAIL';
+        }
+        
+        /**
+         * 审核收货地址
+         */
+        public function actionShAddress()
+        {
+            $addressId = intval($_POST['id']);
+            $s = intval($_POST['s']);
+            //审核通过之后，自动分配收货一个收货地址
+            $userAddress = Useraddress::model()->findByPk($addressId);
+            if(isset($userAddress))
+            {
+                //如果存在收货地址,则修改审核状态
+                $userAddress->is_check =$s;
+                $userAddress->save();
+                //分配收货地址
+                $zdAddress = Useraddress::model()->findByAttributes( array('occupy_uid'=> $userAddress->uid));
+                if(!isset($zdAddress) && $s == 1)
+                {
+                    $zdAddress = Useraddress::model()->findByAttributes( array('occupy_uid'=> 0, 'is_check'=>1));
+                    $zdAddress->occupy_uid = $userAddress->uid;
+                    $zdAddress->save();
+                }
+            }
+            echo '200';
         }
         
         /**

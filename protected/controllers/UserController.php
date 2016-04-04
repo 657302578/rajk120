@@ -1843,7 +1843,20 @@ class UserController extends Controller
         $pages->pageSize=10;//分页大小
         $pages->applyLimit($criteria);
         $linkList = Goodsurl::model()->findAll($criteria);
-        $this->render('goodsUrlManage', array('linkList' => $linkList,'pages' => $pages));
+        
+        //new
+        $linkInof = array();
+        $shopList = array();
+        if(isset($_GET['id']) && intval($_GET['id']) > 0)
+        {
+            $linkInof =Goodsurl::model()->findByPk(intval($_GET['id']));
+        }
+        //获取掌柜号信息
+        $shopList = Blindwangwang::model()->findAllByAttributes( array('userid' => Yii::app()->user->getId(), 'catalog'=>2, 'is_check' => 1));
+        //$this->render('editGoodsUrl', array('linkInof' => $linkInof, 'shopList' => $shopList) );
+    
+        
+        $this->render('goodsUrlManage', array('linkList' => $linkList,'pages' => $pages,'linkInof' => $linkInof, 'shopList' => $shopList));
     }
     
     public function actionDelGoodsUrl()
@@ -1893,7 +1906,7 @@ class UserController extends Controller
                 $url->create_time = time();
                 $url->save();
             }
-            $this->redirect($this->createUrl('user/editGoodsUrl', array('addResult' => 200)));
+            $this->redirect($this->createUrl('user/goodsUrlManage', array('addResult' => 200)));
         }
     }
     

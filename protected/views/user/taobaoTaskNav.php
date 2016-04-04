@@ -18,7 +18,6 @@
                 <li <?php echo Yii::app()->controller->id=="user" && $this->getAction()->getId()=="taobaoBindBuyer"?"class='on'":"";?>><a href="<?php echo $this->createUrl('user/taobaoBindBuyer');?>">绑定买号</a></li>
                 <li <?php echo Yii::app()->controller->id=="user" && $this->getAction()->getId()=="taobaoBindSeller"?"class='on'":"";?>><a href="<?php echo $this->createUrl('user/taobaoBindSeller');?>">绑定掌柜</a></li>
                 <li <?php echo Yii::app()->controller->id=="user" && in_array($this->getAction()->getId(),$taskPublistActionArr)?"class='on'":"";?>><a href="<?php echo $this->createUrl('user/taskPublishPT');?>">发布任务</a></li>
-                <li <?php echo Yii::app()->controller->id=="user" && $this->getAction()->getId() == "editGoodsUrl" ? "class='on'":"";?>><a href="<?php echo $this->createUrl('user/editGoodsUrl');?>">添加商品链接</a></li>
             </ul>
             <!--<a class="kqqq">开启QQ临时会话，双方及时沟通</a>-->
         </div>

@@ -164,6 +164,15 @@
         									身份证信息是否通过审核：<br>
 												<input <?php if($userinfo->id_is_check == 0){?> checked="checked" <?php }?> type="radio" name="id_is_check" value="0" />未通过 <input <?php if($userinfo->id_is_check == 1){?> checked="checked" <?php }?> type="radio" name="id_is_check" value="1" />已通过
         								</li>
+                                        <li>
+											<?php
+												$addressInfo = Useraddress::model()->find('uid='.$userinfo->id);
+												if(!isset($addressInfo)) $addressInfo['is_check']=0;
+											?>
+        									收货地址审核：<br>
+												<input <?php if(isset($addressInfo) && $addressInfo['is_check'] == 0){?> checked="checked" <?php }?> type="radio" name="address_is_check" value="0" />未通过 
+												<input <?php if(isset($addressInfo) && $addressInfo['is_check'] == 1){?> checked="checked" <?php }?> type="radio" name="address_is_check" value="1" />审核通过
+        								</li>
         								<li>
         									登录邮箱：<input type="text" name="Email" value="<?php echo $userinfo->Email;?>" />
         								</li>

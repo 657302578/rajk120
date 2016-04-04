@@ -98,6 +98,7 @@
             <th><div align="center">收货电话</div></th>
             <th><div align="center">收货人详细地址</div></th>
             <th><div align="center">占用者</div></th>
+			<th><div align="center">审核状态</div></th>
             <th><div align="center">添加时间</div></th>
             <th><div align="center">操作</div></th>
           </tr>
@@ -136,9 +137,21 @@
 					echo isset($ocInfo) ? $ocInfo->Username : '无';
 				}else{echo '无';} ?>
 			</td>
+			<td>
+				<?php
+					echo  $item->is_check == 1 ? '审核通过' : '审核未通过';
+				?>
+			</td>
             <td><?php echo $item->create_time;?></td>
             <td>
-				<a href="<?php echo $this->createUrl("membercenter/addBuyerAddress", array('id' => $item->id))?>" alt="<?php echo $item->id;?>" class="delUserAddress" title="修改收货地址">修改</a>&nbsp;<a href="javascript:delUserAddress(<?php echo $item->id;?>);" alt="<?php echo $item->id;?>" class="delUserAddress" title="删除收货地址">删除</a>
+				<a href="<?php echo $this->createUrl("membercenter/addBuyerAddress", array('id' => $item->id))?>" alt="<?php echo $item->id;?>" class="delUserAddress" title="修改收货地址">修改</a>&nbsp;
+				<?php if(!$item->is_check){?>
+				<a href="javascript:shAddress(<?php echo $item->id;?>,1);" alt="<?php echo $item->id;?>" class="delUserAddress" title="审核地址">审核通过</a>
+				<?php }else{?>
+				<a href="javascript:shAddress(<?php echo $item->id;?>,0);" alt="<?php echo $item->id;?>" class="delUserAddress" title="审核不通过该地址">审核不通过</a>
+				<?php }?>
+				&nbsp;
+				<a href="javascript:delUserAddress(<?php echo $item->id;?>);" alt="<?php echo $item->id;?>" class="delUserAddress" title="删除收货地址">删除</a>
 			</td>
           </tr>
           <?php
@@ -266,12 +279,37 @@ function delUserAddress(id)
 		$.ajax({
 			type:"POST",
 			url:"<?php echo $this->createUrl("membercenter/delBuyerAddress");?>",
-			data:"id="+id,
+			data:"id="+id+"&s="+s,
 			success:function(msg){
-				if(msg == "success")
+				if(msg == 200)
 				{
 					//询问框
-					layer.confirm('删除成功！', {
+					layer.confirm("操作除成功！", {
+						btn: ['确定'] //按钮
+					},function(){
+					   location.reload();//重新刷新当前页面
+					});
+				}else{
+					//询问框
+					layer.confirm('操作失败，请重试！', {
+						btn: ['确定'] //按钮
+					});
+				}
+			}
+		});
+	}
+}
+function shAddress(id,s)
+{
+		$.ajax({
+			type:"POST",
+			url:"<?php echo $this->createUrl("membercenter/shAddress");?>",
+			data:"id="+id+"&s="+s,
+			success:function(msg){
+				if(msg == "200")
+				{
+					//询问框
+					layer.confirm('操作成功！', {
 						btn: ['确定'] //按钮
 					},function(){
 					   location.reload();//重新刷新当前页面
@@ -284,7 +322,6 @@ function delUserAddress(id)
 				}
 			}
 		});
-	}
 }
 </script>
 <!-- end: JavaScript-->
