@@ -61,8 +61,10 @@
             	</div>
             </div>
             <form method="get" action="<?php echo $this->createUrl("taskcenter/goodsUrlManage")?>">
-                商品名称：<input name="goods_name" type="text" class="text-box" value="" />&nbsp;-&nbsp;
+                商品名称：<input name="goods_name" type="text" class="text-box" value="" />&nbsp;&nbsp;
+				旺旺名称：<input name="shop_name" type="text" class="text-box" value="" />&nbsp;&nbsp;
                 审核状态<select class="text-box" name="is_check">
+					<option value="">选择审核状态</option>
                     <option value="1">未审核</option>
                     <option value="2">审核通过</option>
                     <option value="3">审核未通过</option>
@@ -120,7 +122,7 @@
 								?>
 								</td>
                                 <td>
-                                    <a href="<?php echo $item->goods_url?>" title="点击查看该商品"> <?php echo $item->goods_url?> </a>
+                                    <a target="_blank" href="<?php echo $item->goods_url?>" title="点击查看该商品"> <?php echo $item->goods_url?> </a>
                                 </td>
                                 
                                 <td>

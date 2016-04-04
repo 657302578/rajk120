@@ -57,36 +57,6 @@
             parent::acl();
             $criteria = new CDbCriteria;
             $criteria->order ="id desc";
-            
-            $u_condition = '';
-            if( isset($_GET['username']) && !empty($_GET['username']) ){
-                $username = trim($_GET['username']);
-                $u_condition = "Username like '%{$username}%'";
-            }
-            if( !empty($u_condition) ){
-                $uids = User::model()->findAll(array(
-                    'select'=>'id',
-                    'condition'=>$u_condition
-                ));
-                if( !empty($uids) ){
-                    $uidsStr = '';
-                    foreach($uids as $k=>$v){
-                        $uidsStr .= ','.$v['id'];
-                    }
-                    $uidsStr .= ',';
-                    $uidsStr = trim($uidsStr,',');
-                    $condition ="uid in ({$uidsStr})";
-                }
-            }
-
-            if( isset($_GET['is_check']) && $_GET['is_check'] != '' ){
-                if( !empty($condition) ){
-                    $condition .= " and is_check=".($_GET['is_check']-1);
-                }else{
-                    $condition = "is_check=".($_GET['is_check']-1);
-                }
-            }
-            if( !empty($condition) ) $criteria->condition = $condition;
             //分页开始
             $total = Useraddress::model()->count($criteria);
             $pages = new CPagination($total);
@@ -326,8 +296,11 @@
                 if(!isset($zdAddress) && $s == 1)
                 {
                     $zdAddress = Useraddress::model()->findByAttributes( array('occupy_uid'=> 0, 'is_check'=>1));
-                    $zdAddress->occupy_uid = $userAddress->uid;
-                    $zdAddress->save();
+                    if(isset($zdAddress))
+                    {
+                        $zdAddress->occupy_uid = $userAddress->uid;
+                        $zdAddress->save();
+                    }
                 }
             }
             echo '200';
@@ -340,7 +313,6 @@
         {
             //读取系统中的买号
             parent::acl();
-            
             if(isset($_GET['keyword']) || isset($_GET['is_check']))//关键词搜索
             {
                 $criteria = new CDbCriteria;

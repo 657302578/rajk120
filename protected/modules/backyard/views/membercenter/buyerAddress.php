@@ -82,7 +82,7 @@
     </div>
   </div>
 <form method="get" action="">
-    <input type="text" name="username" placeholder="请输入用户名" style="text-indent: 5px; color: #666; font-size:14px; width:260px;" /> <select name="is_check"><option value="">请选择身份审核状态</option><option value="1">未审核</option><option value="2">已审核</option></select>　<button type="submit" class="btn btn-sm btn-success" border="0" id="reg_submit"><i class="fa fa-dot-circle-o"></i>&nbsp;搜索</button>
+    <input type="text" name="username" placeholder="请输入用户名" style="text-indent: 5px; color: #666; font-size:14px; width:260px;" /> <select name="is_check"><option value="">请选择身份审核状态</option><option value="1">未审核</option><option value="2">已审核</option><option value="3">审核不通过</option></select>　<button type="submit" class="btn btn-sm btn-success" border="0" id="reg_submit"><i class="fa fa-dot-circle-o"></i>&nbsp;搜索</button>
 </form>
   <br />
   <div class="panel panel-default">
@@ -159,7 +159,7 @@
 				    {
 				        echo '审核通过';
 				    }
-				    elseif ($item->is_check == 1)
+				    elseif ($item->is_check == 2)
 				    {
 				        echo '审核未通过';
 				    }else
@@ -171,11 +171,24 @@
             <td><?php echo $item->create_time;?></td>
             <td>
 				<a href="<?php echo $this->createUrl("membercenter/addBuyerAddress", array('id' => $item->id))?>" alt="<?php echo $item->id;?>" class="delUserAddress" title="修改收货地址">修改</a>&nbsp;
-				<?php if(!$item->is_check){?>
-				<a href="javascript:shAddress(<?php echo $item->id;?>,1);" alt="<?php echo $item->id;?>" class="delUserAddress" title="审核地址">审核通过</a>
-				<?php }else{?>
-				<a href="javascript:shAddress(<?php echo $item->id;?>,0);" alt="<?php echo $item->id;?>" class="delUserAddress" title="审核不通过该地址">审核不通过</a>
-				<?php }?>
+				
+				<?php
+					if($item->is_check == 1)
+					{
+				?>
+				<a href="javascript:shAddress(<?php echo $item->id;?>,2);" alt="<?php echo $item->id;?>" class="delUserAddress" title="审核不通过该地址">审核不通过</a>				
+				<?php
+					}elseif($item->is_check == 2)
+					{
+				?>
+<a href="javascript:shAddress(<?php echo $item->id;?>,1);" alt="<?php echo $item->id;?>" class="delUserAddress" title="审核地址">审核通过</a>
+				<?php
+					}else{
+				?>
+<a href="javascript:shAddress(<?php echo $item->id;?>,1);" alt="<?php echo $item->id;?>" class="delUserAddress" title="审核地址">审核通过</a>
+				<a href="javascript:shAddress(<?php echo $item->id;?>,2);" alt="<?php echo $item->id;?>" class="delUserAddress" title="审核不通过该地址">审核不通过</a>				<?php
+					}
+				?>
 				&nbsp;
 				<a href="javascript:delUserAddress(<?php echo $item->id;?>);" alt="<?php echo $item->id;?>" class="delUserAddress" title="删除收货地址">删除</a>
 			</td>

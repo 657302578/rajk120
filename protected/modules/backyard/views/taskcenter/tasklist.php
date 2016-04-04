@@ -63,18 +63,8 @@
             		</ol>
             	</div>
             </div>
-            <form method="post" action="<?php echo $this->createUrl("taskcenter/tasklist")?>">
-                <input name="act_start_time" type="text" class="text-box" value="" placeholder="开始时间" title="开始时间" readonly="readonly" style="cursor:pointer;"/>&nbsp;-&nbsp;
-                <input name="act_stop_time" type="text" class="text-box" value="" placeholder="结束时间" title="结束时间" readonly="readonly" style="cursor:pointer;"/>&nbsp;-&nbsp;
-                <select class="text-box" style="height: 32px; line-height:30px; position: relative; top: 1px;">
-                    <option value="0">任务类型</option>
-                    <option>等待接手</option>
-                    <option>等待接手付款</option>
-                    <option>等待商家发货</option>
-                    <option>等待接手收货</option>
-                    <option>等待商家确认</option>
-                    <option>已完成任务</option>
-                </select>
+            <form method="get" action="<?php echo $this->createUrl("taskcenter/tasklist")?>">
+                <input name="task_id" type="text" class="text-box" value="" placeholder="输入任务编号" title="任务编号"  />&nbsp;&nbsp; 
                 <button type="submit" class="btn btn-sm btn-success" border="0" id="reg_submit" style="position:relative; top:-1px;"><i class="fa fa-dot-circle-o"></i>&nbsp;确认搜索</button>
             </form>
             <br />

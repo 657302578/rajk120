@@ -10,6 +10,14 @@
         {
             parent::acl();
             $criteria = new CDbCriteria;
+            if(isset($_GET['task_id']))
+            {
+                $idInfo = explode('*', trim($_GET['task_id']));
+                if(is_array($idInfo) && count($idInfo) > 1)
+                {
+                    $criteria->condition = 'id='.$idInfo[1];
+                }
+            }
             $criteria->order ="time desc";
         
             //分页开始
@@ -76,8 +84,29 @@
             parent::acl();
             $criteria = new CDbCriteria;
             $criteria->condition = '1';
-            if(isset($_GET['goods_name'])) $criteria->condition.= ' AND goods_name LIKE \''.strval($_GET['goods_name']).'\'';
-            if(isset($_GET['is_check'])) $criteria->condition.= ' AND is_check='.intval($_GET['is_check']-1);
+            if(isset($_GET['goods_name']) && !empty($_GET['goods_name'])) $criteria->condition.= ' AND goods_name LIKE \''.strval($_GET['goods_name']).'\'';
+            if(isset($_GET['is_check']) && intval($_GET['is_check']) > 0) $criteria->condition.= ' AND is_check='.intval($_GET['is_check']-1);
+            if(isset($_GET['shop_name']))
+            {
+                $list = Blindwangwang::model()->findAllByAttributes(array('wangwang' => strval(trim($_GET['shop_name']))));
+                if(isset($list))
+                {
+                    $uid = array();
+                    foreach ($list as $v)
+                    {
+                       array_push($uid, $v->id); 
+                    }
+                   
+                    if(count($uid) > 0)
+                    {
+                        $criteria->condition.=' AND shop_id IN('.implode(',', $uid).')';
+                    }
+                }else{
+                    $criteria->condition.=' AND shop_id=0';
+                }
+            }
+            
+            
             $criteria->order ="create_time desc";
         
             //分页开始
