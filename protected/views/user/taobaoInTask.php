@@ -126,7 +126,7 @@
                                     <div class="person-info">
                                       <ul>
                                           <li class="xf_name" title="经验值越高，代表会员越熟悉任务流程">经验：<b><?php echo $myinfo->Experience;?></b><span>好评率：<b><?php
-                                            if((count($hp)+count($zp)+count($cp))==0)
+                                            if((count($zp)+count($cp))==0)
                                                 echo "100%";
                                             else
                                                 echo (count($hp)/(count($zp)+count($cp)))."%";
@@ -157,17 +157,29 @@
                                 </ul>
                             </div>
                             <div class="allRw_proLink">
-                                <?php
-                                    if($item->cbxIsSB)
-                                        echo '<a style="border-color:red; color:red;">商保</a>';
+            <?php
                                     if($item->isLimitCity)
-                                        echo '<a style="border-color:red; color:red;">'.$item->Province.'</a>';
+									{
+										if(intval($item->Province) > 0)
+										{
+											$areaInfo = Area::model()->findByPk($item->Province);
+											if($item->is_xzqx_type == 2)
+											{
+											    $bzStr = 'style="text-decoration:line-through;"';
+											}else{
+											    $bzStr = '';
+											}
+											echo '<a '.$bzStr.' >'.$areaInfo->name.'</a>';
+										}else{
+                                        	echo '<a style="border-color:red; color:red;">'.$item->Province.'</a>';
+										}
+									}
                                     if($item->isMobile)
-                                        echo '<a style="border-color:red; color:red;">手机</a>';
+                                        echo '<a>手机</a>';
                                     if($item->isSign)
-                                        echo '<a style="border-color:red; color:red;">真签</a>';
-                                    if($item->cbxIsAudit)
-                                        echo '<a>审核</a>'; 
+                                        echo '<a>真签</a>';
+									if($item->cbxIsAddress)
+										echo '<a>地址</a>';
                                     if($item->isReal)
                                         echo '<a>实名</a>';
                                     if($item->cbxIsWW)
@@ -187,12 +199,15 @@
                                         $itemImg=$item->taskerBottomImg!=""?$item->taskerBottomImg:"";
                                         echo '<a class="bueryImg" alt="'.$itemImg.'">底图</a>';
                                     }
-                                ?>
-                                <a class="bueryImg" alt="<?php echo $item->taskerOtheroneImg!=""?$item->taskerOtheroneImg:"";?>">货比1</a>
-                                <a class="bueryImg" alt="<?php echo $item->taskerOthersecondImg!=""?$item->taskerOthersecondImg:"";?>">货比2</a>
-                                <a class="bueryImg" alt="<?php echo $item->taskerHBthirdImg!=""?$item->taskerHBthirdImg:"";?>">货比3</a>
-                                <a class="bueryImg" alt="<?php echo $item->taskerHPingImg!=""?$item->taskerHPingImg:"";?>">好评截图</a>
-                            </div>
+                                    if($item->txtSearchDes)
+                                    {
+                                        echo '<a alt="'.$item->txtSearchDes.'" title="'.$item->txtSearchDes.'">提示</a>';
+                                    }
+                                    if($item->txtRemind)
+                                    {
+                                        echo '<a alt="'.$item->txtRemind.'" title="'.$item->txtRemind.'">留言</a>';
+                                    }
+                                ?><a class="bueryImg" alt="<?php echo $item->taskerHPingImg!=""?$item->taskerHPingImg:"";?>">评图</a> </div>
                         </div>
                     </div>
                     <?php
