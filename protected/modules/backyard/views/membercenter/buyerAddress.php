@@ -281,7 +281,7 @@ function delUserAddress(id)
 			url:"<?php echo $this->createUrl("membercenter/delBuyerAddress");?>",
 			data:"id="+id,
 			success:function(msg){
-				if(msg == 200)
+				if(msg == 'success')
 				{
 					//询问框
 					layer.confirm("操作除成功！", {
