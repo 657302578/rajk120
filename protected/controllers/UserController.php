@@ -1923,7 +1923,7 @@ class UserController extends Controller
             $userinfo->QQToken=$_POST['qq'];//QQ号码
             $userinfo->TrueName=$_POST['truename'];//真实姓名
             $userinfo->Sex=$_POST['sex'];//性别
-            $userinfo->PlaceOtherLogin=$_POST['PlaceOtherLogin'];//异地登录
+            //$userinfo->PlaceOtherLogin=$_POST['PlaceOtherLogin'];//异地登录
             $userinfo->id_card = $_POST['id_card'];
             $userinfo->id_photo_front = $_POST['id_photo_front'];
             $userinfo->id_photo_rear = $_POST['id_photo_rear'];
@@ -1940,7 +1940,7 @@ class UserController extends Controller
                 $data['create_time'] = date('Y/m/d H:i:s');
                 //更新收货地址
                 $userAddressInfo = Useraddress::model()->find('uid='.Yii::app()->user->getId());
-                if(!$userAddressInfo)
+                if(!$userAddressInfo && intval($_POST['idProvince'])> 0 && intval($_POST['idCity']) > 0 && intval($_POST['idDistrict']) > 0 && !empty($_POST['addr']['mobile']) && !empty($_POST['addr']['address']) && !$_POST['addr']['user_name'])
                 {
                     $userAddModel = new Useraddress();
                     $userAddModel->uid = Yii::app()->user->getId();
