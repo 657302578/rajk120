@@ -152,7 +152,7 @@
                                         五星好评
                                     </li>
                                     <li title="平台担保：此任务卖家已缴纳全额担保存款，接手可放心购买，任务完成后，买家平台账号自动获得相应存款">
-                                        任务金额： <span><?php echo $item->txtPrice;?></span>金币
+                                        任务金额： <span><?php echo $item->txtPrice;?></span>元　任务佣金：<span><?php echo $item->yongjin_money;?></span>元 
                                     </li>
                                     
                                 </ul>

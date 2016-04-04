@@ -152,7 +152,7 @@
                                         五星好评
                                     </li>
                                     <li title="平台担保：此任务卖家已缴纳全额担保存款，接手可放心购买，任务完成后，买家平台账号自动获得相应存款">
-                                        任务金额： <span><?php echo $item->txtPrice;?></span>金币
+                                        任务金额： <span><?php echo $item->txtPrice;?></span>元　任务佣金：<span><?php echo $item->yongjin_money;?></span>元 
                                     </li>
                                 </ul>
                             </div>
@@ -300,8 +300,27 @@
                         <?php
                             $addressInfoArr=explode('|',$item->cbxIsAddressContent);
                         ?>
-                        姓名：<?php echo $addressInfoArr['0'];?>　地址：<font style='color:#e99f4b;'><?php echo $addressInfoArr['3'];?></font>　邮编：<?php echo $addressInfoArr['2'];?>　电话：<?php echo $addressInfoArr['1'];?>
+                        姓名：<?php echo $addressInfoArr['0'];?>　地址：<font style='color:#e99f4b;'><?php echo $addressInfoArr['3'];?></font>　邮编：<?php echo $addressInfoArr['2'];?>　
                     </p>
+                    <p>下单地址：
+                    <?php
+                        $userAddressInfo = Useraddress::model()->findByPk($item->publishid);
+                        if($userAddressInfo){
+                            $addressStr = '';
+                            $addressStr.= $userAddressInfo->user_name.'&nbsp';
+                            $addressStr.= $userAddressInfo->mobile.'&nbsp';
+                            $area1 = Area::model()->findByPk($userAddressInfo->sheng_id);
+                            $addressStr.= $area1->name.'&nbsp';
+                            $area1 = Area::model()->findByPk($userAddressInfo->shi_id);
+                            $addressStr.= $area1->name.'&nbsp';
+                            $area1 = Area::model()->findByPk($userAddressInfo->qu_id);
+                            $addressStr.= $area1->name.'&nbsp';
+                            $addressStr .= $userAddressInfo->address;
+                            echo $addressStr;
+                        }else{
+                            echo '未分配地址，请联系买家进行修改收货地址';
+                        }
+                    ?>（商家规定地址的遵循商家要求）</p>
                     <p>卖家留言提醒：<?php echo $item->txtRemind!=""?$item->txtRemind:"请按要求完成任务";?></p>
                 </div><!--introduce end-->
             </li>
