@@ -13,6 +13,36 @@
     ?>
     <div class="cle"></div>
     <div class="reListTitle">
+      <form action="<?php echo $this->createUrl('user/editGoodsUrl');?>" method="post">
+      <table width="1000" border="0" cellspacing="0" cellpadding="4" id="tpl">
+          <tr>
+            <td width="120">商品名称：</td>
+			<td width="120" align="left" ><input  required="required"  style="float:left;"  type="text" name="goods_name" value="<?php if(($linkInof)) echo $linkInof->goods_name;?>"  class="pc11 inputp"  /></td>
+          
+            <td width="120">所属店铺：</td>
+			<td align="left">
+				<select  required="required"   name="shop_id" class="ui-select zhsr">
+                        <option value="">请选择店铺</option>
+                        <?php if(isset($shopList)){
+							foreach($shopList as $k=>$v){
+						?>
+							<option <?php if($linkInof  && $linkInof->shop_id == $v->id){?> selected="selected" <?php }?> value="<?php echo $v->id?>"><?php echo $v->wangwang;?></option>
+						<?php
+							}}
+						?>
+              </select>
+			</td>
+                      <td>商品链接：</td>
+			<td align="left"><input  required="required"  style="float:left;"  value="<?php if(($linkInof)) echo $linkInof->goods_url;?>" type="text" name="goods_url"  class="pc11 inputp"  /></td>
+          
+            <td colspan="2" align="center">
+				<input type="hidden" name="id" value="<?php if(($linkInof)){echo $linkInof->id;}else{echo 0;}?>" />
+				<button type="submit" id="btnCilentAdd" class="button abtn7" style="cursor: pointer;">保存</button>
+			</td>
+          </tr>
+		  
+      </table>
+	  </form>
       <table width="1000" border="0" cellspacing="0" cellpadding="4" id="tpl">
         <thead>
           <tr>
