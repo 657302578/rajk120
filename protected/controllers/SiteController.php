@@ -373,6 +373,8 @@ class SiteController extends Controller
             $taskId = intval($_POST['taskId']);
             $taskInfo = Companytasklist::model()->findByPk($taskId);
             $loginUserInfo = User::model()->findByPk(Yii::app()->user->getId());
+            //查询此会员是否通过新手考试
+            if(!$loginUserInfo->ExamPass) exit('EXAM_NOT_PASS');
             //查询此会员是否上传支付宝账号
             if(empty($loginUserInfo->alipay_account)) exit('NO_ALIPAY_ACCOUNT');
             //判断此会员是否填写收货地址
@@ -2124,7 +2126,6 @@ class SiteController extends Controller
             //生成验证码
             $randStr = str_shuffle('1234567890');//短信验证码由数字组成
             $code = substr($randStr,0,6);
-            echo $code;
             $smsConf = array(
                 'key'   => '6ae1c329d00d4d34e45c234d78c49210', //您申请的APPKEY
                 'mobile'    => ''.$_POST['phone'].'', //接受短信的用户手机号码

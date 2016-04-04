@@ -20,7 +20,6 @@
                     <li><a class="phoneActive" alt="<?php echo $userInfo->Phon;?>" lang="<?php echo $userInfo->PhonActive;?>">手机绑定激活</a><p class="<?php echo $userInfo->PhonActive!=0?'bg_img2':'bg_img3';?>"></p></li>
                     <li><a class="safePwd" lang="<?php echo $userInfo->SafePwd!=""?1:0;?>">安全码设置</a><p class="<?php echo $userInfo->SafePwd!=""?'bg_img2':'bg_img3';?>"></p></li>
                     <li><a class="userExam" lang="<?php echo $userInfo->ExamPass;?>">新手考试</a><p class="<?php echo $userInfo->ExamPass!=0?'bg_img2':'bg_img3';?>"></p></li>
-                    <li><a class="otherPlaceLogin" lang="<?php echo $userInfo->PlaceOtherLogin;?>">异地登录验证</a><p class="<?php echo $userInfo->PlaceOtherLogin!=0?'bg_img2':'bg_img3';?>"></p></li>
                 </ul>
             </div>
             <div class="d_t_right">

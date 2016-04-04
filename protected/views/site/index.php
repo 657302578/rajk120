@@ -225,6 +225,7 @@
         //登录表单检测
         function checkLogin()
         {
+			return true;
             if($("#lusername").val()=="")
             {
                 layer.tips('用户名不能为空', '#lusername');

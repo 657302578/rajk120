@@ -565,7 +565,15 @@ createUrl('site/taobaoTask',$GetConditionArr);
                             	}, function(){
                             		window.location.href="<?php echo $this->createUrl('user/taobaoBindBuyer');?>";
                             	});
-                            }else if(msg == 'NO_ALIPAY_ACCOUNT'){
+                            }else if(msg == 'EXAM_NOT_PASS'){
+							//询问框
+                            	layer.confirm('您还没有通过新手考试，现在去考试吗？', {
+                            		btn: ['确定','取消'] //按钮
+                            	}, function(){
+                            		window.location.href="<?php echo $this->createUrl('user/userExam');?>";
+                            	});
+							
+							}else if(msg == 'NO_ALIPAY_ACCOUNT'){
                             	//询问框
                             	layer.confirm('您还没有绑定收款支付宝账号，去绑定吗？', {
                             		btn: ['确定','取消'] //按钮

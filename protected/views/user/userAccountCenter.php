@@ -71,14 +71,7 @@
               <input type="radio" name="sex" value="0" class="d_radio2 mysex" <?php echo $userinfo->Sex==0?'checked="checked"':'';?>/>
               <span>女</span></label>
             </li>
-            <li class="newinput"><font class="newth">开启异地登录短信验证 :</font>
-              <label>
-              <input type="radio" name="PlaceOtherLogin" class="d_radio3 PlaceOtherLogin" <?php echo $userinfo->PlaceOtherLogin==1?'checked="checked"':'';?> value="1"/>
-              <span>开启</span></label>
-              <label>
-              <input type="radio" name="PlaceOtherLogin" class="d_radio4 PlaceOtherLogin" <?php echo $userinfo->PlaceOtherLogin==0?'checked="checked"':'';?>  value="0"/>
-              <span>关闭</span></label>
-            </li>
+			<input type="hidden" name="PlaceOtherLogin" value="0" />
           </ul>
         </div>
         <div class="d_check clearfix">

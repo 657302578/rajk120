@@ -28,6 +28,49 @@
             ));
         }
         
+        /**
+         * 重置任务
+         */
+        public function actionResetTask()
+        {
+            $taskId = intval($_POST['taskId']);
+            $taskInfo = Companytasklist::model()->findByPk($taskId);
+            $taskInfo->taskerid = 0;
+            $taskInfo->taskerWangwang = '';
+            $taskInfo->taskfristTime = 0;
+            $taskInfo->tasksecondTime = 0;
+            $taskInfo->taskthirdTime = 0;
+            $taskInfo->taskforthTime = 0;
+            $taskInfo->taskfifthTime = 0;
+            $taskInfo->taskcompleteTime = 0;
+            $taskInfo->status = 0;
+            $taskInfo->complian_status = 0;
+            $taskInfo->tasktime = 0;
+            $taskInfo->taskCompleteStatus = 0;
+            $taskInfo->refresh_time = time();
+            $taskInfo->time = time();
+            if($taskInfo->save())
+            {
+                echo '200';
+            }else{
+                echo '500';
+            }
+        }
+        
+        /**
+         * 删除任务
+         */
+        public function actionDelTask()
+        {
+            $taskId = intval($_POST['taskId']);
+            if(Companytasklist::model()->deleteByPk($taskId))
+            {
+                echo '200';
+            }else{
+                echo '500';
+            }
+        }
+        
         public function actionGoodsUrlManage()
         {
             parent::acl();
