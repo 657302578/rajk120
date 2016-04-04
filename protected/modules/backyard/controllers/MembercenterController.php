@@ -13,6 +13,7 @@
             {
                 $criteria = new CDbCriteria;
                 $criteria->condition = '1 ';
+                $criteria->order ="RegTime asc";
                 if(isset($_GET['keyword']) && !empty($_GET['keyword'])) $criteria->condition.=' AND (Username="'.$_GET['keyword'].'" or Phon="'.$_GET['keyword'].'")';
                 if(isset($_GET['id_is_check']) && $_GET['id_is_check'] > 0 )
                 { 
@@ -314,6 +315,7 @@
             {
                 $criteria = new CDbCriteria;
                 $criteria->condition = 'catalog=1 ';
+                $criteria->order ="id desc";
                 if(isset($_GET['keyword']) && !empty($_GET['keyword'])) $criteria->condition.=' AND (wangwang="'.$_GET['keyword'].'" AND catalog=1)';
                 if(isset($_GET['is_check']) && $_GET['is_check'] > 0) $criteria->condition.=' AND is_check='.(intval($_GET['is_check'])-1);
                 //分页开始
@@ -372,6 +374,7 @@
             {
                 $criteria = new CDbCriteria;
                 $criteria->condition = 'catalog=2 ';
+                $criteria->order ="id desc";
                 if(isset($_GET['keyword']) && !empty($_GET['keyword'])) $criteria->condition.=' AND (wangwang="'.$_GET['keyword'].'" AND catalog=1)';
                 if(isset($_GET['is_check']) && $_GET['is_check'] > 0) $criteria->condition.=' AND is_check='.(intval($_GET['is_check'])-1);
                 //分页开始
