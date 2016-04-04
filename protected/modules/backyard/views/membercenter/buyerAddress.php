@@ -155,7 +155,17 @@
 			</td>
 			<td>
 				<?php
-					echo  $item->is_check == 1 ? '审核通过' : '审核未通过';
+				    if($item->is_check == 1)
+				    {
+				        echo '审核通过';
+				    }
+				    elseif ($item->is_check == 1)
+				    {
+				        echo '审核未通过';
+				    }else
+				    {
+				        echo '未审核';
+				    }
 				?>
 			</td>
             <td><?php echo $item->create_time;?></td>
