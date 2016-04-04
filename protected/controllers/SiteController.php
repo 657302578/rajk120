@@ -307,6 +307,12 @@ class SiteController extends Controller
                     Yii::app()->end();
                 }
                 $wangwanginfo=Blindwangwang::model()->findByAttributes(array('wangwang'=>$_POST['taskerWangwang']));
+                //检查买号是否有正在进行的任务
+                $runTaskInfo = Companytasklist::model()->findByAttributes( array('taskerWangwang'=> $wangwanginfo->wangwang,'status'=>2));
+                if(isset($runTaskInfo))
+                {
+                    exit('HAS_STATUS_2_TASKER');
+                }
                 //2.检测买号等级要求是否符合任务要求
                 if($taskInfo->BuyerJifen>$wangwanginfo->wangwanginfo)
                 {

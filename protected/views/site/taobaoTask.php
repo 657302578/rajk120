@@ -644,7 +644,14 @@ createUrl('site/taobaoTask',$GetConditionArr);
                                             	},function(){
                                             	   location.href="<?php echo $this->createUrl('user/userSBcenter');?>";
                                             	});
-                                            }else if(msg == 'ALLOW_GET_300'){
+                                            }else if(msg == 'HAS_STATUS_2_TASKER'){
+												 //询问框
+                                            	layer.confirm('<span style="color:red;">您有等待操作的任务，请先完成操作！</span>', {
+                                            		btn: ['去完成','知道了'] //按钮
+                                            	},function(){
+                                            	   location.href="<?php echo $this->createUrl('user/taobaoInTask');?>";
+                                            	});
+											}else if(msg == 'ALLOW_GET_300'){
                                             	layer.confirm('<span style="color:red;">您的账户余额不能申请此任务，规则如下：<br/>a)余额150金币以下，可接300元以内的任务；<br/>b)余额150-1000金币，可接余额2倍金额以内的任务；<br/>c)余额1000金币以上，可接任意金额任务。<br/></span>', {
                                             		btn: ['知道了'] //按钮
                                             	});
