@@ -373,6 +373,8 @@ class SiteController extends Controller
             $taskId = intval($_POST['taskId']);
             $taskInfo = Companytasklist::model()->findByPk($taskId);
             $loginUserInfo = User::model()->findByPk(Yii::app()->user->getId());
+            //查询此会员是否通过新手考试
+            if(!$loginUserInfo->ExamPass) exit('EXAM_NOT_PASS');
             //查询此会员是否上传支付宝账号
             if(empty($loginUserInfo->alipay_account)) exit('NO_ALIPAY_ACCOUNT');
             //判断此会员是否填写收货地址
