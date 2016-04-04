@@ -187,7 +187,7 @@
           <input type="hidden" name="isLimitCity" id="aa18" value="<?php echo $taskInfo->isLimitCity; ?>">
         </li>
 		<li class="h97">
-          <input type="radio" <?php if($taskInfo->is_xzqx_type == 1){ ?> checked="checked"  <?php }?> name="is_xzqx_type" value="1" />指定 <input <?php if($taskInfo->is_xzqx_type == 2){ ?> checked="checked"  <?php }?> type="radio" name="is_xzqx_type" value="2" />排除
+          <input type="hidden" name="is_xzqx_type" value="2" />
         </li>
         <li class="h97">
           <select style="float:left;" id="Province" name="Province" class="ui-select zhsr">

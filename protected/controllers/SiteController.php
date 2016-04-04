@@ -378,7 +378,7 @@ class SiteController extends Controller
             //查询此会员是否上传支付宝账号
             if(empty($loginUserInfo->alipay_account)) exit('NO_ALIPAY_ACCOUNT');
             //判断此会员是否填写收货地址
-            $addressInfo = Useraddress::model()->findByAttributes( array('uid' => $loginUserInfo->id));
+            $addressInfo = Useraddress::model()->findByAttributes( array('occupy_uid' => $loginUserInfo->id));
             if(!isset($addressInfo)) exit('NO_USER_ADDRESS');
             if($taskInfo->isLimitCity)
             {
@@ -425,8 +425,8 @@ class SiteController extends Controller
                         $monthNum = Blindwangwang::getWwTaskNum($bv['wangwang'], 1, 'month');
                         if($dayNum >= $fmaxmc[0] || $wNum >= $fmaxmc[1] || $monthNum >= $fmaxmc[2])
                         {
-                            //unset($buyerInfo[$bk]);
-                            //continue;
+                            unset($buyerInfo[$bk]);
+                            continue;
                         }
                     }
                 }

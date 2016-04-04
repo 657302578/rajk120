@@ -236,7 +236,7 @@
               <input type="hidden" name="isLimitCity" id="aa18">
             </li>
             <li class="h97">
-              <input type="radio" name="is_xzqx_type" value="1" />指定 <input type="radio" name="is_xzqx_type" value="2" />排除 <input type="radio" name="is_xzqx_type" value="3" />不限制
+			<input type="hidden" name="is_xzqx_type" value="2" />
             </li>
             <li class="h97">
               <select style="float:left;" id="Province" name="Province" class="ui-select zhsr">
