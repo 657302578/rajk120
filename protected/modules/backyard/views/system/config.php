@@ -97,6 +97,13 @@
     		                    </div>
                             </div><br /><br />
                             <div class="examItem">
+                                <label class="col-sm-3 control-label" for="input-small" style="width: auto;">重复申请限制天数：</label>
+                                <div class="col-sm-3">
+    		                        <input type="text" name="one_user_day_limit" id="input-small"  class="form-control input-sm" placeholder="重复申请限制天数" value="<?php if(isset($config)) echo $config->one_user_day_limit;?>"/>
+    		                    </div>
+                            </div>
+                            <br /><br />
+                            <div class="examItem">
                                 <label class="col-sm-3 control-label" for="input-small" style="width: auto;">1积分等于多少元：</label>
                                 <div class="col-sm-3">
     		                        <input type="text" name="jifen_rate" id="input-small"  class="form-control input-sm" placeholder="1积分等于多少元" value="<?php if(isset($config)) echo $config->jifen_rate;?>"/>
