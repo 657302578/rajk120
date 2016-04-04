@@ -703,7 +703,7 @@ class SiteController extends Controller
                 //4.改变发布方经验值
                 
                 $publishinfo->Experience=$publishinfo->Experience+1;//商家每有一个任务被完成，经验值增加一个
-                //增加一个麦粒，如果是真实签收，该会员绑定的地址对应的占用者，获得一个麦粒
+                //增加一个签收积分，如果是真实签收，该会员绑定的地址对应的占用者，获得一个签收积分
                 $taskInfo = Companytasklist::model()->findByPk($_POST['taskid']);
                 if($taskInfo->isSign)
                 {

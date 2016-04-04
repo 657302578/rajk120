@@ -733,11 +733,11 @@
             	});
             });
             
-            //商家追加麦粒
+            //商家追加签收积分
             $(".addMinLi").click(function(){
                 var id=$(this).attr("alt");//任务id
                 
-                layer.confirm('<span style="color:red; line-height:25px;">您剩余麦粒'+$(".MinLinOwn").html()+'个</span><br/>'+'追加麦粒数：<input type="text" class="text1 addMinLiNum" style="width:50px; text-align:center; margin:0;" />&nbsp;个', {
+                layer.confirm('<span style="color:red; line-height:25px;">您剩余签收积分'+$(".MinLinOwn").html()+'个</span><br/>'+'追加签收积分数：<input type="text" class="text1 addMinLiNum" style="width:50px; text-align:center; margin:0;" />&nbsp;个', {
             		btn: ['确定追加','取消'] //按钮
             	},function(){
             	   if($(".addMinLiNum").val()=="")//不能为空
@@ -745,24 +745,24 @@
                         layer.tips('<span>不能为空<span>', '.addMinLiNum');
                         exit;
                    }
-                   if(isNaN(parseFloat($(".addMinLiNum").val())))//麦粒数量必须为数字
+                   if(isNaN(parseFloat($(".addMinLiNum").val())))//签收积分数量必须为数字
                    {
                         layer.tips('<span>必须为数字<span>', '.addMinLiNum');
                         exit;
                    }
-                   if(parseFloat($(".addMinLiNum").val())<0)//麦粒数量必须大于0
+                   if(parseFloat($(".addMinLiNum").val())<0)//签收积分数量必须大于0
                    {
                         layer.tips('<span>必须大于0<span>', '.addMinLiNum');
                         exit;
                    }
                    
-                   if(parseFloat($(".addMinLiNum").val())>parseFloat($(".MinLinOwn").html()))//麦粒剩余数量不足
+                   if(parseFloat($(".addMinLiNum").val())>parseFloat($(".MinLinOwn").html()))//签收积分剩余数量不足
                    {
-                        layer.tips('<span>麦粒数量不足，您剩余麦粒'+$(".MinLinOwn").html()+'个<span>', '.addMinLiNum');
+                        layer.tips('<span>签收积分数量不足，您剩余签收积分'+$(".MinLinOwn").html()+'个<span>', '.addMinLiNum');
                         exit;
                    }
                    
-                   //检查通过开始追加麦粒
+                   //检查通过开始追加签收积分
                    $.ajax({
             			type:"POST",
             			url:"<?php echo $this->createUrl('site/addMinLi');?>",
@@ -771,26 +771,26 @@
             			{
                             if(msg=="SUCCESS")
                             {
-           			            layer.confirm('麦粒追加成功', {
+           			            layer.confirm('签收积分追加成功', {
                             		btn: ['知道了'] //按钮
                             	},function(){
                             	   location.reload();//重新刷新当前页面
                             	});
                             }else if(msg=="MINLINOTENOUGH")
                             {
-                                layer.confirm('麦粒数量不足', {
+                                layer.confirm('签收积分数量不足', {
                             		btn: ['知道了'] //按钮
                             	});
                             }
                             else
                             {
-                                layer.confirm('麦粒追加失败，请联系我们的客服人员', {
+                                layer.confirm('签收积分追加失败，请联系我们的客服人员', {
                             		btn: ['知道了'] //按钮
                             	});
                             }
             			}
             		});
-                    //检查通过开始追加麦粒
+                    //检查通过开始追加签收积分
             	});
             });
             
@@ -802,7 +802,7 @@
             		btn: ['确定修改','取消'] //按钮
             	},function(){
                    
-                   //检查通过开始追加麦粒
+                   //检查通过开始追加签收积分
                    $.ajax({
             			type:"POST",
             			url:"<?php echo $this->createUrl('site/changeTxtMessage');?>",
@@ -830,7 +830,7 @@
                             }
             			}
             		});
-                    //检查通过开始追加麦粒
+                    //检查通过开始追加签收积分
             	});
             });
             
@@ -843,7 +843,7 @@
             		btn: ['确定修改','取消'] //按钮
             	},function(){
                    
-                   //检查通过开始追加麦粒
+                   //检查通过开始追加签收积分
                    $.ajax({
             			type:"POST",
             			url:"<?php echo $this->createUrl('site/changeCbxIsAddressContent');?>",
@@ -871,7 +871,7 @@
                             }
             			}
             		});
-                    //检查通过开始追加麦粒
+                    //检查通过开始追加签收积分
             	});
             });
             

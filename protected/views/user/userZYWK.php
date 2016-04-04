@@ -3,7 +3,7 @@
     	<div class="d_dotop clearfix">
         	<ul class="d_dotop_ul">
             	<li>
-                    1、申请职业威客可以获得更高的麦粒回收价格、更多的同时接手任务次数、更多的买号绑定、申请时限为一个月，到期后将自动恢复到当前积分对应等级；
+                    1、申请职业威客可以获得更高的签收积分回收价格、更多的同时接手任务次数、更多的买号绑定、申请时限为一个月，到期后将自动恢复到当前积分对应等级；
                     一旦申请成功，无法返回原始的会员等级，必须到期后才能取消，请申请前一定重视！
                 </li>
                 <li>
@@ -35,7 +35,7 @@
                 <ul>
                 	<li class="ph11">每周接手任务500个以上</li>
                     <li class="ph22">无奖励</li>
-                    <li class="ph33">前三名分别奖励：300金币，200金币，100金币。4-10名奖励100麦粒 <a class="chakan" href="<?php echo $this->createUrl('user/userTop10');?>" target="_blank">查看排行榜</a></li>
+                    <li class="ph33">前三名分别奖励：300金币，200金币，100金币。4-10名奖励100签收积分 <a class="chakan" href="<?php echo $this->createUrl('user/userTop10');?>" target="_blank">查看排行榜</a></li>
                 </ul>
             </div>
         </div>

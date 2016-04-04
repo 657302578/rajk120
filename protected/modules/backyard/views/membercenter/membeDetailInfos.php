@@ -264,7 +264,7 @@
         									<a>帐户余额：<font style="font-weight:bold; font-size:14px; color:red;"><?php echo $userinfo->Money;?></font>&nbsp;&nbsp;元&nbsp;&nbsp;&nbsp;&nbsp;<font class="giveMoney" style="color:#57A0FF; cursor: pointer;" alt="<?php echo $userinfo->id;?>">手动充值</font></a>
         								</li>
                                         <li>
-        									<a>帐户麦粒：<font style="font-weight:bold; font-size:14px; color:red;"><?php echo $userinfo->MinLi;?></font>&nbsp;&nbsp;个</a>
+        									<a>帐户签收积分：<font style="font-weight:bold; font-size:14px; color:red;"><?php echo $userinfo->MinLi;?></font>&nbsp;&nbsp;个</a>
         								</li>
                                         <li>
         									<a>商保金额：

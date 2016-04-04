@@ -48,7 +48,7 @@
                 </div>
                 <!--<div class="d_con_right">
                 	<div class="d_con_right_top">
-                        <p class="cunkuan1">麦粒</p>
+                        <p class="cunkuan1">签收积分</p>
                         <p class="shuzhi1"><?php echo $userInfo->MinLi;?></p>
                         <span>个</span>
                     </div>

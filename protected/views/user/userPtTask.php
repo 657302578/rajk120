@@ -6,7 +6,7 @@
       <ul class="pmm">
         <li style="display:block;" class="lili">
           <div class="drw">
-            <div class="pt"> <span class="h40"> <img class="h41" src="<?php echo VERSION2;?>taskcss/blue.png" alt="">商品信息： </span> <!--<span class="h40" style="margin-left: 25px;"><a href="http://www.milioo.com/article/sell/122Q02015.html" target="_blank" style="color: red;font-size: 15px;">查看麦粒计算规则</a></span>--> </div>
+            <div class="pt"> <span class="h40"> <img class="h41" src="<?php echo VERSION2;?>taskcss/blue.png" alt="">商品信息： </span> <!--<span class="h40" style="margin-left: 25px;"><a href="http://www.milioo.com/article/sell/122Q02015.html" target="_blank" style="color: red;font-size: 15px;">查看签收积分计算规则</a></span>--> </div>
             <!--来路任务不同与普通任务不同部分-->
             <div class="product_content1">
               <ul class="dowebok">
@@ -81,7 +81,7 @@
                 <li class="s40 s41 searchway" title="要求接手通过信用评价地址进店">
                   <input type="radio" <?php if($taskInfo->visitWay == 4){ ?> checked="checked"  <?php }?> name="visitWay" value="4">
                   其他</li>
-               <!-- <li class="h32"><span>支付 <font class="pdfo">1.0</font> 个麦粒</span></li>-->
+               <!-- <li class="h32"><span>支付 <font class="pdfo">1.0</font> 个签收积分</span></li>-->
               </ul>
 			  <!--<ul class="dowebok">
 			  	<li class="s35" ><img src="<?php echo VERSION2;?>taskcss/c12.jpg" alt="">搜索关键字：</li>
@@ -163,7 +163,7 @@
           <div id="a1" lang="1" alt="0" class="nulldiv" title="在拍下商品前使用旺旺或旺信与商家聊天" <?php if($taskInfo->cbxIsWW){ ?> style="background-position: -122px 0px;" <?php }?> ></div>
           <input type="hidden" name="cbxIsWW" id="aa1" value="<?php echo $taskInfo->cbxIsWW; ?>"/>
         </li>
-        <!--<li class="pdli"><span>支付<font class="pdfo">1.0</font>个麦粒</span></li>-->
+        <!--<li class="pdli"><span>支付<font class="pdfo">1.0</font>个签收积分</span></li>-->
         <li>
           <div id="a2" lang="2" alt="0" class="nulldiv" title="收藏商家发布的商品" <?php if($taskInfo->shopcoller){ ?> style="background-position: -122px -34px;" <?php }?> ></div>
           <input type="hidden" name="shopcoller" id="aa2" value="<?php echo $taskInfo->shopcoller;?>">
@@ -188,7 +188,7 @@
         </li>
         <li class="pdlli12">
           <input id="hpnr" type="text" class="inputp" name="txtMessage" value="<?php echo $taskInfo->txtMessage;?>" placeholder="如果需要接手方带字好评请勾选，并填写规定好评内容。不勾选则默认不带字好评">
-          <!--支付<font class="pdfo">0.5</font>个麦粒--></li>
+          <!--支付<font class="pdfo">0.5</font>个签收积分--></li>
       </ul>
       <ul class="pdul">
         <li>
@@ -214,7 +214,7 @@
         <li class="h97">邮编：
           <input type="text" name="cbxcode" id="cbxcode" class="pc11 inputp shdz" value="<?php echo $zdAddress[2] ;?>">
         </li>
-        <!--<li class="s33"><span>支付<font class="pdfo">0.5</font>个麦粒</span></li>-->
+        <!--<li class="s33"><span>支付<font class="pdfo">0.5</font>个签收积分</span></li>-->
       </ul>
       <div class="address1">
         <div class="add1"> 地址： </div>
@@ -265,16 +265,16 @@
         </li>
         <li class="h34">
           <select name="BuyerJifen" id="BuyerJifen" class="ui-select zhsr">
-            <option <?php if($taskInfo->BuyerJifen == 1){ ?> selected="selected" <?php }?> value="1">一心及以上  <!--（支付 0.5 麦粒）--></option>
-            <option <?php if($taskInfo->BuyerJifen == 2){ ?> selected="selected" <?php }?> value="2">二心及以上  <!--（支付 1.0 麦粒）--></option>
-            <option <?php if($taskInfo->BuyerJifen == 3){ ?> selected="selected" <?php }?> value="3">三心及以上  <!--（支付 2.0 麦粒）--></option>
-            <option <?php if($taskInfo->BuyerJifen == 4){ ?> selected="selected" <?php }?> value="4">四心及以上  <!--（支付 3.0 麦粒）--></option>
-            <option <?php if($taskInfo->BuyerJifen == 5){ ?> selected="selected" <?php }?> value="5">五心及以上  <!--（支付 4.0 麦粒）--></option>
-            <option <?php if($taskInfo->BuyerJifen == 6){ ?> selected="selected" <?php }?> value="6">一钻及以上  <!--（支付 5.0 麦粒）--></option>
-            <option <?php if($taskInfo->BuyerJifen == 7){ ?> selected="selected" <?php }?> value="7">二钻及以上  <!--（支付 6.0 麦粒）--></option>
-            <option <?php if($taskInfo->BuyerJifen == 8){ ?> selected="selected" <?php }?> value="8">三钻及以上  <!--（支付 7.0 麦粒）--></option>
-            <option <?php if($taskInfo->BuyerJifen == 9){ ?> selected="selected" <?php }?> value="9">四钻及以上  <!--（支付 8.0 麦粒）--></option>
-            <option <?php if($taskInfo->BuyerJifen == 10){ ?> selected="selected" <?php }?> value="10">五钻及以上  <!--（支付 9.0 麦粒）--></option>
+            <option <?php if($taskInfo->BuyerJifen == 1){ ?> selected="selected" <?php }?> value="1">一心及以上  <!--（支付 0.5 签收积分）--></option>
+            <option <?php if($taskInfo->BuyerJifen == 2){ ?> selected="selected" <?php }?> value="2">二心及以上  <!--（支付 1.0 签收积分）--></option>
+            <option <?php if($taskInfo->BuyerJifen == 3){ ?> selected="selected" <?php }?> value="3">三心及以上  <!--（支付 2.0 签收积分）--></option>
+            <option <?php if($taskInfo->BuyerJifen == 4){ ?> selected="selected" <?php }?> value="4">四心及以上  <!--（支付 3.0 签收积分）--></option>
+            <option <?php if($taskInfo->BuyerJifen == 5){ ?> selected="selected" <?php }?> value="5">五心及以上  <!--（支付 4.0 签收积分）--></option>
+            <option <?php if($taskInfo->BuyerJifen == 6){ ?> selected="selected" <?php }?> value="6">一钻及以上  <!--（支付 5.0 签收积分）--></option>
+            <option <?php if($taskInfo->BuyerJifen == 7){ ?> selected="selected" <?php }?> value="7">二钻及以上  <!--（支付 6.0 签收积分）--></option>
+            <option <?php if($taskInfo->BuyerJifen == 8){ ?> selected="selected" <?php }?> value="8">三钻及以上  <!--（支付 7.0 签收积分）--></option>
+            <option <?php if($taskInfo->BuyerJifen == 9){ ?> selected="selected" <?php }?> value="9">四钻及以上  <!--（支付 8.0 签收积分）--></option>
+            <option <?php if($taskInfo->BuyerJifen == 10){ ?> selected="selected" <?php }?> value="10">五钻及以上  <!--（支付 9.0 签收积分）--></option>
           </select>
         </li>
       </ul>

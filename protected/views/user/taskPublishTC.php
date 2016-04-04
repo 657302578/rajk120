@@ -43,7 +43,7 @@
           <ul class="pmm">
             <li style="display:block;" class="lili">
               <div class="drw">
-                <div class="pt"> <span class="h40"> <img class="h41" src="<?php echo VERSION2;?>taskcss/blue.png" alt="">商品信息： </span> <span class="h40" style="margin-left: 25px;"><a href="http://www.milioo.com/article/sell/122Q02015.html" target="_blank" style="color: red;font-size: 15px;">查看麦粒计算规则</a></span> </div>
+                <div class="pt"> <span class="h40"> <img class="h41" src="<?php echo VERSION2;?>taskcss/blue.png" alt="">商品信息： </span> <span class="h40" style="margin-left: 25px;"><a href="http://www.milioo.com/article/sell/122Q02015.html" target="_blank" style="color: red;font-size: 15px;">查看签收积分计算规则</a></span> </div>
                 <div class="product_content2">
                   <input type="hidden" name="task_type" value="3">
                   <ul class="pc1">
@@ -81,7 +81,7 @@
                     <li class="s40 s41 searchway" title="要求威客通过信用评价地址进店">
                       <input type="radio" name="visitWay" value="4">
                       信用评价</li>
-                    <li class="h32"><span>支付 <font class="pdfo">1.0</font> 个麦粒</span></li>
+                    <li class="h32"><span>支付 <font class="pdfo">1.0</font> 个签收积分</span></li>
                   </ul>
                 </div>
                 <div class="product_content2 comeway" style="display:none;">
@@ -137,13 +137,13 @@
                     <li class="s34">
                       <select name="ddlOKDay" id="ddlOKDay" class="ui-select" style="display: none;">
                         <option value="0" selected="selected">马上好评（虚拟任务）</option>
-                        <option value="1">24小时(基本麦粒×1.5+0)</option>
-                        <option value="2">48小时(基本麦粒×1.5+1)</option>
-                        <option value="3">72小时(基本麦粒×1.5+2)</option>
-                        <option value="4">96小时(基本麦粒×1.5+3)</option>
-                        <option value="5">120小时(基本麦粒×1.5+4)</option>
-                        <option value="6">144小时(基本麦粒×1.5+5)</option>
-                        <option value="7">168小时(基本麦粒×1.5+6)</option>
+                        <option value="1">24小时(基本签收积分×1.5+0)</option>
+                        <option value="2">48小时(基本签收积分×1.5+1)</option>
+                        <option value="3">72小时(基本签收积分×1.5+2)</option>
+                        <option value="4">96小时(基本签收积分×1.5+3)</option>
+                        <option value="5">120小时(基本签收积分×1.5+4)</option>
+                        <option value="6">144小时(基本签收积分×1.5+5)</option>
+                        <option value="7">168小时(基本签收积分×1.5+6)</option>
                       </select>
                       <div class="select-main">
                         <div class="select-arrow"></div>
@@ -151,13 +151,13 @@
                         <div class="select-block" style="display: none;">
                           <ul class="select-list" style="height: 250px; overflow: auto;">
                             <li class="select-items active">马上好评（虚拟任务）</li>
-                            <li class="select-items">24小时(基本麦粒×1.5+0)</li>
-                            <li class="select-items">48小时(基本麦粒×1.5+1)</li>
-                            <li class="select-items">72小时(基本麦粒×1.5+2)</li>
-                            <li class="select-items">96小时(基本麦粒×1.5+3)</li>
-                            <li class="select-items">120小时(基本麦粒×1.5+4)</li>
-                            <li class="select-items">144小时(基本麦粒×1.5+5)</li>
-                            <li class="select-items">168小时(基本麦粒×1.5+6)</li>
+                            <li class="select-items">24小时(基本签收积分×1.5+0)</li>
+                            <li class="select-items">48小时(基本签收积分×1.5+1)</li>
+                            <li class="select-items">72小时(基本签收积分×1.5+2)</li>
+                            <li class="select-items">96小时(基本签收积分×1.5+3)</li>
+                            <li class="select-items">120小时(基本签收积分×1.5+4)</li>
+                            <li class="select-items">144小时(基本签收积分×1.5+5)</li>
+                            <li class="select-items">168小时(基本签收积分×1.5+6)</li>
                           </ul>
                         </div>
                       </div>
@@ -185,7 +185,7 @@
                     <li class="h38" title="取消商品价格限制" style="display:none">打折：
                       <input type="checkbox" name="chssp" class="h39">
                     </li>
-                    <li class="s37" title="与商品价格、收货时长相关">基本麦粒：
+                    <li class="s37" title="与商品价格、收货时长相关">基本签收积分：
                       <input type="text" id="txtMinMPrice" readonly="" style="background:#F0F0F0;" name="txtMinMPrice" class="inputp">
                     </li>
                   </ul>
@@ -204,36 +204,36 @@
               <div id="a1" class="nulldiv" title="在拍下商品前使用旺旺或旺信与商家聊天"></div>
               <input type="checkbox" name="cbxIsWW" id="aa1">
             </li>
-            <li class="pdli"><span>支付<font class="pdfo">1.0</font>个麦粒</span></li>
+            <li class="pdli"><span>支付<font class="pdfo">1.0</font>个签收积分</span></li>
             <li>
               <div id="a2" class="nulldiv" title="收藏商家发布的商品"></div>
               <input type="checkbox" name="shopcoller" id="aa2">
             </li>
-            <li class="pdli"><span>支付<font class="pdfo">0.5</font>个麦粒</span></li>
+            <li class="pdli"><span>支付<font class="pdfo">0.5</font>个签收积分</span></li>
             <li>
               <div id="a3" class="nulldiv" title="要求接手使用手机付款"></div>
               <input type="checkbox" name="isMobile" id="aa3">
             </li>
-            <li class="pdli"><span>支付<font class="pdfo">2.0</font>个麦粒</span></li>
+            <li class="pdli"><span>支付<font class="pdfo">2.0</font>个签收积分</span></li>
           </ul>
           <ul class="pdul">
             <li>
               <div id="a4" class="nulldiv" title="接手确认收货前在旺旺与您聊天确认。如：已收到货，下次还会再来"></div>
               <input type="checkbox" name="cbxIsLHS" id="aa4">
             </li>
-            <li class="pdli"><span>支付<font class="pdfo">0.5</font>个麦粒</span></li>
+            <li class="pdli"><span>支付<font class="pdfo">0.5</font>个签收积分</span></li>
             <li>
               <div id="a5" class="nulldiv" title="从头到尾浏览宝贝，并提供底图截图"></div>
               <input type="checkbox" name="isViewEnd" id="aa5">
             </li>
-            <li class="pdli"><span>支付<font class="pdfo">0.5</font>个麦粒</span></li>
+            <li class="pdli"><span>支付<font class="pdfo">0.5</font>个签收积分</span></li>
           </ul>
           <ul class="pdul">
             <li>
               <div id="a9" class="nulldiv" title="接手确认收货好评时需要上传的好评图片"></div>
               <input type="checkbox" name="pinimage" id="aa9">
             </li>
-            <li class="pdli"><span>每张支付<font class="pdfo">0.5</font>个麦粒</span></li>
+            <li class="pdli"><span>每张支付<font class="pdfo">0.5</font>个签收积分</span></li>
             <li class="pdli">
               <div class="haoPingWrap" style="float:left;margin-left:-68px;"> <span class="uploadImg" style="float:left;height:39px;margin-left:0px;width:131px;">
                 <input type="file" name="file" class="file" id="upfile-haoping" size="25">
@@ -253,13 +253,13 @@
             </li>
             <li class="pdli11">
               <input type="radio" name="stopTime" value="1">
-              停1分钟<span class="f12"> （<font class="pdfo">0.1</font>个麦粒）</span></li>
+              停1分钟<span class="f12"> （<font class="pdfo">0.1</font>个签收积分）</span></li>
             <li class="pdli11">
               <input type="radio" name="stopTime" value="2">
-              停2分钟<span class="f12"> （<font class="pdfo">0.3</font>个麦粒）</span></li>
+              停2分钟<span class="f12"> （<font class="pdfo">0.3</font>个签收积分）</span></li>
             <li class="pdli11">
               <input type="radio" name="stopTime" value="3">
-              停3分钟<span class="f12"> （<font class="pdfo">0.5</font>个麦粒）</span></li>
+              停3分钟<span class="f12"> （<font class="pdfo">0.5</font>个签收积分）</span></li>
           </ul>
           <ul class="pdul">
             <li>
@@ -268,7 +268,7 @@
             </li>
             <li class="pdlli12">
               <input id="hpnr" type="text" class="inputp" name="txtMessage" placeholder="如果需要接手方带字好评请勾选，并填写规定好评内容。不勾选则默认不带字好评">
-              支付<font class="pdfo">0.5</font>个麦粒</li>
+              支付<font class="pdfo">0.5</font>个签收积分</li>
           </ul>
           <ul class="pdul">
             <li>
@@ -289,17 +289,17 @@
               <div id="a14" class="nulldiv" title="您手动审核接手，通过后才可接手任务"></div>
               <input type="checkbox" name="cbxIsAudit" id="aa14">
             </li>
-            <li class="pdli"><span>支付<font class="pdfo">0.5</font>个麦粒</span></li>
+            <li class="pdli"><span>支付<font class="pdfo">0.5</font>个签收积分</span></li>
             <li>
               <div id="a15" class="nulldiv" title="要求接手使用实名认证的买号"></div>
               <input type="checkbox" name="isReal" id="aa15">
             </li>
-            <li class="pdli"><span>支付<font class="pdfo">0.5</font>个麦粒</span></li>
+            <li class="pdli"><span>支付<font class="pdfo">0.5</font>个签收积分</span></li>
             <li>
               <div id="a16" class="nulldiv" title="要求接手方必须是已加入平台商保的接手"></div>
               <input type="checkbox" name="cbxIsSB" id="aa16">
             </li>
-            <li class="h32"><span>支付<font class="pdfo">2.0</font>个麦粒</span></li>
+            <li class="h32"><span>支付<font class="pdfo">2.0</font>个签收积分</span></li>
           </ul>
           <ul class="pdul">
             <li>
@@ -308,13 +308,13 @@
             </li>
             <li class="pdli11">
               <input type="radio" name="fmaxmc" value="1">
-              1天接1个<span class="f12"> （<font class="pdfo">0.5</font>个麦粒）</span></li>
+              1天接1个<span class="f12"> （<font class="pdfo">0.5</font>个签收积分）</span></li>
             <li class="pdli11">
               <input type="radio" name="fmaxmc" value="2">
-              1天接2个<span class="f12"> （<font class="pdfo">0.2</font>个麦粒）</span></li>
+              1天接2个<span class="f12"> （<font class="pdfo">0.2</font>个签收积分）</span></li>
             <li class="pdli11">
               <input type="radio" name="fmaxmc" value="3">
-              1周接1个<span class="f12"> （<font class="pdfo">1.0</font>个麦粒）</span></li>
+              1周接1个<span class="f12"> （<font class="pdfo">1.0</font>个签收积分）</span></li>
           </ul>
           <ul class="pdul">
             <li>
@@ -399,7 +399,7 @@
             </li>
             <li class="scli1" title="按住Shifl键加单击选项，可多选！">
               <input type="checkbox" id="isMultiple" class="h45">
-              多选省份<span class="f12">(支付<font class="pdfo">2.0</font>个麦粒)</span></li>
+              多选省份<span class="f12">(支付<font class="pdfo">2.0</font>个签收积分)</span></li>
           </ul>
           <ul class="pdul">
             <li>
@@ -408,37 +408,37 @@
             </li>
             <li class="h34">
               <select name="BuyerJifen" id="BuyerJifen" class="ui-select" placeholder="请选择模板" style="display: none;">
-                <option value="1">一心及以上  （支付 0.5 麦粒）</option>
-                <option value="2">二心及以上  （支付 1.0 麦粒）</option>
-                <option value="3">三心及以上  （支付 2.0 麦粒）</option>
-                <option value="4">四心及以上  （支付 3.0 麦粒）</option>
-                <option value="5">五心及以上  （支付 4.0 麦粒）</option>
-                <option value="6">一钻及以上  （支付 5.0 麦粒）</option>
-                <option value="7">二钻及以上  （支付 6.0 麦粒）</option>
-                <option value="8">三钻及以上  （支付 7.0 麦粒）</option>
-                <option value="9">四钻及以上  （支付 8.0 麦粒）</option>
-                <option value="10">五钻及以上  （支付 9.0 麦粒）</option>
+                <option value="1">一心及以上  （支付 0.5 签收积分）</option>
+                <option value="2">二心及以上  （支付 1.0 签收积分）</option>
+                <option value="3">三心及以上  （支付 2.0 签收积分）</option>
+                <option value="4">四心及以上  （支付 3.0 签收积分）</option>
+                <option value="5">五心及以上  （支付 4.0 签收积分）</option>
+                <option value="6">一钻及以上  （支付 5.0 签收积分）</option>
+                <option value="7">二钻及以上  （支付 6.0 签收积分）</option>
+                <option value="8">三钻及以上  （支付 7.0 签收积分）</option>
+                <option value="9">四钻及以上  （支付 8.0 签收积分）</option>
+                <option value="10">五钻及以上  （支付 9.0 签收积分）</option>
               </select>
               <div class="select-main">
                 <div class="select-arrow"></div>
-                <div class="select-set">一心及以上  （支付 0.5 麦粒）</div>
+                <div class="select-set">一心及以上  （支付 0.5 签收积分）</div>
                 <div class="select-block" style="display: none;">
                   <ul class="select-list" style="height: 250px; overflow: auto;">
-                    <li class="select-items active">一心及以上  （支付 0.5 麦粒）</li>
-                    <li class="select-items">二心及以上  （支付 1.0 麦粒）</li>
-                    <li class="select-items">三心及以上  （支付 2.0 麦粒）</li>
-                    <li class="select-items">四心及以上  （支付 3.0 麦粒）</li>
-                    <li class="select-items">五心及以上  （支付 4.0 麦粒）</li>
-                    <li class="select-items">一钻及以上  （支付 5.0 麦粒）</li>
-                    <li class="select-items">二钻及以上  （支付 6.0 麦粒）</li>
-                    <li class="select-items">三钻及以上  （支付 7.0 麦粒）</li>
-                    <li class="select-items">四钻及以上  （支付 8.0 麦粒）</li>
-                    <li class="select-items">五钻及以上  （支付 9.0 麦粒）</li>
+                    <li class="select-items active">一心及以上  （支付 0.5 签收积分）</li>
+                    <li class="select-items">二心及以上  （支付 1.0 签收积分）</li>
+                    <li class="select-items">三心及以上  （支付 2.0 签收积分）</li>
+                    <li class="select-items">四心及以上  （支付 3.0 签收积分）</li>
+                    <li class="select-items">五心及以上  （支付 4.0 签收积分）</li>
+                    <li class="select-items">一钻及以上  （支付 5.0 签收积分）</li>
+                    <li class="select-items">二钻及以上  （支付 6.0 签收积分）</li>
+                    <li class="select-items">三钻及以上  （支付 7.0 签收积分）</li>
+                    <li class="select-items">四钻及以上  （支付 8.0 签收积分）</li>
+                    <li class="select-items">五钻及以上  （支付 9.0 签收积分）</li>
                   </ul>
                 </div>
               </div>
             </li>
-            <li class="scli2">此等级以上可接任务<span>（支付<font class="pdfo">0.5 - 9.0</font>个麦粒）</span></li>
+            <li class="scli2">此等级以上可接任务<span>（支付<font class="pdfo">0.5 - 9.0</font>个签收积分）</span></li>
           </ul>
           <ul class="pduzz">
             <li>
@@ -463,7 +463,7 @@
               <li class="h99">
                 <input type="radio" name="fmingrade" value="100">
                 100</li>
-              <li class="s32"><span>支付<font class="pdfo">0.5</font>个麦粒</span></li>
+              <li class="s32"><span>支付<font class="pdfo">0.5</font>个签收积分</span></li>
             </ul>
             <ul class="pdul_1">
               <li class="h100">接手好评率不低于 :
@@ -518,7 +518,7 @@
               <div id="a21" class="nulldiv" title="要求接手使用真实地址签收快递"></div>
               <input type="checkbox" name="isSign" id="aa21">
             </li>
-            <li class="pdli"><span>支付<font class="pdfo">2.0</font>个麦粒</span></li>
+            <li class="pdli"><span>支付<font class="pdfo">2.0</font>个签收积分</span></li>
           </ul>
           <ul class="pdul" style="display:none">
             <li>
@@ -543,7 +543,7 @@
             <li class="h97">邮编：
               <input type="text" name="cbxcode " class="pc11 inputp shdz">
             </li>
-            <li class="s33"><span>支付<font class="pdfo">0.5</font>个麦粒</span></li>
+            <li class="s33"><span>支付<font class="pdfo">0.5</font>个签收积分</span></li>
           </ul>
           <div class="address1">
             <div class="add1"> 地址： </div>

@@ -85,7 +85,7 @@
                                         任务金额： <span>48</span>金币
                                     </li>
                                     <li>
-                                    悬赏麦粒： <span>58</span>个
+                                    悬赏签收积分： <span>58</span>个
                                     </li>
                                 </ul>
                             </div>
@@ -115,7 +115,7 @@
                                         任务金额： <span>48</span>金币
                                     </li>
                                     <li>
-                                    悬赏麦粒： <span>58</span>个
+                                    悬赏签收积分： <span>58</span>个
                                     </li>
                                 </ul>
                             </div>
@@ -145,7 +145,7 @@
                                         任务金额： <span>48</span>金币
                                     </li>
                                     <li>
-                                    悬赏麦粒： <span>58</span>个
+                                    悬赏签收积分： <span>58</span>个
                                     </li>
                                 </ul>
                             </div>

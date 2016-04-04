@@ -84,7 +84,7 @@
                                 <th><div align="center">真实姓名</div></th>
                                 <th><div align="center">联系号码</div></th>
                                 <th><div align="center">余额</div></th>
-                                <th><div align="center">剩余麦粒</div></th>
+                                <th><div align="center">剩余签收积分</div></th>
                                 <th><div align="center">会员等级</div></th>
                                 <th><div align="center">商保状态</div></th>
                                 <th><div align="center">手机激活</div></th>
