@@ -379,10 +379,13 @@ createUrl('site/taobaoTask',$GetConditionArr);
                 <ul>
                   <li class="xf_name" title="经验值越高，代表会员越熟悉任务流程">经验：<b><?php echo $myinfo->Experience;?></b><span>好评率：<b>
                     <?php
-                                            if((count($hp)+count($zp)+count($cp))==0)
+                                            if((count($zp)+count($cp))==0)
+                                            {
                                                 echo "100%";
-                                            else
+                                            }
+                                            else{
                                                 echo (count($hp)/(count($zp)+count($cp)))."%";
+                                            }
                                           ?>
                     </b></span></li>
                   <li class="xf_hzc"><span class="hp">好评：<b><?php echo count($hp);?></b></span><span class="zp">中评：<b><?php echo count($zp);?></b></span><span class="cp">差评：<b><?php echo count($cp);?></b></span></li>
