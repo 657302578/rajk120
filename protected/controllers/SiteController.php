@@ -2124,7 +2124,6 @@ class SiteController extends Controller
             //生成验证码
             $randStr = str_shuffle('1234567890');//短信验证码由数字组成
             $code = substr($randStr,0,6);
-            echo $code;
             $smsConf = array(
                 'key'   => '6ae1c329d00d4d34e45c234d78c49210', //您申请的APPKEY
                 'mobile'    => ''.$_POST['phone'].'', //接受短信的用户手机号码
