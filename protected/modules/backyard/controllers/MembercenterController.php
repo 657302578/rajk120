@@ -244,10 +244,12 @@
             {
                 $userInfo->id_check_time = date('Y/m/d H:i:s',time());
             }
+            //echo strtotime($_POST['VipStopTime']);exit;
             foreach ($_POST as $k => $v)
             {
                 $userInfo->$k = $v;
             }
+            $userInfo->VipStopTime = strtotime($_POST['VipStopTime']);
             echo $userInfo->save() ? 'SUCCESS' : 'FAIL';
         }
         

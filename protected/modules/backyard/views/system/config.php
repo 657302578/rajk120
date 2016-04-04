@@ -84,6 +84,18 @@
     		                        <input type="text" name="task_price" id="input-small"  class="form-control input-sm" value="<?php if(isset($config)) echo $config->task_price;?>" placeholder="发任务扣多少金额"/>
     		                    </div>
                             </div><br /><br />
+							<div class="examItem">
+                                <label class="col-sm-3 control-label" for="input-small" style="width: auto;">支付宝收款账号：</label>
+                                <div class="col-sm-3">
+    		                        <input type="text" name="sk_alipay_no" id="input-small"  class="form-control input-sm" value="<?php if(isset($config)) echo $config->sk_alipay_no;?>" placeholder="支付宝收款账号"/>
+    		                    </div>
+                            </div><br /><br />
+							<div class="examItem">
+                                <label class="col-sm-3 control-label" for="input-small" style="width: auto;">支付宝收款姓名：</label>
+                                <div class="col-sm-3">
+    		                        <input type="text" name="sk_alipay_name" id="input-small"  class="form-control input-sm" value="<?php if(isset($config)) echo $config->sk_alipay_name;?>" placeholder="支付宝收款姓名"/>
+    		                    </div>
+                            </div><br /><br />
                             <div class="examItem">
                                 <label class="col-sm-3 control-label" for="input-small" style="width: auto;">1积分等于多少元：</label>
                                 <div class="col-sm-3">

@@ -220,14 +220,14 @@
                     ?>
                          <a href="javascript:;" class="qcrw waiterBuyerPayWarning" style="width: auto; padding:0 8px; cursor: pointer;top:0px;" title="点击查看提醒">等待接手付款</a>
                          <div class="clear"></div>
-                         <span style="width: auto; position: relative; top:-30px; left:805px;" class="settime" action="waiterBuyerPay" lang="<?php echo $item->taskerid;?>" alt="<?php echo $item->id;?>" endTime="<?php echo date("Y-m-d H:i:s",$item->tasksecondTime+1800);?>"></span>
+                         <span style="width: auto; position: relative; top:-30px; left:805px;" class="settime" action="waiterBuyerPay" lang="<?php echo $item->taskerid;?>" alt="<?php echo $item->id;?>" endTime="<?php echo date("Y-m-d H:i:s",$item->tasksecondTime+3600);?>"></span>
                     <?php
                         }
                         if($item->status==3){
                     ?>
                         <a href="javascript:;" class="qcrw sellerCertainSendGood" lang="<?php echo $item->id;?>" style="width: auto; padding:0 8px; cursor: pointer;top:0px;">接手已完成，等待您返款</a>
                         <div class="clear"></div>
-                        <span style="width: auto; position: relative; top:-30px; left:805px;" class="settime" action="waiteSellerSendGood" lang="<?php echo $item->taskerid;?>" alt="<?php echo $item->id;?>" endTime="<?php echo date("Y-m-d H:i:s",$item->taskthirdTime+86400);?>"></span>
+                        <span style="width: auto; position: relative; top:-30px; left:805px;" class="settime" action="waiteSellerSendGood" lang="<?php echo $item->taskerid;?>" alt="<?php echo $item->id;?>" endTime="<?php echo date("Y-m-d H:i:s",$item->taskthirdTime+21600);?>"></span>
                     <?php
                         }
                         if($item->status==4){
