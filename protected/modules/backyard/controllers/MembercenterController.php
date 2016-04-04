@@ -57,6 +57,31 @@
             parent::acl();
             $criteria = new CDbCriteria;
             $criteria->order ="id desc";
+            
+            $u_condition = '';
+            if( isset($_GET['username']) && !empty($_GET['username']) ){
+                $username = trim($_GET['username']);
+                $u_condition = "Username like '%{$username}%'";
+            }
+            if( isset($_GET['id_is_check']) && $_GET['id_is_check'] != '' ){
+                $u_condition .= "id_is_check=".$_GET['id_is_check'];
+            }
+            if( !empty($u_condition) ){
+                $uids = User::model()->findAll(array(
+                    'select'=>'id',
+                    'condition'=>$u_condition
+                ));
+                if( !empty($uids) ){
+                    $uidsStr = '';
+                    foreach($uids as $k=>$v){
+                        $uidsStr .= ','.$v['id'];
+                    }
+                    $uidsStr .= ',';
+                    $uidsStr = trim($uidsStr,',');
+                    $criteria->condition ="uid in ({$uidsStr})";
+                }
+            }
+            
             //分页开始
             $total = Useraddress::model()->count($criteria);
             $pages = new CPagination($total);
