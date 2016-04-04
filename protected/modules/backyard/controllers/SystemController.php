@@ -12,6 +12,7 @@
             {   
                 $config = Config::model()->findByPk(1);
                 $data['task_price'] = $_POST['task_price'];
+                $data['one_user_day_limit'] = $_POST['one_user_day_limit'];
                 $data['jifen_rate'] = $_POST['jifen_rate'];
                 $data['last_update_time'] = date('Y/m/d H:i:s');
                 $data['buyertaskmaxnum'] = intval($_POST['buyertaskmaxnum']);
