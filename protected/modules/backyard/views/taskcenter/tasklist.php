@@ -97,6 +97,7 @@
                                 <th>商品价格</th>
                                 <th>消耗麦粒</th>
                                 <th>任务状态</th>
+                                <th>操作</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -157,6 +158,10 @@
                                             }
                                         }
                                     ?>
+                                </td>
+                                <td>
+                                    <a href="javascript:resetTask(<?php echo $item->id;?>);" title="重置此任务">重置</a>
+                                    <a href="javascript:delTask(<?php echo $item->id;?>);">删除此任务</a>
                                 </td>
                             </tr>
                         <?php }?>
@@ -308,6 +313,28 @@
     </style>
     <script type="text/javascript">
 	$( "input[name='act_start_time'],input[name='act_stop_time']" ).datetimepicker();
+    </script>
+    <script>
+    function resetTask(taskId)
+    {
+        $.ajax({
+            type:"POST",
+            url:"<?php echo $this->createUrl('taskcenter/resetTask');?>",
+            data:"taskId="+taskId,
+            success:function(msg)
+            {
+                if(msg == '200')
+                    {
+                    alert('重置成功！');
+                    }else{
+                        alert('重置失败！');
+                    }
+                }
+            });
+        }
+    function delTask(taskId)
+    {
+        }
     </script>
 	
 </body>
