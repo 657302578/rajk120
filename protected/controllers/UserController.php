@@ -702,14 +702,80 @@ class UserController extends Controller
         $pages = new CPagination($total);
         $pages->pageSize=10;//分页大小
         $pages->applyLimit($criteria);
-        
         $proreg = Companytasklist::model()->findAll($criteria);
         //分页结束
-        
         $this->render('taobaoInTask',array(
             'proInfo' => $proreg,
             'pages' => $pages
         ));
+    }
+    
+    /**
+     * 取消任务
+     */
+    public function actionCancelTask()
+    {
+        $taskId = intval($_POST['taskId']);
+        if($taskId > 0)
+        {
+            //查询任务申请状态
+            $aTaskInfo = Usertasklist::model()->findByAttributes( array('uid' => Yii::app()->user->getId(),'task_id'=> $taskId));
+            if(!isset($aTaskInfo))
+            {
+                //任务不存在
+                exit('NOT_A_THIS_TASKER');
+            }
+            if($aTaskInfo->state == 1)
+            {
+                exit('YIJINGSHENHETONGGUO');
+            }
+            //取消此申请
+            $aTaskInfo->delete();
+            exit('success');
+        }else{
+            echo 'fail';
+        }
+    }
+    
+    /**
+     * 已审核通过，取消任务
+     */
+    public function actionSellerCancelTask()
+    {
+        $taskId = intval($_POST['taskId']);
+        if($taskId > 0)
+        {
+            //重置任务的部分字段
+            $taskInfo = Companytasklist::model()->findByPk($taskId);
+            //查询任务申请状态
+            $aTaskInfo = Usertasklist::model()->findByAttributes( array('uid' => $taskInfo->taskerid,'task_id'=> $taskId));
+            if(!isset($aTaskInfo))
+            {
+                //任务不存在
+                exit('NOT_A_THIS_TASKER');
+            }
+            
+            if(isset($taskInfo))
+            {
+                //取消此申请
+                $aTaskInfo->delete();
+                if($taskInfo->status != 2) exit('STATUS_ERROR');
+                $taskInfo->taskerid = 0;
+                $taskInfo->taskerWangwang = '';
+                $taskInfo->taskfristTime = 0;
+                $taskInfo->tasksecondTime = 0;
+                $taskInfo->taskthirdTime = 0;
+                $taskInfo->taskforthTime = 0;
+                $taskInfo->status =0;
+                $taskInfo->tasktime = 0;
+                $taskInfo->save();
+                exit('success');
+            }else{
+                exit('fail');
+            }
+        }else{
+            echo 'fail';
+        }
     }
     
     /*

@@ -234,6 +234,7 @@
                         if($item->status==2){
                     ?>
                          <a href="javascript:;" class="qcrw waiterBuyerPayWarning" style="width: auto; padding:0 8px; cursor: pointer;top:0px;" title="点击查看提醒">等待接手付款</a>
+						 <a href="javascript:;" class="qcrw sellerCancelTasker" style="width: auto; padding:0 8px; cursor: pointer;top:0px;" title="取消此任务" alt="<?php echo $item->id;?>">取消</a>
                          <div class="clear"></div>
                          <span style="width: auto; position: relative; top:-30px; left:805px;" class="settime" action="waiterBuyerPay" lang="<?php echo $item->taskerid;?>" alt="<?php echo $item->id;?>" endTime="<?php echo date("Y-m-d H:i:s",$item->tasksecondTime+3600);?>"></span>
                     <?php
@@ -929,6 +930,38 @@
             		});
             	});
             });
+			
+			
+			$(".sellerCancelTasker").click(function(){
+				var taskerid=$(this).attr("alt");
+				if(confirm('确定取消该接手吗？'))
+				{
+					$.ajax({
+						type:"POST",
+						url:"<?php echo $this->createUrl('user/sellerCancelTask');?>",
+						data:"taskId="+taskerid,
+						success:function(msg)
+						{
+							if(msg == 'success')
+							{
+								layer.confirm('取消成功！', {
+            		btn: ['知道了'] //按钮
+            					},function(){
+									location.reload();
+								});
+							}else if(msg == 'STATUS_ERROR'){
+								layer.confirm('该任务不是等待刷手操作状态，不可取消！', {
+            		btn: ['知道了'] //按钮
+            					});
+							}else{
+								layer.confirm('取消失败！', {
+            		btn: ['知道了'] //按钮
+            					});
+							}
+						}
+					});
+				}
+			});
             
             //商家最后确认
             $(".sellerLastCertain").click(function(){

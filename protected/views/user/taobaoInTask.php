@@ -214,6 +214,7 @@
                         if($item->status==0){
                     ?>
                     <a class="qcrw" style="width: auto; padding:0 8px; cursor: pointer; top:0px;" title="点击查看提醒">等待商家审核</a>
+					<a class="qcrw cancelTask" alt="<?php echo $item->id;?>" style="width: auto; padding:0 8px; cursor: pointer; top:0px;" title="取消申请">取消申请</a>
                     <?php
                         }
                         if($item->status==1){
@@ -463,6 +464,41 @@
             		btn: ['知道了'] //按钮
             	});
             });
+			
+			$(".cancelTask").click(function(){
+				var taskerid=$(this).attr("alt");
+				if(confirm('确定取消吗？'))
+				{
+					$.ajax({
+						type:"POST",
+						url:"<?php echo $this->createUrl('user/cancelTask');?>",
+						data:"taskId="+taskerid,
+						success:function(msg)
+						{
+							if(msg == 'success')
+							{
+								layer.confirm('取消成功！', {
+            		btn: ['知道了'] //按钮
+            					},function(){
+									location.reload();
+								});
+							}else if(msg == "NOT_A_THIS_TASKER"){
+								layer.confirm('您没有申请过此任务！', {
+            		btn: ['知道了'] //按钮
+            					});
+							}else if(msg == "YIJINGSHENHETONGGUO"){
+								layer.confirm('该任务已经审核通过！', {
+            		btn: ['知道了'] //按钮
+            					});
+							}else{
+								layer.confirm('取消失败！', {
+            		btn: ['知道了'] //按钮
+            					});
+							}
+						}
+					});
+				}
+			});
             
             //接手退出任务
             $(".taskBack").click(function(){

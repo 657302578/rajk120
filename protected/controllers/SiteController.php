@@ -827,7 +827,11 @@ class SiteController extends Controller
             {
                 $taskInfo->status=6;//任务状态变6，即暂停任务状态
                 if($taskInfo->save())
+                {
+                    //删除此任务的申请者
+                    Usertasklist::model()->deleteAllByAttributes(array('task_id' => $_POST['id']));
                     echo "SUCCESS";
+                }
                 else
                 {
                     echo "FAIL";
