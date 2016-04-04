@@ -140,7 +140,14 @@
                                     <li title="在拍下商品并支付后，<?php echo $item->ddlOKDay*24==0?"立即":"在".($item->ddlOKDay*24)."小时后";?>且物流信息显示已签收后确认收货五星好评！">
                                         收货时长： 
                                         <span>
-                                            <?php echo $item->ddlOKDay*24==0?"立即":($item->ddlOKDay*24)."小时立即";?>
+                                           <?php
+			  	if($item->ddlOKDay == 8)
+				{
+				echo '根据物流';
+				}else{
+			  	 echo $item->ddlOKDay*24==0?"立即":($item->ddlOKDay*24)."小时立即";
+				}
+			  ?> 
                                         </span>
                                         五星好评
                                     </li>
