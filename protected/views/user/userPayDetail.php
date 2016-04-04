@@ -41,7 +41,7 @@
                                         echo '帐户充值';
                                         break;
                                     case 7:
-                                        echo '回收'.$item->MinLi.'个麦粒获得';
+                                        echo '回收'.$item->MinLi.'个签收积分获得';
                                         break;
                                 }
                             ?>

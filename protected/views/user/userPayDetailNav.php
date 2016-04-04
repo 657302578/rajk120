@@ -5,7 +5,7 @@
                     	充值
                     </li>
                     <li <?php echo $this->getAction()->getId()=="userPayDetailMinLi"?"class='now'":"";?> onclick="window.location.href='<?php echo $this->createUrl('user/userPayDetailMinLi');?>'">
-                    	麦粒
+                    	签收积分
                     </li>
                     <li <?php echo $this->getAction()->getId()=="userPayDetailTask"?"class='now'":"";?> onclick="window.location.href='<?php echo $this->createUrl('user/userPayDetailTask');?>'">
                     	任务
