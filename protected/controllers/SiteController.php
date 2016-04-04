@@ -410,12 +410,17 @@ class SiteController extends Controller
             {
                 exit('USER_DAY_TASK_LIMIT');
             }
-            //判断此会员10日内是否做过此会员的任务
-            $count = Companytasklist::model()->count('taskerid='.$loginUserInfo->id.' AND taskerid='.$loginUserInfo->id.' AND status > 1 AND tasksecondTime >'.strtotime('-10 day', time()).' AND tasksecondTime <= '.time());
-            if(false)//$count > 0)
+            
+            if($ptConfig->one_user_day_limit > 0)
             {
-                exit('ten_day_cftask');
+                //判断此会员10日内是否做过此会员的任务
+                $count = Companytasklist::model()->count('taskerid='.$loginUserInfo->id.' AND taskerid='.$loginUserInfo->id.' AND status > 1 AND tasksecondTime >'.strtotime('-'.$ptConfig->one_user_day_limit.' day', time()).' AND tasksecondTime <= '.time());
+                if(false)//$count > 0)
+                {
+                    exit('ten_day_cftask');
+                }
             }
+            
             //查询符合条件的买号 
             $buyerInfo=Blindwangwang::model()->findAll(array(
                 'condition'=>'userid='.Yii::app()->user->getId().' and statue=1 and catalog=1 AND is_check=1',
