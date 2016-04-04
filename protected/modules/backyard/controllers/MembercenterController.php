@@ -13,7 +13,7 @@
             {
                 $criteria = new CDbCriteria;
                 $criteria->condition = '1 ';
-                $criteria->order ="RegTime asc";
+                $criteria->order ="RegTime DESC";
                 if(isset($_GET['keyword']) && !empty($_GET['keyword'])) $criteria->condition.=' AND (Username="'.$_GET['keyword'].'" or Phon="'.$_GET['keyword'].'")';
                 if(isset($_GET['id_is_check']) && $_GET['id_is_check'] > 0 )
                 { 
@@ -34,7 +34,7 @@
                 Yii::app()->end();
             }
             $criteria = new CDbCriteria;
-            $criteria->order ="RegTime asc";
+            $criteria->order ="RegTime DESC";
             //分页开始
             $total = User::model()->count($criteria);
             $pages = new CPagination($total);
