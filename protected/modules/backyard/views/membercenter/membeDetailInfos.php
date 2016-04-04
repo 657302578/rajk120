@@ -149,7 +149,7 @@
         								</li>
                                         <li>
         									新手考试：
-												<input <?php if($userinfo->PhonActive == 0){?> checked="checked" <?php }?> type="radio" name="PhonActive" value="0" />未通过 <input <?php if($userinfo->PhonActive == 1){?> checked="checked" <?php }?> type="radio" name="PhonActive" value="1" />已通过
+												<input <?php if($userinfo->ExamPass == 0){?> checked="checked" <?php }?> type="radio" name="ExamPass" value="0" />未通过 <input <?php if($userinfo->ExamPass == 1){?> checked="checked" <?php }?> type="radio" name="ExamPass" value="1" />已通过
         								</li>
 										<li>
         									身份证号码：<input type="text" name="id_card" value="<?php echo $userinfo->id_card?>" />

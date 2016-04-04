@@ -61,7 +61,7 @@
             <li class="newinput"><font class="newth">Email :</font><span class="emailstyle"><?php echo substr_replace($userinfo->Email,'***',3,3);?></span	></li>
           </ul>
         </div>
-        <input type="type" name="sex" value="1" />
+        <input type="hidden" name="sex" value="1" />
         <!-- <div class="d_check clearfix">
           <ul>
             <li class="newinput"><font class="newth">性别 :</font>
