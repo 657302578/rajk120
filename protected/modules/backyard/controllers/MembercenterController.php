@@ -64,7 +64,11 @@
                 $u_condition = "Username like '%{$username}%'";
             }
             if( isset($_GET['id_is_check']) && $_GET['id_is_check'] != '' ){
-                $u_condition .= "id_is_check=".$_GET['id_is_check'];
+                if( !empty($_GET['username']) ){
+                    $u_condition = " and id_is_check=".$_GET['id_is_check'];
+                }else{
+                    $u_condition = "id_is_check=".$_GET['id_is_check'];
+                }
             }
             if( !empty($u_condition) ){
                 $uids = User::model()->findAll(array(
