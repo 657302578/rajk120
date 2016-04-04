@@ -1952,22 +1952,19 @@ class UserController extends Controller
                     $userAddModel->user_name = $_POST['addr']['user_name'];
                     $userAddModel->create_time = date('Y/m/d H:i:s');
                     $userAddModel->save();
-                }else{
-                    //收货地址前台不能更新
-                    //Useraddress::model()->updateByPk($userAddressInfo->id, $data);
                 }
-                //查询是否绑定了买号
-                $otherAddr = Useraddress::model()->find('occupy_uid='.Yii::app()->user->getId());
-                if(!$otherAddr)
-                {
-                    //没有绑定就自动绑定一个
-                    $targetAddr = Useraddress::model()->find('occupy_uid=0 AND uid != '.Yii::app()->user->getId());
-                    if($targetAddr)
-                    {
-                        $targetAddr->occupy_uid = Yii::app()->user->getId();
-                        $targetAddr->save();
-                    }
-                }
+                //查询是否绑定了
+//                 $otherAddr = Useraddress::model()->find('occupy_uid='.Yii::app()->user->getId());
+//                 if(!$otherAddr)
+//                 {
+//                     //没有绑定就自动绑定一个
+//                     $targetAddr = Useraddress::model()->find('occupy_uid=0 AND uid != '.Yii::app()->user->getId());
+//                     if($targetAddr)
+//                     {
+//                         $targetAddr->occupy_uid = Yii::app()->user->getId();
+//                         $targetAddr->save();
+//                     }
+//                 }
                 echo "SUCCESS";
             }
             else

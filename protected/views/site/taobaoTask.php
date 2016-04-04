@@ -553,7 +553,7 @@ createUrl('site/taobaoTask',$GetConditionArr);
                                             		btn: ['知道了'] //按钮
                                 });						
 							}else if(msg == "ADDRESS_NO_PIPEI"){
-								layer.confirm('<span style="color:red;">您不符合条件！</span>', {
+								layer.confirm('<span style="color:red;">收货地址不符合要求！</span>', {
                                             		btn: ['知道了'] //按钮
                                 });
 							}else if(msg == "ten_day_cftask"){

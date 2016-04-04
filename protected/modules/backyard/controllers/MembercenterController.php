@@ -240,17 +240,6 @@
             $userInfo = User::model()->findByPk($_POST['uid']);
             if(!$userInfo) exit('NO_USER');
             unset($_POST['uid'], $_POST['submit']);
-            if($userInfo->id_is_check <= 0 && $_POST['id_is_check'] > 0 )
-            {
-                $userInfo->id_check_time = date('Y/m/d H:i:s',time());
-            }
-            foreach ($_POST as $k => $v)
-            {
-                $userInfo->$k = $v;
-            }
-            $userInfo->alipay_account = trim($_POST['alipay_account']);
-            $userInfo->Phon = trim($_POST['Phon']);
-            $userInfo->VipStopTime = strtotime($_POST['VipStopTime']);
             //处理收货地址审核的功能,大于0说明审核通过
             if(intval($_POST['address_is_check']) > 0)
             {
@@ -271,6 +260,19 @@
                     }
                 }
             }
+            unset($_POST['address_is_check']);
+            if($userInfo->id_is_check <= 0 && $_POST['id_is_check'] > 0 )
+            {
+                $userInfo->id_check_time = date('Y/m/d H:i:s',time());
+            }
+            foreach ($_POST as $k => $v)
+            {
+                $userInfo->$k = $v;
+            }
+            $userInfo->alipay_account = trim($_POST['alipay_account']);
+            $userInfo->Phon = trim($_POST['Phon']);
+            $userInfo->VipStopTime = strtotime($_POST['VipStopTime']);
+            
             echo $userInfo->save() ? 'SUCCESS' : 'FAIL';
         }
         
