@@ -212,7 +212,7 @@
                     ?>
                          <a href="javascript:;" class="qcrw certainGoToPay" alt="<?php echo $item->id;?>" style="width: auto; padding:0 8px; cursor: pointer; top:0px;">等待您完成操作</a>
                          <div class="clear"></div>
-                         <span style="width: auto; position: relative; top:-30px; left:805px;" class="settime" action="waiterBuyerPay" lang="<?php echo $item->taskerid;?>" alt="<?php echo $item->id;?>" endTime="<?php echo date("Y-m-d H:i:s",$item->tasksecondTime+1800);?>"></span>
+                         <span style="width: auto; position: relative; top:-30px; left:805px;" class="settime" action="waiterBuyerPay" lang="<?php echo $item->taskerid;?>" alt="<?php echo $item->id;?>" endTime="<?php echo date("Y-m-d H:i:s",$item->tasksecondTime+3600);?>"></span>
                     <?php
                         }
                         if($item->status==3){
