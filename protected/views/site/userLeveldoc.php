@@ -2,7 +2,7 @@
     <div class="d_dj">
     	<div class="d_djbg">
         	<div class="d_djcon">
-            	<a class="d_vip1" href="#">麦粒网VIP</a>
+            	<a class="d_vip1" href="#">签收积分网VIP</a>
                 <a class="d_vip2" href="#">申请VIP</a>
             </div>
         </div>

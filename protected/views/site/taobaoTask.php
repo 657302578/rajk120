@@ -175,23 +175,23 @@ createUrl('site/taobaoTask',$GetConditionArr);
   <li><a <?php echo @$_GET['MinLi']==1?'class="searchOn"':'';?> href="<?php
                         $GetConditionArr['MinLi']=1;
                         echo $this->createUrl('site/taobaoTask',$GetConditionArr);
-                    ?>">1-10麦粒</a></li>
+                    ?>">1-10签收积分</a></li>
   <li><a <?php echo @$_GET['MinLi']==2?'class="searchOn"':'';?> href="<?php
                         $GetConditionArr['MinLi']=2;
                         echo $this->createUrl('site/taobaoTask',$GetConditionArr);
-                    ?>">11-20麦粒</a></li>
+                    ?>">11-20签收积分</a></li>
   <li><a <?php echo @$_GET['MinLi']==3?'class="searchOn"':'';?> href="<?php
                         $GetConditionArr['MinLi']=3;
                         echo $this->createUrl('site/taobaoTask',$GetConditionArr);
-                    ?>">21-30麦粒</a></li>
+                    ?>">21-30签收积分</a></li>
   <li><a <?php echo @$_GET['MinLi']==4?'class="searchOn"':'';?> href="<?php
                         $GetConditionArr['MinLi']=4;
                         echo $this->createUrl('site/taobaoTask',$GetConditionArr);
-                    ?>">30-40麦粒</a></li>
+                    ?>">30-40签收积分</a></li>
   <li><a <?php echo @$_GET['MinLi']==5?'class="searchOn"':'';?> href="<?php
                         $GetConditionArr['MinLi']=5;
                         echo $this->createUrl('site/taobaoTask',$GetConditionArr);
-                    ?>">41麦粒以上</a></li>
+                    ?>">41签收积分以上</a></li>
 </ul>
 <?php @$GetConditionArr['MinLi'] = $_GET['MinLi'];?>
 </div>
@@ -406,7 +406,7 @@ createUrl('site/taobaoTask',$GetConditionArr);
 			  </span> 五星好评 </li>
               <li title="平台担保：此任务卖家已缴纳全额担保存款，接手可放心购买，任务完成后，买家平台账号自动获得相应存款"> 任务金额：<span><?php echo $item->txtPrice;?></span>元&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;任务佣金： <span><?php echo $item->yongjin_money;?></span>元 </li>
               <!--<li title="完成任务后，您能获得的任务奖励，可兑换成RMB">
-                                    悬赏麦粒： <span><?php echo $item->
+                                    悬赏签收积分： <span><?php echo $item->
               MinLi;?></span>个
               </li>
               -->

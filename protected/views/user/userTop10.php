@@ -123,7 +123,7 @@
                     </table>
                 </li>
                 <li>
-                	<p class="d_zb">消费麦粒</p>
+                	<p class="d_zb">消费签收积分</p>
                     <table class="d_zbtable">
                     	<tr class="d_zbtr">
                         	<th class="d_zbtd1"></td>

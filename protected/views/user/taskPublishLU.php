@@ -50,7 +50,7 @@
           <ul class="pmm">
             <li style="display:block;" class="lili">
               <div class="drw">
-                <div class="pt"> <span class="h40"> <img class="h41" src="<?php echo VERSION2;?>taskcss/blue.png" alt="">商品信息： </span> <!--<span class="h40" style="margin-left: 25px;"><a href="http://www.milioo.com/article/sell/122Q02015.html" target="_blank" style="color: red;font-size: 15px;">查看麦粒计算规则</a></span>--> </div>
+                <div class="pt"> <span class="h40"> <img class="h41" src="<?php echo VERSION2;?>taskcss/blue.png" alt="">商品信息： </span> <!--<span class="h40" style="margin-left: 25px;"><a href="http://www.milioo.com/article/sell/122Q02015.html" target="_blank" style="color: red;font-size: 15px;">查看签收积分计算规则</a></span>--> </div>
                 <!--来路任务不同与普通任务不同部分-->
                 <div class="product_content1">
                   <ul class="dowebok">
@@ -125,7 +125,7 @@
                     <li class="s40 s41 searchway" title="要求接手通过信用评价地址进店">
                       <input type="radio" name="visitWay" value="4">
                       信用评价</li>
-                   <!-- <li class="h32"><span>支付 <font class="pdfo">1.0</font> 个麦粒</span></li>-->
+                   <!-- <li class="h32"><span>支付 <font class="pdfo">1.0</font> 个签收积分</span></li>-->
                   </ul>
 				  <ul class="dowebok">
 				  	<li class="s35" ><img src="<?php echo VERSION2;?>taskcss/c12.jpg" alt="">搜索关键字：</li>
@@ -188,7 +188,7 @@
               <div id="a1" lang="1" alt="0" class="nulldiv" title="在拍下商品前使用旺旺或旺信与商家聊天"></div>
               <input type="hidden" name="cbxIsWW" id="aa1" />
             </li>
-            <!--<li class="pdli"><span>支付<font class="pdfo">1.0</font>个麦粒</span></li>-->
+            <!--<li class="pdli"><span>支付<font class="pdfo">1.0</font>个签收积分</span></li>-->
             <li>
               <div id="a2" lang="2" alt="0" class="nulldiv" title="收藏商家发布的商品"></div>
               <input type="hidden" name="shopcoller" id="aa2">
@@ -257,19 +257,19 @@
             </li>
             <li class="h34">
               <select name="BuyerJifen" id="BuyerJifen" class="ui-select zhsr">
-                <option value="1">一心及以上  <!--（支付 0.5 麦粒）--></option>
-                <option value="2">二心及以上  <!--（支付 1.0 麦粒）--></option>
-                <option value="3">三心及以上  <!--（支付 2.0 麦粒）--></option>
-                <option value="4">四心及以上  <!--（支付 3.0 麦粒）--></option>
-                <option value="5">五心及以上  <!--（支付 4.0 麦粒）--></option>
-                <option value="6">一钻及以上  <!--（支付 5.0 麦粒）--></option>
-                <option value="7">二钻及以上  <!--（支付 6.0 麦粒）--></option>
-                <option value="8">三钻及以上  <!--（支付 7.0 麦粒）--></option>
-                <option value="9">四钻及以上  <!--（支付 8.0 麦粒）--></option>
-                <option value="10">五钻及以上  <!--（支付 9.0 麦粒）--></option>
+                <option value="1">一心及以上  <!--（支付 0.5 签收积分）--></option>
+                <option value="2">二心及以上  <!--（支付 1.0 签收积分）--></option>
+                <option value="3">三心及以上  <!--（支付 2.0 签收积分）--></option>
+                <option value="4">四心及以上  <!--（支付 3.0 签收积分）--></option>
+                <option value="5">五心及以上  <!--（支付 4.0 签收积分）--></option>
+                <option value="6">一钻及以上  <!--（支付 5.0 签收积分）--></option>
+                <option value="7">二钻及以上  <!--（支付 6.0 签收积分）--></option>
+                <option value="8">三钻及以上  <!--（支付 7.0 签收积分）--></option>
+                <option value="9">四钻及以上  <!--（支付 8.0 签收积分）--></option>
+                <option value="10">五钻及以上  <!--（支付 9.0 签收积分）--></option>
               </select>
             </li>
-            <li class="scli2">此等级以上可接任务<span><!--（支付<font class="pdfo">0.5 - 9.0</font>个麦粒）--></span></li>
+            <li class="scli2">此等级以上可接任务<span><!--（支付<font class="pdfo">0.5 - 9.0</font>个签收积分）--></span></li>
           </ul>
         </div>
       </div>
@@ -408,7 +408,7 @@ function changeTpl(taskId,tplType)
         
     })
     
-    //计算麦粒
+    //计算签收积分
     function needMinLi()
     {
         var txtPrice=$("#txtPrice").val();//商品价格

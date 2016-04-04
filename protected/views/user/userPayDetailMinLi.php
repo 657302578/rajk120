@@ -21,7 +21,7 @@
                 <table style="width: 100%; text-align: center; color:#666; font-size:12px; line-height:55px; margin-top:20px;">
                     <tr style="background: #57A0FF; color:#fff; height:40px; line-height:40px;">
                         <td>序列号</td>
-                        <td>购买麦粒</td>
+                        <td>购买签收积分</td>
                         <td>购买状态</td>
                         <td>操作时间</td>
                     </tr>
@@ -33,7 +33,7 @@
                         <td style="color: #F60; font-size:16px;">￥<?php echo $item->number;?></td>
                         <td>
                             <?php
-                                echo $item->catalog==2?"购买麦粒":"追加麦粒，任务ID号：".$item->taskid;
+                                echo $item->catalog==2?"购买签收积分":"追加签收积分，任务ID号：".$item->taskid;
                             ?>
                         </td>
                         <td><?php echo date('Y-m-d H:i:s',$item->time);?></td>

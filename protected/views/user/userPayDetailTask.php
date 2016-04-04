@@ -62,13 +62,13 @@
                                         echo '发布任务使用的金额';
                                         break;
                                     case 4:
-                                        echo '发布任务使用的麦粒';
+                                        echo '发布任务使用的签收积分';
                                         break;
                                     case 5:
                                         echo '接任务获得的金额';
                                         break;
                                     case 6:
-                                        echo '接手任务获得的麦粒';
+                                        echo '接手任务获得的签收积分';
                                         break;
                                 }
                             ?>
