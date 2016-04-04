@@ -28,26 +28,14 @@
                 
                 <div class="d_duihuan clearfix">
                 	<a class="d_duohuan_a MinLinToCsh" href="javascript:;">兑换</a>
-                    <p>签收积分回收价格：1个签收积分
-                        <?php
-                            switch($userInfo->VipLv)
-                            {
-                                case 0:
-                                    echo 0.42;
-                                    break;
-                                case 1:
-                                    echo 0.43;
-                                    break;
-                                case 2:
-                                    echo 0.45;
-                                    break;
-                                case 3:
-                                    echo 0.48;
-                                    break;
-                            }
-                        ?>
-                    金币</p>
-                    <a class="d_huishou" href="<?php echo $this->createUrl('site/userLeveldoc');?>" target="_blank">查看等级回收价格</a>
+                    <p>
+					<?php
+						$ptConfig = Config::model()->findByPk(1);
+					?>
+					签收积分回收价格：1个签收积分等于
+                        <?php echo $ptConfig->jifen_rate;?>
+                    金币
+					</p>
                 </div>
             </div>
          </div>

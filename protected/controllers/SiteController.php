@@ -212,7 +212,12 @@ class SiteController extends Controller
                 }
                 if($k=='ddlOKDay' && $v!='noVal' && $v!='')//收货时长
                 {
+                    if($v == 8)
+                    {
+                        $condition=$condition.' and '.$k.'=8';;
+                    }else{
                         $condition=$condition.' and '.$k.'='.($v-1);
+                    }
                 }
             }
             
