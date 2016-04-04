@@ -673,7 +673,7 @@ class UserController extends Controller
             $keywordsArr=explode('*',$_POST['keywords']);//分解关键词
             //任务大厅
     	    $criteria = new CDbCriteria;
-            $criteria->condition=' id IN(select task_id from zxjy_usertasklist WHERE uid='.Yii::app()->user->getId().') and taskCompleteStatus<>1 and time='.trim($keywordsArr[0]).' and id='.trim($keywordsArr[1]);
+            $criteria->condition=' id IN(select task_id from zxjy_usertasklist WHERE uid='.Yii::app()->user->getId().' AND state=0) and time='.trim($keywordsArr[0]).' and id='.trim($keywordsArr[1]);
             $criteria->order ="time desc";
             
             
@@ -695,7 +695,7 @@ class UserController extends Controller
         }
         //我接手的任务
 	    $criteria = new CDbCriteria;
-        $criteria->condition=' id IN(select task_id from zxjy_usertasklist WHERE uid='.Yii::app()->user->getId().')  and taskCompleteStatus<>1';//不查询已完成的任务
+        $criteria->condition=' id IN(select task_id from zxjy_usertasklist WHERE uid='.Yii::app()->user->getId().' AND state=0)';//不查询已完成的任务
         $criteria->order ="status asc";
         //分页开始
         $total =Companytasklist::model()->count($criteria);
@@ -789,7 +789,7 @@ class UserController extends Controller
             $keywordsArr=explode('*',$_POST['keywords']);//分解关键词
             //任务大厅
     	    $criteria = new CDbCriteria;
-            $criteria->condition='taskerid='.Yii::app()->user->getId().' and status<>6 and status=2 and time='.trim($keywordsArr[0]).' and id='.trim($keywordsArr[1]);
+            $criteria->condition='taskerid='.Yii::app()->user->getId().' and status IN(2,3) and time='.trim($keywordsArr[0]).' and id='.trim($keywordsArr[1]);
             $criteria->order ="tasksecondTime desc";
         
             //分页开始
@@ -809,7 +809,7 @@ class UserController extends Controller
         }
         //我接手的任务
 	    $criteria = new CDbCriteria;
-        $criteria->condition='taskerid='.Yii::app()->user->getId().' and status<>6 and status=2';//不查询已完成的任务
+        $criteria->condition='taskerid='.Yii::app()->user->getId().' and  status IN(2,3)';//不查询已完成的任务
         $criteria->order ="tasksecondTime desc";
     
         //分页开始
@@ -986,7 +986,7 @@ class UserController extends Controller
             $keywordsArr=explode('*',$_POST['keywords']);//分解关键词
             //任务大厅
     	    $criteria = new CDbCriteria;
-            $criteria->condition='publishid='.Yii::app()->user->getId().' and taskCompleteStatus<>1 and time='.trim($keywordsArr[0]).' and id='.trim($keywordsArr[1]);
+            $criteria->condition='publishid='.Yii::app()->user->getId().' id IN(select task_id from zxjy_usertasklist WHERE task_id IN(select id from zxjy_companytasklist  WHERE publishid='.Yii::app()->user->getId().' AND state=0)) and time='.trim($keywordsArr[0]).' and id='.trim($keywordsArr[1]);
             $criteria->order ="status desc";
         
             //分页开始
@@ -1006,7 +1006,7 @@ class UserController extends Controller
         }
         //发布的任务
 	    $criteria = new CDbCriteria;
-        $criteria->condition='publishid='.Yii::app()->user->getId().' and taskCompleteStatus<>1';//不查询已完成的任务
+        $criteria->condition='publishid='.Yii::app()->user->getId().' and id IN(select task_id from zxjy_usertasklist WHERE task_id IN(select id from zxjy_companytasklist  WHERE publishid='.Yii::app()->user->getId().' AND state=0))';//不查询已完成的任务
         $criteria->order ="`time` desc";
     
         //分页开始
@@ -1035,7 +1035,7 @@ class UserController extends Controller
             $keywordsArr=explode('*',$_POST['keywords']);//分解关键词
             //任务大厅
     	    $criteria = new CDbCriteria;
-            $criteria->condition='publishid='.Yii::app()->user->getId().' and status=6 and time='.trim($keywordsArr[0]).' and id='.trim($keywordsArr[1]);
+            $criteria->condition='publishid='.Yii::app()->user->getId().' and status IN(2,3) and time='.trim($keywordsArr[0]).' and id='.trim($keywordsArr[1]);
             $criteria->order ="time desc";
         
             //分页开始
@@ -1055,7 +1055,7 @@ class UserController extends Controller
         }
         //发布的任务
 	    $criteria = new CDbCriteria;
-        $criteria->condition='publishid='.Yii::app()->user->getId().' and status=6';//商家暂停的任务
+        $criteria->condition='publishid='.Yii::app()->user->getId().' and status IN(2,3)';//商家暂停的任务
         $criteria->order ="time desc";
     
         //分页开始
@@ -1084,7 +1084,7 @@ class UserController extends Controller
             $keywordsArr=explode('*',$_POST['keywords']);//分解关键词
             //任务大厅
     	    $criteria = new CDbCriteria;
-            $criteria->condition='publishid='.Yii::app()->user->getId().' and taskCompleteStatus=1 and time='.trim($keywordsArr[0]).' and id='.trim($keywordsArr[1]);
+            $criteria->condition='publishid='.Yii::app()->user->getId().' and status IN(4) and time='.trim($keywordsArr[0]).' and id='.trim($keywordsArr[1]);
             $criteria->order ="time desc";
         
             //分页开始
@@ -1104,7 +1104,7 @@ class UserController extends Controller
         }
         //发布的任务
 	    $criteria = new CDbCriteria;
-        $criteria->condition='publishid='.Yii::app()->user->getId().' and taskCompleteStatus=1';//商家暂停的任务
+        $criteria->condition='publishid='.Yii::app()->user->getId().' and status IN(4,5) AND taskCompleteStatus=0';//商家暂停的任务
         $criteria->order ="time desc";
     
         //分页开始

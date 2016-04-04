@@ -3,12 +3,12 @@
                 
                 //1.我接手的-可处理的任务数量
                 $taobaoInTaskCount=Companytasklist::model()->findAll(array(
-                    'condition'=>' status<>6 and taskCompleteStatus<>1 AND id IN(select task_id from zxjy_usertasklist WHERE uid='.Yii::app()->user->getId().')'
+                    'condition'=>' status<>6 AND id IN(select task_id from zxjy_usertasklist WHERE uid='.Yii::app()->user->getId().' AND state=0)'
                 ));
                
                 //2.我接手的-等待我商品付款任务数量
                 $taobaoInTaskWaitPay=Companytasklist::model()->findAll(array(
-                    'condition'=>'taskerid='.Yii::app()->user->getId().' and status<>6 and status=2'
+                    'condition'=>'taskerid='.Yii::app()->user->getId().' and status IN(2,3)'
                 ));
                 //3.我接手的-等待我收货好评任务数量
                 $taobaoInTaskWaitSHHP=Companytasklist::model()->findAll(array(
@@ -28,7 +28,7 @@
             ?>
             
             <ul class="yjrwPro clearfix">
-                <li <?php echo Yii::app()->controller->id=="user" && $this->getAction()->getId()=="taobaoInTask"?"class='yjrwProSelected'":"";?>><a href="<?php echo $this->createUrl('user/taobaoInTask');?>">可处理<span><?php echo count($taobaoInTaskCount);?></span></a></li>
+                <li <?php echo Yii::app()->controller->id=="user" && $this->getAction()->getId()=="taobaoInTask"?"class='yjrwProSelected'":"";?>><a href="<?php echo $this->createUrl('user/taobaoInTask');?>"> 等待商家审核<span><?php echo count($taobaoInTaskCount);?></span></a></li>
                 <li <?php echo Yii::app()->controller->id=="user" && $this->getAction()->getId()=="taobaoInTaskWaitPay"?"class='yjrwProSelected'":"";?>><a href="<?php echo $this->createUrl('user/taobaoInTaskWaitPay');?>">等待我商品付款<span><?php echo count($taobaoInTaskWaitPay);?></span></a></li>
                 <li <?php echo Yii::app()->controller->id=="user" && $this->getAction()->getId()=="taobaoInTaskWaitSHHP"?"class='yjrwProSelected'":"";?>><a href="<?php echo $this->createUrl('user/taobaoInTaskWaitSHHP');?>">等待我收货好评<span><?php echo count($taobaoInTaskWaitSHHP);?></span></a></li>
                 <li <?php echo Yii::app()->controller->id=="user" && $this->getAction()->getId()=="taobaoInTaskComplete"?"class='yjrwProSelected'":"";?>><a href="<?php echo $this->createUrl('user/taobaoInTaskComplete');?>">已完成任务<span><?php echo count($taobaoInTaskComplete);?></span></a></li>
