@@ -13301,3 +13301,111 @@ Stack trace:
 REQUEST_URI=/assets/layer/skin/layer.css
 HTTP_REFERER=http://www.lx.com/site/taobaoTask.html
 ---
+2016/04/01 01:23:42 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "assets/img/select.png"。' in F:\www\rajk120\framework\web\CWebApplication.php:286
+Stack trace:
+#0 F:\www\rajk120\framework\web\CWebApplication.php(141): CWebApplication->runController('assets/img/sele...')
+#1 F:\www\rajk120\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#2 F:\www\rajk120\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/assets/img/select.png
+HTTP_REFERER=http://sd.com/assets/css/style.min.css
+---
+2016/04/01 01:39:39 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "favicon.ico"。' in F:\www\rajk120\framework\web\CWebApplication.php:286
+Stack trace:
+#0 F:\www\rajk120\framework\web\CWebApplication.php(141): CWebApplication->runController('favicon.ico')
+#1 F:\www\rajk120\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#2 F:\www\rajk120\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+HTTP_REFERER=http://sd.com/backyard/user/login.html
+---
+2016/04/01 01:39:46 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "assets/plugins/datatables/images/sort_both.png"。' in F:\www\rajk120\framework\web\CWebApplication.php:286
+Stack trace:
+#0 F:\www\rajk120\framework\web\CWebApplication.php(141): CWebApplication->runController('assets/plugins/...')
+#1 F:\www\rajk120\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#2 F:\www\rajk120\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/assets/plugins/datatables/images/sort_both.png
+HTTP_REFERER=http://sd.com/assets/css/add-ons.min.css
+---
+2016/04/01 01:41:51 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "assets/img/select.png"。' in F:\www\rajk120\framework\web\CWebApplication.php:286
+Stack trace:
+#0 F:\www\rajk120\framework\web\CWebApplication.php(141): CWebApplication->runController('assets/img/sele...')
+#1 F:\www\rajk120\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#2 F:\www\rajk120\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/assets/img/select.png
+HTTP_REFERER=http://sd.com/assets/css/style.min.css
+---
+2016/04/01 01:41:57 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "assets/img/select.png"。' in F:\www\rajk120\framework\web\CWebApplication.php:286
+Stack trace:
+#0 F:\www\rajk120\framework\web\CWebApplication.php(141): CWebApplication->runController('assets/img/sele...')
+#1 F:\www\rajk120\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#2 F:\www\rajk120\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/assets/img/select.png
+HTTP_REFERER=http://sd.com/assets/css/style.min.css
+---
+2016/04/04 10:12:31 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "assets/layer/skin/layer.css"。' in F:\www\rajk120\framework\web\CWebApplication.php:286
+Stack trace:
+#0 F:\www\rajk120\framework\web\CWebApplication.php(141): CWebApplication->runController('assets/layer/sk...')
+#1 F:\www\rajk120\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#2 F:\www\rajk120\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/assets/layer/skin/layer.css
+HTTP_REFERER=http://sd.com/
+---
+2016/04/04 10:12:32 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "favicon.ico"。' in F:\www\rajk120\framework\web\CWebApplication.php:286
+Stack trace:
+#0 F:\www\rajk120\framework\web\CWebApplication.php(141): CWebApplication->runController('favicon.ico')
+#1 F:\www\rajk120\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#2 F:\www\rajk120\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+HTTP_REFERER=http://sd.com/
+---
+2016/04/04 10:12:35 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "assets/layer/skin/layer.css"。' in F:\www\rajk120\framework\web\CWebApplication.php:286
+Stack trace:
+#0 F:\www\rajk120\framework\web\CWebApplication.php(141): CWebApplication->runController('assets/layer/sk...')
+#1 F:\www\rajk120\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#2 F:\www\rajk120\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/assets/layer/skin/layer.css
+HTTP_REFERER=http://sd.com/site/index.html
+---
+2016/04/04 10:13:12 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "assets/plugins/datatables/images/sort_both.png"。' in F:\www\rajk120\framework\web\CWebApplication.php:286
+Stack trace:
+#0 F:\www\rajk120\framework\web\CWebApplication.php(141): CWebApplication->runController('assets/plugins/...')
+#1 F:\www\rajk120\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#2 F:\www\rajk120\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/assets/plugins/datatables/images/sort_both.png
+HTTP_REFERER=http://sd.com/assets/css/add-ons.min.css
+---
+2016/04/04 10:13:18 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "assets/img/select.png"。' in F:\www\rajk120\framework\web\CWebApplication.php:286
+Stack trace:
+#0 F:\www\rajk120\framework\web\CWebApplication.php(141): CWebApplication->runController('assets/img/sele...')
+#1 F:\www\rajk120\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#2 F:\www\rajk120\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/assets/img/select.png
+HTTP_REFERER=http://sd.com/assets/css/style.min.css
+---
+2016/04/04 10:13:24 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "assets/img/select.png"。' in F:\www\rajk120\framework\web\CWebApplication.php:286
+Stack trace:
+#0 F:\www\rajk120\framework\web\CWebApplication.php(141): CWebApplication->runController('assets/img/sele...')
+#1 F:\www\rajk120\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#2 F:\www\rajk120\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/assets/img/select.png
+HTTP_REFERER=http://sd.com/assets/css/style.min.css
+---
+2016/04/04 10:13:24 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "assets/layer/skin/layer.css"。' in F:\www\rajk120\framework\web\CWebApplication.php:286
+Stack trace:
+#0 F:\www\rajk120\framework\web\CWebApplication.php(141): CWebApplication->runController('assets/layer/sk...')
+#1 F:\www\rajk120\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#2 F:\www\rajk120\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/assets/layer/skin/layer.css
+HTTP_REFERER=http://sd.com/backyard/membercenter/membeDetailInfos/uid/312.html
+---
