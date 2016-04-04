@@ -25,10 +25,13 @@
                         <a class="d_jinea" href="#">点击充值</a>
                     </div>
                 </div>-->
+                <?php
+                    $ptConfig = Config::model()->findByPk(1);
+                ?>
                 <div class="d_cz clearfix">
                     <div class="d_cz_left">
-                        <div class="d_czzhanghao clearfix"><p class="d_zhp">支付宝收款账号：</p><span class="d_zhspan">longtangjbp@163.com</span></div>
-                        <div class="d_czxingming clearfix"><p>支付宝收款姓名：</p><span class="d_czn">牛正家</span><span class="d_name1">转账时请核实收款姓名</span></div>
+                        <div class="d_czzhanghao clearfix"><p class="d_zhp">支付宝收款账号：</p><span class="d_zhspan"><?php echo $ptConfig->sk_alipay_no;?></span></div>
+                        <div class="d_czxingming clearfix"><p>支付宝收款姓名：</p><span class="d_czn"><?php echo $ptConfig->sk_alipay_name;?></span><span class="d_name1">转账时请核实收款姓名</span></div>
                         <div class="d_czjiaoyihao clearfix">
                             <p>支付宝交易号：</p>
                                 <input type="text" class="d_jiaoyihao_input businessRecord" placeholder="付款成功后交易明细里的32位数字交易号"/>

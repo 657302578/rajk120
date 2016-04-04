@@ -20,6 +20,8 @@
                 $data['tj_award_num'] = intval($_POST['tj_award_num']);
                 $data['tj_timeliness'] = intval($_POST['tj_timeliness']);
                 $data['tj_time_awardnum'] = intval($_POST['tj_time_awardnum']);
+                $data['sk_alipay_no'] = $_POST['sk_alipay_no'];
+                $data['sk_alipay_name'] = $_POST['sk_alipay_name'];
                 if(!$config)
                 {
                     $config = new Config();
