@@ -82,7 +82,12 @@
                   <?php
 				  if(isset($address) && $address->is_check = 1)
 				  {
-				  
+				  		$shengInfo = Area::model()->findByPk($address->sheng_id);
+				        if(isset($shengInfo)) echo $shengInfo->name;
+						$shengInfo = Area::model()->findByPk($address->shi_id);
+				          if(isset($shengInfo)) echo $shengInfo->name;
+						$shengInfo = Area::model()->findByPk($address->qu_id);
+				          if(isset($shengInfo)) echo $shengInfo->name;
 				  }else{
                   echo CHtml::dropDownList('idProvince', ''.isset($address) ? $address->sheng_id : ''.'', CHtml::listData($area, 'id', 'name'),
                       array(
