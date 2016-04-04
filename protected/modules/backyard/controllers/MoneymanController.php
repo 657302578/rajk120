@@ -44,7 +44,7 @@
                 {
                     unset($data['id']);
                     if( $data['status'] ) $data['completetime'] = time();
-                    $result = $Kcborder::model()->updateByPk($id, $data);
+                    $result = Kcborder::model()->updateByPk($id, $data);
                 }
                 else
                 {
