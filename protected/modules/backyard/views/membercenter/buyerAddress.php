@@ -81,6 +81,9 @@
       </ol>
     </div>
   </div>
+<form method="get" action="">
+    <input type="text" name="username" placeholder="请输入用户名" style="text-indent: 5px; color: #666; font-size:14px; width:260px;" /> <select name="is_check"><option value="">请选择身份审核状态</option><option value="1">未审核</option><option value="2">已审核</option></select>　<button type="submit" class="btn btn-sm btn-success" border="0" id="reg_submit"><i class="fa fa-dot-circle-o"></i>&nbsp;搜索</button>
+</form>
   <br />
   <div class="panel panel-default">
     <!--theBody start-->
@@ -97,6 +100,7 @@
             <th><div align="center">收货人姓名</div></th>
             <th><div align="center">收货电话</div></th>
             <th><div align="center">收货人详细地址</div></th>
+            <th><div align="center">提供者</div></th>
             <th><div align="center">占用者</div></th>
 			<th><div align="center">审核状态</div></th>
             <th><div align="center">添加时间</div></th>
@@ -124,6 +128,18 @@
 				    }
 					echo $item->address;
 				?>
+			</td>
+            <td>
+				<?php if($item->uid > 0){
+					$ocInfo = User::model()->findByPk($item->uid);
+					if(!isset($ocInfo))
+					{
+						$temp = Useraddress::model()->findByPk($item->id);
+						$temp->uid = 0;
+						$temp->save();
+					}
+					echo isset($ocInfo) ? $ocInfo->Username : '无';
+				}else{echo '无';} ?>
 			</td>
             <td>
 				<?php if($item->occupy_uid > 0){
