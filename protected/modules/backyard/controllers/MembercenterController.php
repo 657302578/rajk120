@@ -248,6 +248,9 @@
             {
                 $userInfo->$k = $v;
             }
+            $userInfo->alipay_account = trim($_POST['alipay_account']);
+            $userInfo->Phon = trim($_POST['Phon']);
+            $userInfo->VipStopTime = strtotime($_POST['VipStopTime']);
             echo $userInfo->save() ? 'SUCCESS' : 'FAIL';
         }
         

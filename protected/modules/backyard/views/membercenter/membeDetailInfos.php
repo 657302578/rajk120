@@ -112,19 +112,22 @@
                                                     if($userinfo->VipLv<>0) 
                                                         echo "<img src='".VERSION2."img/vip".$userinfo->VipLv.".gif' /><span style='color:red;'>&nbsp;&nbsp;&nbsp;".date('Y-m-d',$userinfo->VipStopTime)."到期</span>";
                                                     else
-                                                        echo "新手会员";
+                                                        echo "普通会员";
                                                 ?>
                                             </a>
         								</li>
                                         <li>
-        									修改会员等级：
-											<select name="VipLv">
-											<option <?php if($userinfo->VipLv == 0){?> selected="selected" <?php }?> value="0">新手会员</option>
-											<option <?php if($userinfo->VipLv == 1){?> selected="selected" <?php }?> value="0">VIP</option>
-											</select><br/>
+        									修改会员等级： 
+                                            <label><input <?php if($userinfo->VipLv == 0){?> checked="checked" <?php }?> type="radio" name="VipLv" value="0" />普通会员</label><label><input <?php if($userinfo->VipLv == 1){?> checked="checked" <?php }?> type="radio" name="VipLv" value="1" />VIP</label>
+											<br/>
 											VIP过期时间：
 											<input type="text" name="VipStopTime" <?php if($userinfo->VipLv > 0 && $userinfo->VipStopTime > 0){?> value="<?php echo date('Y/m/d H:i:s',$userinfo->VipStopTime )?>" <?php }else{?> value="<?php echo date('Y/m/d H:i:s',strtotime("+1 month"))?>" <?php } ?> />
         								</li>
+                                        <li>
+                                            修改支付宝： 
+                                            <input type="text" name="alipay_account" value="<?php echo $userinfo->alipay_account;?>" />
+                                            
+                                       </li>
 										<li>
         									<a>是否加入商保：
                                                 <input type="radio" <?php if($userinfo->JoinProtectPlan > 0 ){?>  checked="checked" <?php }?> name="JoinProtectPlan" value="1" />是 <input type="radio"  name="JoinProtectPlan" value="0" <?php if($userinfo->JoinProtectPlan == 0 ){?>  checked="checked" <?php }?> />未加入
@@ -132,10 +135,16 @@
         								</li>
                                         <li>
         									<a>用户手机：
-                                                <?php 
-                                                    echo $userinfo->Phon!=""?$userinfo->Phon:"暂无";
-                                                    echo $userinfo->PhonActive!=0?"&nbsp;&nbsp;<span style='color:green; font-weight:bold;'>已激活</span>":"&nbsp;&nbsp;<span style='color:green; font-weight:bold;'>未激活</span>";
-                                                ?>
+                                                    <?php 
+                                                    if($userinfo->Phon){
+                                                    ?>
+                                                    <input name="Phon" type="text" value="<?php echo $userinfo->Phon; ?>" />
+                                                    <?php
+                                                    }else{
+                                                        echo '暂无';
+                                                    }
+                                                    echo $userinfo->PhonActive!=0?"&nbsp;&nbsp;<span style='color:green; font-weight:bold;'>已激活</span>":"&nbsp;&nbsp;<span style='color:green; font-weight:bold;'>未激活</span>";                                             
+                                                    ?>
                                             </a>
         								</li>
                                         <li>

@@ -161,7 +161,7 @@
                                 </td>
                                 <td>
                                     <a href="javascript:resetTask(<?php echo $item->id;?>);" title="重置此任务">重置</a>
-                                    <a href="javascript:delTask(<?php echo $item->id;?>);">删除此任务</a>
+                                    <a href="javascript:delTask(<?php echo $item->id;?>);">删除</a>
                                 </td>
                             </tr>
                         <?php }?>
@@ -334,6 +334,23 @@
         }
     function delTask(taskId)
     {
+        if(!confirm('确定删除吗？此操作不可恢复！')) return ;
+            
+   	 $.ajax({
+         type:"POST",
+         url:"<?php echo $this->createUrl('taskcenter/delTask');?>",
+         data:"taskId="+taskId,
+         success:function(msg)
+         {
+             if(msg == '200')
+                 {
+                 alert('删除成功！');
+                 location.reload();
+                 }else{
+                     alert('删除失败！');
+                 }
+             }
+         });
         }
     </script>
 	

@@ -47,6 +47,8 @@
             $taskInfo->complian_status = 0;
             $taskInfo->tasktime = 0;
             $taskInfo->taskCompleteStatus = 0;
+            $taskInfo->refresh_time = time();
+            $taskInfo->time = time();
             if($taskInfo->save())
             {
                 echo '200';
