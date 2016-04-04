@@ -90,7 +90,7 @@
         									<span>帐户状态：
 												<input type="radio" <?php if($userinfo->Status == 0){?> checked="checked" <?php  } ?> name="Status" value="0" />正常 <input <?php if($userinfo->Status == 1){?> checked="checked" <?php  } ?> type="radio" name="Status" value="1" />冻结中
                                                 <br/>
-                                                <input type="text" name="dj_time" value="<?php echo date('Y/m/d H:i:s', $userinfo->dj_time);?>"> 冻结截止日期格式如：2016/03/31 12:10:11
+                                                <input type="text" name="dj_time" value="<?php echo $userinfo->dj_time > 0 ? date('Y/m/d H:i:s', $userinfo->dj_time) : '2020/01/01 00:00:00';?>"> 冻结截止日期格式如：2016/03/31 12:10:11
                                             </span>
         								</li>
                                         <li>

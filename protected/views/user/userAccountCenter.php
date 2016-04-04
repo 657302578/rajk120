@@ -80,6 +80,10 @@
             <li class="newinput">
                   <font class="newth">收货地址 :</font>
                   <?php
+				  if(isset($address) && $address->is_check = 1)
+				  {
+				  
+				  }else{
                   echo CHtml::dropDownList('idProvince', ''.isset($address) ? $address->sheng_id : ''.'', CHtml::listData($area, 'id', 'name'),
                       array(
                           'prompt' => '选择省份',
@@ -103,7 +107,9 @@
                               'data' => array('idCity' => 'js:this.value'),
                           )));
                   echo CHtml::dropDownList('idDistrict', ''.isset($address) ? $address->qu_id : ''.'',  CHtml::listData($qu, 'id', 'name'), array('prompt' => '选择区域'));
+				  }
                   ?>
+				  
               </li>
               <li class="newinput">
               <font class="newth">收货人姓名：</font>
@@ -117,6 +123,7 @@
             </li>
           </ul>
         </div>
+		
         <div class="d_tijiao"><a href="javascript:;" class="changMyInfo">提交更改</a></div>
       </div>
     </form>
