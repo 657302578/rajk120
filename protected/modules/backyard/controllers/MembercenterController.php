@@ -63,13 +63,6 @@
                 $username = trim($_GET['username']);
                 $u_condition = "Username like '%{$username}%'";
             }
-            if( isset($_GET['id_is_check']) && $_GET['id_is_check'] != '' ){
-                if( !empty($_GET['username']) ){
-                    $u_condition .= " and id_is_check=".$_GET['id_is_check'];
-                }else{
-                    $u_condition = "id_is_check=".$_GET['id_is_check'];
-                }
-            }
             if( !empty($u_condition) ){
                 $uids = User::model()->findAll(array(
                     'select'=>'id',
@@ -82,10 +75,18 @@
                     }
                     $uidsStr .= ',';
                     $uidsStr = trim($uidsStr,',');
-                    $criteria->condition ="uid in ({$uidsStr})";
+                    $condition ="uid in ({$uidsStr})";
                 }
             }
-            
+
+            if( isset($_GET['is_check']) && $_GET['is_check'] != '' ){
+                if( !empty($condition) ){
+                    $condition .= " and is_check=".($_GET['is_check']-1);
+                }else{
+                    $condition = "is_check=".($_GET['is_check']-1);
+                }
+            }
+            if( !empty($condition) ) $criteria->condition = $condition;
             //分页开始
             $total = Useraddress::model()->count($criteria);
             $pages = new CPagination($total);
