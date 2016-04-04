@@ -12,8 +12,14 @@
         $this->renderPartial('/user/taskPublishNav');//加载发布任务公共导航
     ?>
     <div class="cle"></div>
+	
     <div class="reListTitle">
-      <table width="1000" border="0" cellspacing="0" cellpadding="4" id="tpl">
+      <table width="100%" border="0" cellspacing="0" cellpadding="4" id="tpl">
+          <tr>
+		  
+		  </tr>
+	  </table>
+      <table width="100%" border="0" cellspacing="0" cellpadding="4" id="tpl">
         <thead>
           <tr>
             <th class="id">链接ID</th>
