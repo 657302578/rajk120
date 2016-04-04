@@ -1930,17 +1930,9 @@ class UserController extends Controller
             $userinfo->alipay_account = $_POST['alipay_account'];
             if($userinfo->save())
             {
-                $data['uid'] = Yii::app()->user->getId();
-                $data['sheng_id'] = intval($_POST['idProvince']);
-                $data['shi_id'] = intval($_POST['idCity']);
-                $data['qu_id'] = intval($_POST['idDistrict']);
-                $data['mobile'] = $_POST['addr']['mobile'];
-                $data['address'] = $_POST['addr']['address'];
-                $data['user_name'] = $_POST['addr']['user_name'];
-                $data['create_time'] = date('Y/m/d H:i:s');
                 //更新收货地址
                 $userAddressInfo = Useraddress::model()->find('uid='.Yii::app()->user->getId());
-                if(!$userAddressInfo && intval($_POST['idProvince'])> 0 && intval($_POST['idCity']) > 0 && intval($_POST['idDistrict']) > 0 && !empty($_POST['addr']['mobile']) && !empty($_POST['addr']['address']) && !$_POST['addr']['user_name'])
+                if(!$userAddressInfo && isset($_POST['idProvince'])> 0 && isset($_POST['idCity']) > 0 && isset($_POST['idDistrict']) > 0 && !empty($_POST['addr']['mobile']) && !empty($_POST['addr']['address']) && !empty($_POST['addr']['user_name']))
                 {
                     $userAddModel = new Useraddress();
                     $userAddModel->uid = Yii::app()->user->getId();
