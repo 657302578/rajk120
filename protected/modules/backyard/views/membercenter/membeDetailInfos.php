@@ -100,10 +100,7 @@
         									<a style="cursor: pointer;" class="changePwd" alt="<?php echo $userinfo->id;?>">登录密码：<font style="color:#57A0FF;">修改新密码</font></a>
         								</li>
                                         <li>
-        									<a>经验数值：<font style="font-weight:bold; font-size:14px; color:red;"><?php echo $userinfo->Experience;?></font></a>
-        								</li>
-                                        <li>
-        									会员积分：<input type="text" name="Score" value="<?php echo $userinfo->Score;?>" />
+        									会员积分：<input type="text" name="Experience" value="<?php echo $userinfo->Experience;?>" />
         								</li>
 										
                                         <li>

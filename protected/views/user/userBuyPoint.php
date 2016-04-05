@@ -11,7 +11,7 @@
                         $vipInfo=User::model()->findByPk(Yii::app()->user->getId());
                         //VIP已到期或者不是VIP
                         $vipInfo->VipStopTime!=""?$vipInfo->VipStopTime:0;//VIP到期时间处理
-                        if($vipInfo->VipStopTime<time()){
+                        if($vipInfo->VipStopTime<time() || $vipInfo->VipLv <= 0){
                     ?>
                     <div class="zbuy112" >
                         <img src="<?php echo VERSION2;?>img/vip.jpg" alt="" />

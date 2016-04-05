@@ -165,7 +165,8 @@
 								}
 							}
 						?>
-					</select>                    </li>
+					</select>
+					</li>
 				  </ul>
 				  <input type="hidden" name="txtPrice" value="0" />
 				  <ul class="dowebok">
